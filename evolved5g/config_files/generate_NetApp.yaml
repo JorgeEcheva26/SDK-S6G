@@ -1,0 +1,5 @@
+default_context:
+    git_email: "GITHUB_EMAIL"
+    repo_name: "REPOSITORY_NAME"
+    remote_username: "GITHUB_USERNAME"
+    token_repo: "GITHUB_TOKEN"
