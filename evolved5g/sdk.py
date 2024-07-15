@@ -53,6 +53,7 @@ class CAPIFInvokerConnector:
             capif_host: str,
             capif_http_port: str,
             capif_https_port: str,
+            capif_register_port: str,
             capif_netapp_username,
             capif_netapp_password: str,
             capif_callback_url: str,
@@ -91,6 +92,7 @@ class CAPIFInvokerConnector:
         # make sure the parameters are str
         capif_http_port = str(capif_http_port)
         capif_https_port = str(capif_https_port)
+        capif_register_port = str(capif_register_port)
         if len(capif_http_port) == 0 or int(capif_http_port) == 80:
             self.capif_http_url = "http://" + capif_host.strip() + "/"
         else:
