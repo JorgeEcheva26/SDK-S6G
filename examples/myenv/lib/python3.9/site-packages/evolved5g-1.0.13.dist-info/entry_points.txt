@@ -1,0 +1,4 @@
+[console_scripts]
+cli_helper = evolved5g.cli:cli_helper
+evolved5g = evolved5g.cli:cli
+
