@@ -1,10 +1,3 @@
-import sys
-import os
-
-# Verifica si la ruta y el archivo existen
-sdk_path = '/Users/IDB0128/Documents/OpenCapif/SDK-S6G/evolved5g'
-sdk_file = os.path.join(sdk_path, 'sdk.py')
-sys.path.append(sdk_path)
 
 
 from evolved5g.sdk import CAPIFInvokerConnector, ServiceDiscoverer
