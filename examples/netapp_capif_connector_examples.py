@@ -12,8 +12,10 @@ def showcase_capif_connector():
 
     capif_connector = CAPIFInvokerConnector(folder_to_store_certificates=emulator_utils.get_folder_path_for_netapp_certificates_and_capif_api_key(),
                                             capif_host="capifcore",
+                                            register_host="localhost",
                                             capif_http_port="8080",
                                             capif_https_port="443",
+                                            capif_register_port="8084",
                                             capif_netapp_username="custom_netapp41",
                                             capif_netapp_password="pass123",
                                             capif_callback_url="http://localhost:5000",

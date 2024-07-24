@@ -29,7 +29,7 @@ def get_folder_path_for_netapp_certificates_and_capif_api_key()->str:
     Make sure to change this path name to match your environment!
     :return:
     """
-    return "/home/alex/Projects/test_certificate_folder"
+    return "/Users/IDB0128/Documents/OpenCapif/test_certificate_folder"
 
 def get_capif_host()->str:
     """

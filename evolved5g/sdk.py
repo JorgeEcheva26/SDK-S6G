@@ -51,6 +51,7 @@ class CAPIFInvokerConnector:
             self,
             folder_to_store_certificates: str,
             capif_host: str,
+            register_host: str,
             capif_http_port: str,
             capif_https_port: str,
             capif_register_port: str,
@@ -93,6 +94,7 @@ class CAPIFInvokerConnector:
         capif_http_port = str(capif_http_port)
         capif_https_port = str(capif_https_port)
         capif_register_port = str(capif_register_port)
+        register_host=register_host
         if len(capif_http_port) == 0 or int(capif_http_port) == 80:
             self.capif_http_url = "http://" + capif_host.strip() + "/"
         else:
@@ -104,6 +106,11 @@ class CAPIFInvokerConnector:
             self.capif_https_url = "https://" + capif_host.strip() + "/"
         else:
             self.capif_https_url = "https://" + capif_host.strip() + ":" + capif_https_port.strip() + "/"
+
+        if len(capif_register_port) == 0 :
+            self.capif_register_url = "https://" + register_host.strip() + ":8084/"
+        else:
+            self.capif_register_url = "https://" + register_host.strip() + ":" + capif_register_port.strip() + "/"    
 
         self.capif_callback_url = self.__add_trailing_slash_to_url_if_missing(
             capif_callback_url.strip()
@@ -137,11 +144,15 @@ class CAPIFInvokerConnector:
 
         """
         public_key = self.__create_private_and_public_keys()
-        role = "invoker"
-        registration_result = self.__register_to_capif(role)
-        capif_onboarding_url = registration_result["ccf_onboarding_url"]
-        capif_discover_url = registration_result["ccf_discover_url"]
-        capif_access_token = self.__save_capif_ca_root_file_and_get_auth_token(role)
+        registration_result = self.__register_to_capif()
+        admintoken =registration_result["access_token"]
+        self.__create_user(admintoken)
+        # capif_onboarding_url = registration_result["ccf_onboarding_url"]
+        # capif_discover_url = registration_result["ccf_discover_url"]
+        capif_postauth_info = self.__save_capif_ca_root_file_and_get_auth_token()
+        capif_onboarding_url = capif_postauth_info["ccf_onboarding_url"]
+        capif_discover_url = capif_postauth_info["ccf_discover_url"]
+        capif_access_token = capif_postauth_info["access_token"]
         api_invoker_id = (
             self.__onboard_netapp_to_capif_and_create_the_signed_certificate(
                 public_key, capif_onboarding_url, capif_access_token
@@ -209,26 +220,45 @@ class CAPIFInvokerConnector:
 
         return public_key
 
-    def __register_to_capif(self, role):
+    def __register_to_capif(self):
 
-        url = self.capif_http_url + "register"
-        payload = dict()
-        payload["username"] = self.capif_netapp_username
-        payload["password"] = self.capif_netapp_password
-        payload["role"] = role
-        payload["description"] = self.description
-        payload["cn"] = self.csr_common_name
-
+        url = self.capif_register_url + "login"
+        
         response = requests.request(
             "POST",
             url,
             headers={"Content-Type": "application/json"},
-            data=json.dumps(payload),
+            auth=(self.capif_netapp_username, self.capif_netapp_password),
         )
         response.raise_for_status()
 
         response_payload = json.loads(response.text)
         return response_payload
+    
+    def __create_user(self,admin_token):
+    
+        url=self.capif_register_url + "createUser" 
+        payload = dict()
+        payload["username"] = self.capif_netapp_username
+        payload["password"] = self.capif_netapp_password
+        payload["description"]=self.description
+        payload["email"]=self.csr_email_address
+        payload["enterprise"]=self.csr_organization
+        payload["country"]=self.crs_locality
+        payload["purpose"]="SDK for SAFE 6G"
+        headers = {
+            "Authorization": "Bearer {}".format(admin_token),
+            "Content-Type": "application/json",
+        }
+        
+        response = requests.request(
+            "POST",
+            url,
+            headers=headers,
+            auth=(self.capif_netapp_username, self.capif_netapp_password),
+            data=json.dumps(payload)
+        )
+        response.raise_for_status()
 
     def de_register_from_capif(self,role):
 
@@ -249,24 +279,21 @@ class CAPIFInvokerConnector:
 
     def __save_capif_ca_root_file_and_get_auth_token(self, role):
 
-        url = self.capif_http_url + "getauth"
+        url = self.capif_register_url + "getauth"
 
-        payload = dict()
-        payload["username"] = self.capif_netapp_username
-        payload["password"] = self.capif_netapp_password
-        payload["role"] = role
+        
 
         response = requests.request(
             "POST",
             url,
             headers={"Content-Type": "application/json"},
-            data=json.dumps(payload),
+            auth=(self.capif_netapp_username, self.capif_netapp_password),
         )
         response.raise_for_status()
         response_payload = json.loads(response.text)
         ca_root_file = open(self.folder_to_store_certificates + "ca.crt", "wb+")
         ca_root_file.write(bytes(response_payload["ca_root"], "utf-8"))
-        return response_payload["access_token"]
+        return response_payload
 
     def __onboard_netapp_to_capif_and_create_the_signed_certificate(
             self, public_key, capif_onboarding_url, capif_access_token
