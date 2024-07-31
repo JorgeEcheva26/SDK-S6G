@@ -382,6 +382,10 @@ class CAPIFProviderConnector:
             csr_state_or_province_name,
             csr_country_name,
             csr_email_address,
+            capif_register_host:str,
+            capif_register_port:str,
+            capif_register_username:str,
+            capif_register_password:str
     ):
         """
         :param certificates_folder: The folder where certificates will be created and stored.
@@ -421,9 +425,20 @@ class CAPIFProviderConnector:
                     "https://" + capif_host.strip() + ":" + self.capif_https_port .strip() + "/"
             )
 
+        if len(capif_register_port) == 0 :
+            self.capif_register_url = "https://" + capif_register_host.strip() + ":8084/"
+        else:
+            self.capif_register_url = "https://" + capif_register_host.strip() + ":" + capif_register_port.strip() + "/"    
+
+
         self.capif_host = capif_host.strip()
         self.capif_netapp_username = capif_netapp_username
         self.capif_netapp_password = capif_netapp_password
+
+        self.capif_register_host=capif_register_host
+        self.capif_register_port=capif_register_port
+        self.capif_register_username=capif_register_username
+        self.capif_register_password=capif_register_password
 
         self.csr_common_name = csr_common_name
         self.csr_organizational_unit = csr_organizational_unit
@@ -540,27 +555,23 @@ class CAPIFProviderConnector:
         response_payload = json.loads(response.text)
         return response_payload
 
-    def __register_to_capif(self, role):
+    def __register_to_capif(self):
 
-        url = self.capif_http_url + "register"
-        payload = dict()
-        payload["username"] = self.capif_netapp_username
-        payload["password"] = self.capif_netapp_password
-        payload["role"] = role
-        payload["description"] = self.description
-        payload["cn"] = self.csr_common_name
-
+        url = self.capif_register_url + "login"
+        
         response = requests.request(
             "POST",
             url,
             headers={"Content-Type": "application/json"},
-            data=json.dumps(payload),
+            auth=HTTPBasicAuth(self.capif_register_username, self.capif_register_password),
+            verify=False
         )
         response.raise_for_status()
+        
 
         response_payload = json.loads(response.text)
         return response_payload
-
+ 
     def __perform_authorization(self) -> str:
         """
         :return: the access_token from CAPIF
@@ -610,25 +621,79 @@ class CAPIFProviderConnector:
                 data[key] = value
 
             json.dump(data, outfile)
+    def __create_user(self,admin_token):
 
+
+    
+        url=self.capif_register_url + "createUser" 
+        payload = dict()
+        payload["username"] = self.capif_netapp_username
+        payload["password"] = self.capif_netapp_password
+        payload["description"]=self.description
+        payload["email"]=self.csr_email_address
+        payload["enterprise"]=self.csr_organization
+        payload["country"]=self.crs_locality
+        payload["purpose"]="SDK for SAFE 6G"
+        headers = {
+            "Authorization": "Bearer {}".format(admin_token),
+            "Content-Type": "application/json",
+        }
+        
+        response = requests.request(
+            "POST",
+            url,
+            headers=headers,
+            data=json.dumps(payload),
+            verify=False
+        )
+        response.raise_for_status()
+ 
+    def __save_capif_ca_root_file_and_get_auth_token(self):
+
+        url = self.capif_register_url + "getauth"
+
+        
+
+        response = requests.request(
+            "GET",
+            url,
+            headers={"Content-Type": "application/json"},
+            auth=HTTPBasicAuth(self.capif_netapp_username, self.capif_netapp_password),
+            verify=False
+        )
+        
+        response.raise_for_status()
+        response_payload = json.loads(response.text)
+        ca_root_file = open(self.certificates_folder + "ca.crt", "wb+")
+        ca_root_file.write(bytes(response_payload["ca_root"], "utf-8"))
+        return response_payload
+
+    
     def register_and_onboard_provider(self) -> None:
-        role = "provider"
+        
         # retrieve store the .pem certificate from CAPIF
-        self.__store_certificate_authority_file()
+        
         self.__store_certificate()
         # register provider to CAPIF
-        registration_result = self.__register_to_capif(role)
-        capif_registration_id = registration_result["id"]
-        ccf_publish_url = registration_result["ccf_publish_url"]
-        capif_onboarding_url = registration_result["ccf_api_onboarding_url"]
+        registration_result = self.__register_to_capif()
+        admintoken =registration_result["access_token"]
+        self.__create_user(admintoken)
+        capif_postauth_info = self.__save_capif_ca_root_file_and_get_auth_token()
+        capif_onboarding_url = capif_postauth_info["ccf_onboarding_url"]
+        capif_discover_url = capif_postauth_info["ccf_discover_url"]
+        access_token = capif_postauth_info["access_token"]
+        #capif_registration_id = registration_result["id"]
+        #ccf_publish_url = registration_result["ccf_publish_url"]
+        #capif_onboarding_url = registration_result["ccf_api_onboarding_url"]
 
-        access_token = self.__perform_authorization()
         onboarding_response = self.__onboard_exposer_to_capif(
             access_token, capif_onboarding_url
         )
         self.__write_to_file(
             onboarding_response, capif_registration_id, ccf_publish_url
         )
+
+
 
     def publish_services(self, service_api_description_json_full_path) -> dict:
         """
