@@ -238,7 +238,6 @@ class CAPIFInvokerConnector:
             auth=HTTPBasicAuth(self.capif_register_username, self.capif_register_password),
             verify=False
         )
-        print(response.text)
         response.raise_for_status()
         
 
@@ -265,8 +264,8 @@ class CAPIFInvokerConnector:
             "POST",
             url,
             headers=headers,
-            auth=(self.capif_netapp_username, self.capif_netapp_password),
-            data=json.dumps(payload)
+            data=json.dumps(payload),
+            verify=False
         )
         response.raise_for_status()
 
