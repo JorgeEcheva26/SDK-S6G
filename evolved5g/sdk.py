@@ -286,18 +286,20 @@ class CAPIFInvokerConnector:
         response.raise_for_status()
 
 
-    def __save_capif_ca_root_file_and_get_auth_token(self, role):
+    def __save_capif_ca_root_file_and_get_auth_token(self):
 
         url = self.capif_register_url + "getauth"
 
         
 
         response = requests.request(
-            "POST",
+            "GET",
             url,
             headers={"Content-Type": "application/json"},
-            auth=(self.capif_netapp_username, self.capif_netapp_password),
+            auth=HTTPBasicAuth(self.capif_netapp_username, self.capif_netapp_password),
+            verify=False
         )
+        
         response.raise_for_status()
         response_payload = json.loads(response.text)
         ca_root_file = open(self.folder_to_store_certificates + "ca.crt", "wb+")
