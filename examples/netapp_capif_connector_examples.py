@@ -18,6 +18,8 @@ def showcase_capif_connector():
                                             capif_register_port="8084",
                                             capif_netapp_username="custom_netapp41",
                                             capif_netapp_password="pass123",
+                                            capif_register_username="admin",
+                                            capif_register_password="password123",
                                             capif_callback_url="http://localhost:5000",
                                             description= "Dummy NetApp",
                                             csr_common_name="test02",

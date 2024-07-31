@@ -2,6 +2,8 @@
 import os
 from typing import List, Union, Optional
 
+from requests.auth import HTTPBasicAuth
+
 from evolved5g import swagger_client
 from abc import ABC, abstractmethod
 from enum import Enum
@@ -55,8 +57,10 @@ class CAPIFInvokerConnector:
             capif_http_port: str,
             capif_https_port: str,
             capif_register_port: str,
-            capif_netapp_username,
+            capif_netapp_username:str,
             capif_netapp_password: str,
+            capif_register_username: str,
+            capif_register_password: str,
             capif_callback_url: str,
             description: str,
             csr_common_name: str,
@@ -94,7 +98,8 @@ class CAPIFInvokerConnector:
         capif_http_port = str(capif_http_port)
         capif_https_port = str(capif_https_port)
         capif_register_port = str(capif_register_port)
-        register_host=register_host
+        register_host=str(register_host)
+        
         if len(capif_http_port) == 0 or int(capif_http_port) == 80:
             self.capif_http_url = "http://" + capif_host.strip() + "/"
         else:
@@ -115,6 +120,8 @@ class CAPIFInvokerConnector:
         self.capif_callback_url = self.__add_trailing_slash_to_url_if_missing(
             capif_callback_url.strip()
         )
+        self.capif_register_username=str(capif_register_username)
+        self.capif_register_password=str(capif_register_password)
         self.capif_netapp_username = capif_netapp_username
         self.capif_netapp_password = capif_netapp_password
         self.description = description
@@ -228,9 +235,12 @@ class CAPIFInvokerConnector:
             "POST",
             url,
             headers={"Content-Type": "application/json"},
-            auth=(self.capif_netapp_username, self.capif_netapp_password),
+            auth=HTTPBasicAuth(self.capif_register_username, self.capif_register_password),
+            verify=False
         )
+        print(response.text)
         response.raise_for_status()
+        
 
         response_payload = json.loads(response.text)
         return response_payload
