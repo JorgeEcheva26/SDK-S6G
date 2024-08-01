@@ -411,6 +411,7 @@ class CAPIFProviderConnector:
         # make sure the parameters are str
         capif_http_port = str(capif_http_port)
         self.capif_https_port = str(capif_https_port)
+        
         if len(capif_http_port) == 0 or int(capif_http_port) == 80:
             self.capif_http_url = "http://" + capif_host.strip() + "/"
         else:
@@ -510,7 +511,6 @@ class CAPIFProviderConnector:
     def __onboard_exposer_to_capif(self, access_token, capif_onboarding_url):
         url = self.capif_https_url + capif_onboarding_url
         payload = {
-            "regSec": access_token,
             "apiProvFuncs": [
                 {
                     "regInfo": {"apiProvPubKey": ""},
@@ -530,7 +530,8 @@ class CAPIFProviderConnector:
             ],
             "apiProvDomInfo": "This is provider",
             "suppFeat": "fff",
-            "failReason": "string"
+            "failReason": "string",
+            "regSec": access_token,
         }
         for api_func in payload["apiProvFuncs"]:
             public_key = self.__create_private_and_public_keys(
@@ -550,7 +551,7 @@ class CAPIFProviderConnector:
             data=json.dumps(payload),
             verify=self.certificates_folder + "ca.crt",
         )
-
+        
         response.raise_for_status()
         response_payload = json.loads(response.text)
         return response_payload
@@ -679,9 +680,9 @@ class CAPIFProviderConnector:
         admintoken =registration_result["access_token"]
         self.__create_user(admintoken)
         capif_postauth_info = self.__save_capif_ca_root_file_and_get_auth_token()
-        capif_onboarding_url = capif_postauth_info["ccf_onboarding_url"]
-        capif_discover_url = capif_postauth_info["ccf_discover_url"]
+        capif_onboarding_url = capif_postauth_info["ccf_api_onboarding_url"]
         access_token = capif_postauth_info["access_token"]
+        ccf_publish_url=capif_postauth_info["ccf_publish_url"]
         #capif_registration_id = registration_result["id"]
         #ccf_publish_url = registration_result["ccf_publish_url"]
         #capif_onboarding_url = registration_result["ccf_api_onboarding_url"]
@@ -689,6 +690,7 @@ class CAPIFProviderConnector:
         onboarding_response = self.__onboard_exposer_to_capif(
             access_token, capif_onboarding_url
         )
+        capif_registration_id=onboarding_response["apiProvDomId"]
         self.__write_to_file(
             onboarding_response, capif_registration_id, ccf_publish_url
         )
@@ -710,6 +712,8 @@ class CAPIFProviderConnector:
             publish_url = file["publish_url"]
             AEF_api_prov_func_id = file["AEF_api_prov_func_id"]
             APF_api_prov_func_id = file["APF_api_prov_func_id"]
+            print(AEF_api_prov_func_id)
+            print(APF_api_prov_func_id)
 
         url = self.capif_https_url + publish_url.replace(
             "<apfId>", APF_api_prov_func_id
@@ -1001,394 +1005,3 @@ class ServiceDiscoverer:
             return api_name + "/" + version + uri
 
 
-# class TSNManager:
-#     """
-#     Contains helper functions to apply Time-Sensitive Networking (TSN) standards to time-sensitive NetApps.
-#     Allows the configuration of certain parameters in the underlying TSN infrastructure of the testbed.
-#     These parameters indicate the expected QoS of the communication. Read more at https://github.com/EVOLVED-5G/TSN_AF
-#     """
-
-#     def __init__(
-#             self,
-#             folder_path_for_certificates_and_capif_api_key: str,
-#             capif_host: str,
-#             capif_https_port: int,
-#             https: bool,
-#             tsn_host: str,
-#             tsn_port: Optional[int] = None,
-#     ) -> None:
-
-#         self.folder_path_for_certificates_and_capif_api_key = os.path.join(
-#             folder_path_for_certificates_and_capif_api_key.strip(), ""
-#         )
-#         self.api_name = "/tsn/api/"
-#         self.service_discoverer = ServiceDiscoverer(self.folder_path_for_certificates_and_capif_api_key, capif_host,
-#                                                     capif_https_port)
-#         api_resource_description = self.service_discoverer.retrieve_api_description_by_name(self.api_name)
-#         self.access_token = self.service_discoverer.get_access_token(self.api_name, api_resource_description["apiId"],
-#                                                                      api_resource_description["aefProfiles"][0][
-#                                                                          "aefId"])
-#         self.headers_auth = {
-#             "Accept": "application/json",
-#             'Authorization': 'Bearer ' + self.access_token
-#         }
-#         self.api_invoker_id = self.service_discoverer.get_api_invoker_id()
-
-#         if tsn_port is None:
-#             self.url_prefix = "{protocol}://{host}".format(
-#                 protocol="https" if https else "http",
-#                 host=tsn_host
-#             )
-#         else:
-#             self.url_prefix = "{protocol}://{host}:{port}".format(
-#                 protocol="https" if https else "http",
-#                 host=tsn_host,
-#                 port=tsn_port
-#             )
-
-#     class TSNNetappIdentifier:
-#         def __init__(self, netapp_name: str):
-#             self.netapp_name = netapp_name
-#             self.__identifier = self.__generate_random_identifier()
-
-#         def __generate_random_identifier(self):
-#             return "{netapp_name}_{random_uuid}".format(
-#                 netapp_name=self.netapp_name, random_uuid=uuid4().hex
-#             )
-
-#         @property
-#         def value(self):
-#             return self.__identifier
-
-#     class TSNProfile:
-#         def __init__(self, tsn_manager, profile_name):
-#             self.tsn_manager = tsn_manager
-#             self.name = profile_name
-#             self.configuration = self.get_configuration_for_tsn_profile()
-
-#         class TSNProfileConfiguration:
-#             def __init__(self, parameters_dict):
-#                 for (
-#                         profile_parameter_name,
-#                         profile_parameter_value,
-#                 ) in parameters_dict.items():
-#                     setattr(self, profile_parameter_name, profile_parameter_value)
-
-#             def get_profile_configuration_parameters(self):
-#                 return vars(self)
-
-#         def get_configuration_for_tsn_profile(
-#                 self,
-#         ) -> TSNProfileConfiguration:
-#             """
-#             Returns the configuration parameters of the selected time-sensitive networking (TSN) profile.
-
-#             :return: the default TSN profile configuration
-#             """
-
-#             url = self.tsn_manager.url_prefix + \
-#                   self.tsn_manager.service_discoverer. \
-#                       retrieve_specific_resource_name(self.tsn_manager.api_name, "TSN_DETAIL_PROFILE"). \
-#                       format(profileName=self.name)
-
-#             response = requests.get(url=url, headers=self.tsn_manager.headers_auth , verify = False)
-#             response.raise_for_status()
-#             parameters_dict = json.loads(response.text)[self.name]
-#             return self.TSNProfileConfiguration(parameters_dict)
-
-#     def get_tsn_profiles(self) -> [TSNProfile]:
-#         """
-#         Returns the names of supported time-sensitive networking (TSN) profiles.
-
-#         :return: a list of TSN profiles. Each TSN profile is a TSNProfile class.
-
-#         """
-#         url = self.url_prefix + self.service_discoverer. \
-#             retrieve_specific_resource_name(self.api_name, "TSN_LIST_PROFILES")
-
-#         response = requests.get(url=url, headers=self.headers_auth , verify= False)
-#         response.raise_for_status()
-#         response_dict = json.loads(response.text)
-#         return [
-#             self.TSNProfile(tsn_manager=self, profile_name=name)
-#             for name in response_dict["profiles"]
-#         ]
-
-#     def apply_tsn_profile_to_netapp(
-#             self,
-#             tsn_netapp_identifier: TSNNetappIdentifier,
-#             profile: TSNProfile,
-#     ) -> str:
-#         """
-#         Applies the time-sensitive networking (TSN) profile to the NetApp specified by <tsn_netapp_identifier>
-
-#         :param tsn_netapp_identifier: the TSN identifier class of the NetApp
-#         :param profile: the TSN profile whose configuration will be applied to the NetApp
-#         :return: token which can be used to clear the configuration from the NetApp
-#         """
-
-#         data = {
-#             "identifier": tsn_netapp_identifier.value,
-#             "profile": profile.name,
-#             "overrides": {},
-#         }
-#         url = self.url_prefix + self.service_discoverer.retrieve_specific_resource_name(self.api_name,
-#                                                                                         "TSN_APPLY_CONFIGURATION")
-
-#         response = requests.post(
-#             url=url, json=data, headers=self.headers_auth, verify= False
-#         )
-#         response.raise_for_status()
-#         response = json.loads(response.text)
-#         return response["token"]
-
-#     def apply_profile_with_overriden_parameters_to_netapp(
-#             self,
-#             tsn_netapp_identifier: TSNNetappIdentifier,
-#             base_profile: TSNProfile,
-#             modified_params: dict,
-#     ) -> str:
-#         """
-#         Overrides the default parameters of the time-sensitive networking (TSN) profile, and applies it to the NetApp
-#         specified by <tsn_netapp_identifier>.
-
-
-#         :param tsn_netapp_identifier: the TSN identifier class of the NetApp
-#         :param base_profile: the profile class whose configuration will be applied to the NetApp
-#         :param modified_params: Dict of param-value pairs that will override the default configuration of the TSN profile
-#         :return token used to clear the applied TSN configuration from the NetApp
-#         """
-#         if not modified_params:
-#             return self.apply_tsn_profile_to_netapp(
-#                 tsn_netapp_identifier=tsn_netapp_identifier,
-#                 profile=base_profile,
-#             )
-
-#         data = {
-#             "identifier": tsn_netapp_identifier.value,
-#             "profile": base_profile.name,
-#             "overrides": modified_params,
-#         }
-#         url = self.url_prefix + self.service_discoverer.retrieve_specific_resource_name(self.api_name,
-#                                                                                         "TSN_APPLY_CONFIGURATION")
-
-#         response = requests.post(
-#             url=url,
-#             json=data,
-#             headers=self.headers_auth,
-#             verify= False
-#         )
-#         response.raise_for_status()
-#         response = json.loads(response.text)
-#         return response["token"]
-
-#     def clear_profile_for_tsn_netapp_identifier(
-#             self, tsn_netapp_identifier: TSNNetappIdentifier, clearance_token: str
-#     ) -> None:
-#         """
-#         Disables a previously applied configuration for the selected NetApp
-
-
-#         :param tsn_netapp_identifier: the TSN identifier class of the NetApp
-#         :param clearance_token: used to clear the applied TSN configuration from the NetApp
-#         """
-
-#         url = self.url_prefix + self.service_discoverer.retrieve_specific_resource_name(self.api_name,
-#                                                                                         "TSN_CLEAR_CONFIGURATION")
-
-#         data = {
-#             "identifier": tsn_netapp_identifier.value,
-#             "token": clearance_token,
-#         }
-#         response = requests.post(
-#             url=url, json=data, headers=self.headers_auth,  verify= False
-#         )
-#         response.raise_for_status()
-#         assert "success" in json.loads(response.text)["message"]
-
-
-# class CAPIFLogCommon(ABC):
-    def __init__(self,  certificates_folder,
-                 capif_host,
-                 capif_https_port):
-
-        self.certificates_folder = os.path.join(certificates_folder.strip(), "")
-        self.capif_https_url = ""
-        if len(capif_https_port) == 0 or int(capif_https_port) == 443:
-            self.capif_https_url = "https://" + capif_host.strip() + "/"
-        else:
-            self.capif_https_url = "https://" + capif_host.strip() + ":" + capif_https_port.strip() + "/"
-
-        with open(
-                self.certificates_folder + "capif_provider_details.json", "r"
-        ) as openfile:
-            self.capif_provider_details = json.load(openfile)
-            self.aef_id = self.capif_provider_details["AEF_api_prov_func_id"]
-
-    def get_capif_service_description(self, capif_service_api_description_json_full_path):
-        """
-        Use this method to read the api_id of  your service from the relevant file or other relevant information
-
-        :param capif_service_api_description_json_full_path:
-        This file  is generated when you register your Provider to CAPIF. It is stored inside your certificate folder.
-        :return: The service description json that is stored in CAPIF
-        """
-        with open(
-                capif_service_api_description_json_full_path, "r"
-        ) as openfile:
-            return json.load(openfile)
-
-# class CAPIFLogger(CAPIFLogCommon):
-
-    def __init__(self,
-                 certificates_folder,
-                 capif_host,
-                 capif_https_port):
-
-        """
-          :param certificates_folder: The certificated folder you used during registration of the Provider to CAPIF
-          :param capif_host: The CAPIF host name
-          :param capif_https_port: The CAPIF https port
-        """
-        super().__init__(certificates_folder,capif_host,capif_https_port)
-        self.capif_logger_url = self.capif_https_url + "api-invocation-logs/v1/" + self.aef_id + "/logs"
-
-    @dataclass
-    class LogEntry:
-        """
-           A class representing a LogEntry that will be saved to CAPIF Invocation logs.
-
-      Attributes:
-            apiId (str): The ID of the API invoked.
-            apiVersion (str): The version of the API that was invoked.
-            apiName (str): The name of the API.
-            resourceName (str): The name of the resource being invoked
-            uri (str): Full URI  of the request.
-            protocol (str): The protocol used for the request (ex. HTTP_1_1)
-            invocationLatency (int): The time taken to process the request, in milliseconds.
-            invocationTime (datetime): Date on which the request was invoked.
-            operation (str): The HTTP operation being performed (Ex. GET,POST,PUT,DELETE)
-            result (int): The HTTP status code of the results (ex. 200)
-            inputParameters (dict): The input parameters for the request.
-            outputParameters (dict): The output / response parameters
-        """
-        apiId: str
-        apiVersion: str
-        apiName: str
-        resourceName: str
-        uri: str
-        protocol: str
-        invocationLatency: int
-        invocationTime: datetime
-        operation: str
-        result: int
-        inputParameters: dict
-        outputParameters: dict
-
-
-
-
-
-    def save_log(self, api_invoker_id, log_entries: List[LogEntry]):
-
-        payload = {
-            "aefId": self.aef_id,
-            "apiInvokerId": api_invoker_id,
-            "logs": list(map(lambda logentry: logentry.__dict__, log_entries)),
-            "supportedFeatures": "fffffff"
-        }
-
-        headers = {
-            'Content-Type': 'application/json'
-        }
-
-        response = requests.request("POST", self.capif_logger_url,
-                                    headers=headers,
-                                    data=json.dumps(payload),
-                                    cert=(
-                                        self.certificates_folder + "dummy_aef.crt",
-                                        self.certificates_folder + "AEF_private_key.key",
-                                    ),
-                                    verify=self.certificates_folder + 'ca.crt')
-        response.raise_for_status()
-        response_payload = json.loads(response.text)
-
-        return response_payload
-
-
-
-
-# class CAPIFAuditor(CAPIFLogCommon):
-
-    def __init__(self,
-                 certificates_folder,
-                 capif_host,
-                 capif_https_port):
-        """
-        :param certificates_folder: The certificated folder you used during registration of the Provider to CAPIF
-        :param capif_host: The CAPIF host name
-        :param capif_https_port: The CAPIF https port
-        """
-        super().__init__(certificates_folder,capif_host,capif_https_port)
-        self.capif_query_log_url = self.capif_https_url + "logs/v1/apiInvocationLogs"
-
-    def query_log(self, api_invoker_id=None, time_start=None, time_end=None, api_id=None,
-              api_name=None, api_version=None, result=None, resource_name=None, protocol=None,
-              operation=None):
-
-        """
-        :param api_invoker_id:
-        :param time_start:    # e.g. 2022-10-24T00:00:00.000Z
-        :param time_end:  # e.g. 2022-10-25T00:00:00.000Z
-        :param api_id:  # e.g. f7ba97e8f08a7f53365ba81be60a0c
-        :param api_name:   # e.g. dummy-aef
-        :param api_version:   # e.g. v1
-        :param result:   # e.g. 201
-        :param resource_name:   # e.g. MONITORING_SUBSCRIPTION_SINGLE
-        :param protocol:  # e.g. HTTP_1_1 or HTTP_2
-        :param operation:    # e.g. POST
-        :return: The Log entries found in the CAPIF database
-        """
-
-        params = dict()
-        params.update({'aef-id':self.aef_id})
-
-        if api_invoker_id is not None:
-            params.update({'api-invoker-id': api_invoker_id})
-
-        if time_start is not None:
-            params.update({'time-range-start': time_start})
-
-        if time_end is not None:
-            params.update({'time-range-end': time_end})
-
-        if api_id is not None:
-            params.update({'api-id': api_id})
-
-        if api_name is not None:
-            params.update({'api-name': api_name})
-
-        if api_version is not None:
-            params.update({'api-version': api_version})
-
-        if result is not None:
-            params.update({'result': result})
-
-        if resource_name is not None:
-            params.update({'resource-name': resource_name})
-
-        if protocol is not None:
-            params.update({'protocol': protocol})
-
-        if operation is not None:
-            params.update({'operation': operation})
-
-        response = requests.request("GET", self.capif_query_log_url, params=params,
-                                    cert=(
-                                        self.certificates_folder + "dummy_amf.crt",
-                                        self.certificates_folder + "AMF_private_key.key",
-                                    ),
-                                    verify=self.certificates_folder + 'ca.crt')
-        response.raise_for_status()
-        response_payload = json.loads(response.text)
-        return response_payload

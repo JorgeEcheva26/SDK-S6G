@@ -7,11 +7,11 @@ def showcase_capif_nef_connector():
     """
     capif_connector = CAPIFProviderConnector(certificates_folder=capif_exposer_utils.nef_exposer_get_certificate_folder(),
                                              capif_host="capifcore",
-                                             register_host="localhost",
+                                             capif_register_host="localhost",
                                              capif_http_port="8080",
                                              capif_https_port="443",
                                              capif_register_port="8084",
-                                             capif_netapp_username="test_nef_004",
+                                             capif_netapp_username="test_nef_010",
                                              capif_netapp_password="testpassword",
                                              capif_register_username="admin",
                                              capif_register_password="password123",
@@ -29,7 +29,7 @@ def showcase_capif_nef_connector():
 
     capif_connector.publish_services(
         service_api_description_json_full_path=capif_exposer_utils.nef_exposer_get_sample_api_description_path())
-
+    print("COMPLETADO")
 
 if __name__ == "__main__":
     #Let's register a NEF to CAPIF. This should happen exactly once
