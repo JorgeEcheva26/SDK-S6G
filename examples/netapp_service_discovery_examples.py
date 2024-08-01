@@ -1,9 +1,9 @@
 from evolved5g.sdk import CAPIFInvokerConnector, ServiceDiscoverer
-from examples import emulator_utils
+
 
 
 def showcase_service_discovery():
-    service_discoverer = ServiceDiscoverer(folder_path_for_certificates_and_api_key=emulator_utils.get_folder_path_for_netapp_certificates_and_capif_api_key(),
+    service_discoverer = ServiceDiscoverer(folder_path_for_certificates_and_api_key="/Users/IDB0128/Documents/OpenCapif/test_certificate_folder",
                                            capif_host="capifcore",
                                            capif_https_port=443
                                            )
@@ -11,7 +11,7 @@ def showcase_service_discovery():
     print(endpoints)
 
 def showcase_retrieve_endpoint_url_from_tsn():
-    service_discoverer = ServiceDiscoverer(folder_path_for_certificates_and_api_key=emulator_utils.get_folder_path_for_netapp_certificates_and_capif_api_key(),
+    service_discoverer = ServiceDiscoverer(folder_path_for_certificates_and_api_key="/Users/IDB0128/Documents/OpenCapif/test_certificate_folder",
                                            capif_host="capifcore",
                                            capif_https_port=443
                                            )
@@ -23,7 +23,7 @@ def showcase_retrieve_endpoint_url_from_tsn():
     print(url)
 
 def showcase_retrieve_endpoint_url_from_nef():
-    service_discoverer = ServiceDiscoverer(folder_path_for_certificates_and_api_key=emulator_utils.get_folder_path_for_netapp_certificates_and_capif_api_key(),
+    service_discoverer = ServiceDiscoverer(folder_path_for_certificates_and_api_key="/Users/IDB0128/Documents/OpenCapif/test_certificate_folder",
                                            capif_host="capifcore",
                                            capif_https_port=443
                                            )
@@ -36,7 +36,7 @@ def showcase_retrieve_endpoint_url_from_nef():
 
 
 def showcase_access_token_retrieval_from_capif():
-    service_discoverer = ServiceDiscoverer(folder_path_for_certificates_and_api_key=emulator_utils.get_folder_path_for_netapp_certificates_and_capif_api_key(),
+    service_discoverer = ServiceDiscoverer(folder_path_for_certificates_and_api_key="/Users/IDB0128/Documents/OpenCapif/test_certificate_folder",
                                            capif_host="capifcore",
                                            capif_https_port=443
                                            )
@@ -55,6 +55,6 @@ def showcase_access_token_retrieval_from_capif():
 
 if __name__ == "__main__":
     #The following code assumes that you have already registered the net app to capif.
-    showcase_service_discovery()
-    showcase_retrieve_endpoint_url_from_tsn()
+    #showcase_service_discovery()
+    #showcase_retrieve_endpoint_url_from_tsn()
     showcase_access_token_retrieval_from_capif()
