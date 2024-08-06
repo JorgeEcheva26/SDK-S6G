@@ -134,6 +134,7 @@ class CAPIFInvokerConnector:
         self.csr_country_name = csr_country_name
         self.csr_email_address = csr_email_address
         self.capif_api_details_filename = "capif_api_security_context_details.json"
+        self.capif_api_details = self.__load_netapp_api_details()
 
     def __add_trailing_slash_to_url_if_missing(self, url):
         if url[len(url) - 1] != "/":
@@ -151,9 +152,10 @@ class CAPIFInvokerConnector:
 
         """
         public_key = self.__create_private_and_public_keys()
-        registration_result = self.__register_to_capif()
-        admintoken =registration_result["access_token"]
-        self.__create_user(admintoken)
+        log_result = self.__log_to_capif()
+        admintoken =log_result["access_token"]
+        postcreation=self.__create_user(admintoken)
+        self.uuid=postcreation["uuid"]
         # capif_onboarding_url = registration_result["ccf_onboarding_url"]
         # capif_discover_url = registration_result["ccf_discover_url"]
         capif_postauth_info = self.__save_capif_ca_root_file_and_get_auth_token()
@@ -188,11 +190,13 @@ class CAPIFInvokerConnector:
         )
         response.raise_for_status()
 
+    
 
     def offboard_and_deregister_netapp(self)->None:
         self.offboard_netapp()
-        role = "invoker"
-        self.de_register_from_capif(role)
+        log_result = self.__log_to_capif()
+        admintoken =log_result["access_token"]
+        self.de_register_from_capif(admintoken)
 
     def __create_private_and_public_keys(self) -> str:
         """
@@ -227,7 +231,7 @@ class CAPIFInvokerConnector:
 
         return public_key
 
-    def __register_to_capif(self):
+    def __log_to_capif(self):
 
         url = self.capif_register_url + "login"
         
@@ -239,8 +243,6 @@ class CAPIFInvokerConnector:
             verify=False
         )
         response.raise_for_status()
-        
-
         response_payload = json.loads(response.text)
         return response_payload
     
@@ -268,22 +270,28 @@ class CAPIFInvokerConnector:
             verify=False
         )
         response.raise_for_status()
+        response_payload = json.loads(response.text)
+        return response_payload
 
-    def de_register_from_capif(self,role):
+    def de_register_from_capif(self,admin_token):
 
-        url = self.capif_http_url + "remove"
-        payload = dict()
-        payload["username"] = self.capif_netapp_username
-        payload["password"] = self.capif_netapp_password
-        payload["role"] = role
 
+
+        url = self.capif_register_url + "deleteUser/" + self.capif_api_details["uuid"]
+        
+        headers = {
+            "Authorization": "Bearer {}".format(admin_token),
+            "Content-Type": "application/json",
+        }
         response = requests.request(
             "DELETE",
             url,
-            headers={"Content-Type": "application/json"},
-            data=json.dumps(payload)
+            headers=headers,
+            data=None,
+            verify=False
         )
         response.raise_for_status()
+        
 
 
     def __save_capif_ca_root_file_and_get_auth_token(self):
@@ -305,6 +313,13 @@ class CAPIFInvokerConnector:
         ca_root_file = open(self.folder_to_store_certificates + "ca.crt", "wb+")
         ca_root_file.write(bytes(response_payload["ca_root"], "utf-8"))
         return response_payload
+
+    def __cache_security_context(self):
+        with open(
+                self.folder_to_store_certificates + "capif_api_security_context_details.json", "w"
+        ) as outfile:
+            json.dump(self.capif_api_details, outfile)
+
 
     def __onboard_netapp_to_capif_and_create_the_signed_certificate(
             self, public_key, capif_onboarding_url, capif_access_token
@@ -356,10 +371,17 @@ class CAPIFInvokerConnector:
                     "csr_common_name": csr_common_name,
                     "api_invoker_id": api_invoker_id,
                     "discover_services_url": discover_services_url,
+                    "uuid":self.uuid
                 },
                 outfile,
             )
 
+    def __load_netapp_api_details(self):
+            with open(
+                    self.folder_to_store_certificates + "capif_api_security_context_details.json",
+                    "r",
+            ) as openfile:
+                return json.load(openfile)
 
 class CAPIFProviderConnector:
     """
