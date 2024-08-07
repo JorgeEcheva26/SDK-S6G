@@ -617,7 +617,7 @@ class CAPIFProviderConnector:
 
         return response_payload["access_token"]
 
-    def __write_to_file(self, onboarding_response, capif_registration_id, publish_url):
+    def __write_to_file(self, onboarding_response, capif_registration_id, publish_url,uuid):
 
         for func_provile in onboarding_response["apiProvFuncs"]:
             with open(
@@ -636,6 +636,7 @@ class CAPIFProviderConnector:
         ) as outfile:
             data = {
                 "capif_registration_id": capif_registration_id,
+                "uuid":uuid,
                 "publish_url": publish_url,
             }
             for api_prov_func in onboarding_response["apiProvFuncs"]:
@@ -670,6 +671,8 @@ class CAPIFProviderConnector:
             verify=False
         )
         response.raise_for_status()
+        response_payload = json.loads(response.text)
+        return response_payload
  
     def __save_capif_ca_root_file_and_get_auth_token(self):
 
@@ -700,7 +703,8 @@ class CAPIFProviderConnector:
         # register provider to CAPIF
         registration_result = self.__register_to_capif()
         admintoken =registration_result["access_token"]
-        self.__create_user(admintoken)
+        response=self.__create_user(admintoken)
+        uuid=response["uuid"]
         capif_postauth_info = self.__save_capif_ca_root_file_and_get_auth_token()
         capif_onboarding_url = capif_postauth_info["ccf_api_onboarding_url"]
         access_token = capif_postauth_info["access_token"]
@@ -714,7 +718,7 @@ class CAPIFProviderConnector:
         )
         capif_registration_id=onboarding_response["apiProvDomId"]
         self.__write_to_file(
-            onboarding_response, capif_registration_id, ccf_publish_url
+            onboarding_response, capif_registration_id, ccf_publish_url,uuid
         )
 
 
@@ -766,6 +770,72 @@ class CAPIFProviderConnector:
 
         return json.loads(capif_response)
 
+    def offboard_and_deregister_nef(self):
+        
+        self.offboard_nef()
+        log_result = self.__log_to_capif()
+        admintoken =log_result["access_token"]
+        self.de_register_from_capif(admintoken)
+
+
+    def __log_to_capif(self):
+
+        url = self.capif_register_url + "login"
+        
+        response = requests.request(
+            "POST",
+            url,
+            headers={"Content-Type": "application/json"},
+            auth=HTTPBasicAuth(self.capif_register_username, self.capif_register_password),
+            verify=False
+        )
+        response.raise_for_status()
+        response_payload = json.loads(response.text)
+        return response_payload
+    
+    def offboard_nef(self) ->None:
+        capif_api_details = self.__load_nef_api_details()
+        url = self.capif_https_url+ "api-provider-management/v1/registrations/" +capif_api_details["capif_registration_id"]
+
+        signed_key_crt_path = self.certificates_folder + "dummy_amf.crt"
+        private_key_path = self.certificates_folder + "AMF_private_key.key"
+        print(self.certificates_folder + "ca.crt")
+        response = requests.request(
+            "DELETE",
+            url,
+            cert=(signed_key_crt_path, private_key_path),
+            verify=self.certificates_folder + "ca.crt"
+        )
+        response.raise_for_status()
+
+    def __load_nef_api_details(self):
+        with open(
+                    self.certificates_folder + "capif_provider_details.json",
+                    "r",
+            ) as openfile:
+                return json.load(openfile)
+
+    def de_register_from_capif(self,admin_token):
+
+        capif_api_details=self.__load_nef_api_details()
+
+        url = self.capif_register_url + "deleteUser/" + capif_api_details["uuid"]
+        
+        headers = {
+            "Authorization": "Bearer {}".format(admin_token),
+            "Content-Type": "application/json",
+        }
+        response = requests.request(
+            "DELETE",
+            url,
+            headers=headers,
+            data=None,
+            verify=False
+        )
+        response.raise_for_status()
+        
+    
+    
 
 class ServiceDiscoverer:
     class ServiceDiscovererException(Exception):
