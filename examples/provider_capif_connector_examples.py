@@ -1,7 +1,7 @@
 from evolved5g.sdk import CAPIFProviderConnector
 import capif_exposer_utils
 
-def offboard_capif_nef_connector():
+def showcase_capif_nef_connector():
     """
 
     """
@@ -11,7 +11,7 @@ def offboard_capif_nef_connector():
                                              capif_http_port="8080",
                                              capif_https_port="443",
                                              capif_register_port="8084",
-                                             capif_netapp_username="test_nef_013",
+                                             capif_netapp_username="test_nef_015",
                                              capif_netapp_password="testpassword",
                                              capif_register_username="admin",
                                              capif_register_password="password123",
@@ -25,10 +25,12 @@ def offboard_capif_nef_connector():
                                              csr_email_address="test@example.com"
                                              )
 
-    capif_connector.offboard_and_deregister_nef()
+    capif_connector.register_and_onboard_provider()
 
-    
+    capif_connector.publish_services(
+        service_api_description_json_full_path=capif_exposer_utils.nef_exposer_get_sample_api_description_path())
+    print("COMPLETADO")
 
 if __name__ == "__main__":
     #Let's register a NEF to CAPIF. This should happen exactly once
-    offboard_capif_nef_connector()
+    showcase_capif_nef_connector()

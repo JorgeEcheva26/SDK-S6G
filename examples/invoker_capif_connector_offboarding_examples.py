@@ -31,7 +31,7 @@ def showcase_offboard_and_deregister_netapp():
                                             csr_email_address="test@example.com"
                                             )
     capif_connector.offboard_and_deregister_netapp()
-
+    print("COMPLETADO")
 
 
 if __name__ == "__main__":

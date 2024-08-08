@@ -16,7 +16,7 @@ def showcase_capif_connector():
                                             capif_http_port="8080",
                                             capif_https_port="443",
                                             capif_register_port="8084",
-                                            capif_netapp_username="custom_netapp69",
+                                            capif_netapp_username="custom_netapp72",
                                             capif_netapp_password="pass123",
                                             capif_register_username="admin",
                                             capif_register_password="password123",
@@ -32,7 +32,7 @@ def showcase_capif_connector():
                                             )
 
     capif_connector.register_and_onboard_netapp()
-
+    print("COMPLETADO")
 
 if __name__ == "__main__":
     #Let's register NetApp to CAPIF. This should happen exactly once

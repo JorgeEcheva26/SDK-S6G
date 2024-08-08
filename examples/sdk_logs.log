@@ -1,0 +1,131 @@
+2024-08-08 10:49:51,356 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-08 10:49:51,358 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized
+2024-08-08 10:49:51,359 - CAPIFInvokerConnector - INFO - Registering and onboarding NetApp
+2024-08-08 10:49:51,359 - CAPIFInvokerConnector - INFO - Creating private and public keys
+2024-08-08 10:49:52,493 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-08 10:49:52,493 - CAPIFInvokerConnector - INFO - Logging in to CAPIF
+2024-08-08 10:49:52,673 - CAPIFInvokerConnector - INFO - Logged in to CAPIF successfully
+2024-08-08 10:49:52,675 - CAPIFInvokerConnector - INFO - Creating user in CAPIF
+2024-08-08 10:49:52,736 - CAPIFInvokerConnector - INFO - User created successfully
+2024-08-08 10:49:52,737 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token
+2024-08-08 10:49:52,845 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-08 10:49:52,846 - CAPIFInvokerConnector - INFO - Onboarding NetApp to CAPIF and creating signed certificate
+2024-08-08 10:49:53,269 - CAPIFInvokerConnector - INFO - NetApp onboarded and signed certificate created successfully
+2024-08-08 10:49:53,270 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-08 10:49:53,271 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-08 10:49:53,271 - CAPIFInvokerConnector - INFO - NetApp registered and onboarded successfully
+2024-08-08 10:57:07,016 - ServiceDiscoverer - INFO - Inicializando ServiceDiscoverer
+2024-08-08 10:57:07,017 - ServiceDiscoverer - INFO - Detalles de la API de NetApp cargados correctamente
+2024-08-08 10:57:07,017 - ServiceDiscoverer - INFO - ServiceDiscoverer inicializado correctamente
+2024-08-08 10:57:07,110 - ServiceDiscoverer - ERROR - Error al descubrir los APIs de servicio: 404 Client Error: NOT FOUND for url: https://capifcore:443/service-apis/v1/allServiceAPIs?api-invoker-id=INV88bee6021bf6884e49a8345c88ed94
+2024-08-08 11:04:28,151 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-08 11:04:28,152 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized
+2024-08-08 11:04:28,152 - CAPIFInvokerConnector - INFO - Registering and onboarding NetApp
+2024-08-08 11:04:28,152 - CAPIFInvokerConnector - INFO - Creating private and public keys
+2024-08-08 11:04:29,051 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-08 11:04:29,051 - CAPIFInvokerConnector - INFO - Logging in to CAPIF
+2024-08-08 11:04:29,185 - CAPIFInvokerConnector - INFO - Logged in to CAPIF successfully
+2024-08-08 11:04:29,187 - CAPIFInvokerConnector - INFO - Creating user in CAPIF
+2024-08-08 11:04:29,227 - CAPIFInvokerConnector - INFO - User created successfully
+2024-08-08 11:04:29,231 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token
+2024-08-08 11:04:29,350 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-08 11:04:29,351 - CAPIFInvokerConnector - INFO - Onboarding NetApp to CAPIF and creating signed certificate
+2024-08-08 11:04:29,465 - CAPIFInvokerConnector - INFO - NetApp onboarded and signed certificate created successfully
+2024-08-08 11:04:29,466 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-08 11:04:29,468 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-08 11:04:29,468 - CAPIFInvokerConnector - INFO - NetApp registered and onboarded successfully
+2024-08-08 11:06:31,043 - ServiceDiscoverer - INFO - Inicializando ServiceDiscoverer
+2024-08-08 11:06:31,044 - ServiceDiscoverer - INFO - Detalles de la API de NetApp cargados correctamente
+2024-08-08 11:06:31,045 - ServiceDiscoverer - INFO - ServiceDiscoverer inicializado correctamente
+2024-08-08 11:06:31,143 - ServiceDiscoverer - ERROR - Error al descubrir los APIs de servicio: 404 Client Error: NOT FOUND for url: https://capifcore:443/service-apis/v1/allServiceAPIs?api-invoker-id=INV5fff06ad8d6f45523e9f57f6020020
+2024-08-08 11:09:49,974 - ServiceDiscoverer - INFO - Inicializando ServiceDiscoverer
+2024-08-08 11:09:49,981 - ServiceDiscoverer - INFO - Detalles de la API de NetApp cargados correctamente
+2024-08-08 11:09:49,981 - ServiceDiscoverer - INFO - ServiceDiscoverer inicializado correctamente
+2024-08-08 11:09:50,350 - ServiceDiscoverer - INFO - APIs de servicio descubiertos correctamente
+2024-08-08 11:09:50,350 - ServiceDiscoverer - INFO - Obteniendo el token de acceso para api_name=hello_api_demo_v2, api_id=e4a8ffefaafe46efe37ee35493580a, aef_id=AEF87df8d37a05861ecca21fc15c74cd6
+2024-08-08 11:09:50,350 - ServiceDiscoverer - INFO - No existe un contexto de seguridad. Registrando un nuevo servicio de seguridad.
+2024-08-08 11:09:50,446 - ServiceDiscoverer - INFO - Servicio de seguridad registrado correctamente
+2024-08-08 11:09:50,448 - ServiceDiscoverer - INFO - Contexto de seguridad cacheado correctamente
+2024-08-08 11:09:50,534 - ServiceDiscoverer - INFO - Token de seguridad obtenido correctamente
+2024-08-08 11:09:50,534 - ServiceDiscoverer - INFO - Token de acceso obtenido correctamente
+2024-08-08 11:17:07,590 - CAPIFProviderConnector - INFO - Inicializando CAPIFProviderConnector con el host capifcore
+2024-08-08 11:17:07,591 - CAPIFProviderConnector - INFO - Iniciando el proceso de registro y onboarding del proveedor
+2024-08-08 11:17:07,591 - CAPIFProviderConnector - INFO - Realizando autorización en CAPIF usando la URL http://capifcore:8080/getauth
+2024-08-08 11:17:07,678 - CAPIFProviderConnector - ERROR - Error durante el proceso de registro y onboarding: 404 Client Error: Not Found for url: http://capifcore:8080/getauth
+2024-08-08 11:23:20,651 - CAPIFProviderConnector - INFO - Inicializando CAPIFProviderConnector con el host capifcore
+2024-08-08 11:23:20,652 - CAPIFProviderConnector - INFO - Iniciando el proceso de registro y onboarding del proveedor
+2024-08-08 11:23:20,652 - CAPIFProviderConnector - INFO - Iniciando el proceso para recuperar el certificado del servidor CAPIF
+2024-08-08 11:24:21,184 - CAPIFProviderConnector - INFO - Certificado del servidor CAPIF almacenado correctamente
+2024-08-08 11:24:21,185 - CAPIFProviderConnector - INFO - Registrando proveedor en CAPIF usando la URL https://localhost:8084/login
+2024-08-08 11:24:21,301 - CAPIFProviderConnector - INFO - Proveedor registrado correctamente en CAPIF
+2024-08-08 11:24:21,303 - CAPIFProviderConnector - ERROR - Error durante el proceso de registro y onboarding: 'CAPIFProviderConnector' object has no attribute '_CAPIFProviderConnector__create_user'
+2024-08-08 11:37:12,526 - CAPIFProviderConnector - INFO - Initializing CAPIFProviderConnector
+2024-08-08 11:37:12,526 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized successfully
+2024-08-08 11:39:13,703 - CAPIFProviderConnector - INFO - Initializing CAPIFProviderConnector
+2024-08-08 11:39:13,703 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized successfully
+2024-08-08 11:39:13,704 - CAPIFProviderConnector - INFO - Starting provider onboarding and registration process
+2024-08-08 11:39:13,704 - CAPIFProviderConnector - INFO - Storing certificate authority file
+2024-08-08 11:39:14,131 - CAPIFProviderConnector - ERROR - An error occurred during the onboarding and registration process: 404 Client Error: Not Found for url: http://capifcore:8080/ca-root
+2024-08-08 11:57:24,651 - CAPIFProviderConnector - INFO - Initializing CAPIFProviderConnector
+2024-08-08 11:57:49,153 - CAPIFProviderConnector - INFO - Initializing CAPIFProviderConnector
+2024-08-08 12:02:49,159 - CAPIFProviderConnector - INFO - Initializing CAPIFProviderConnector
+2024-08-08 12:19:19,494 - CAPIFProviderConnector - INFO - Initializing CAPIFProviderConnector
+2024-08-08 12:19:19,495 - CAPIFProviderConnector - INFO - Setting up HTTP and HTTPS URLs
+2024-08-08 12:19:19,495 - CAPIFProviderConnector - INFO - CAPIF URLs set: HTTP URL = http://capifcore:8080/, HTTPS URL = https://capifcore/
+2024-08-08 12:20:07,930 - CAPIFProviderConnector - INFO - Initializing CAPIFProviderConnector
+2024-08-08 12:20:07,930 - CAPIFProviderConnector - INFO - Setting up HTTP and HTTPS URLs
+2024-08-08 12:20:07,930 - CAPIFProviderConnector - INFO - CAPIF URLs set: HTTP URL = http://capifcore:8080/, HTTPS URL = https://capifcore/
+2024-08-08 12:20:35,624 - CAPIFProviderConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-08 12:33:39,223 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-08 12:34:39,545 - CAPIFProviderConnector - INFO - Loggeandose en CAPIF
+2024-08-08 12:34:39,926 - CAPIFProviderConnector - INFO - Loggeo completado
+2024-08-08 12:34:39,929 - CAPIFProviderConnector - INFO - Creando usuario de CAPIF
+2024-08-08 12:34:40,015 - CAPIFProviderConnector - INFO - Usuario creado correctamente
+2024-08-08 12:34:40,017 - CAPIFProviderConnector - INFO - Obteniendo autorización de CAPIF
+2024-08-08 12:34:40,209 - CAPIFProviderConnector - INFO - Autorización recibida
+2024-08-08 12:34:40,212 - CAPIFProviderConnector - INFO - Guardando certificado de autoridad
+2024-08-08 12:34:40,215 - CAPIFProviderConnector - INFO - Realizando el onboarding
+2024-08-08 12:34:42,209 - CAPIFProviderConnector - INFO - Onboarding completado
+2024-08-08 12:34:42,210 - CAPIFProviderConnector - INFO - Guardando los datos más relevantes del onboarding
+2024-08-08 12:34:42,213 - CAPIFProviderConnector - INFO - Datos guardados
+2024-08-08 12:35:16,914 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-08 12:35:16,927 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized
+2024-08-08 12:35:16,927 - CAPIFInvokerConnector - INFO - Registering and onboarding NetApp
+2024-08-08 12:35:16,928 - CAPIFInvokerConnector - INFO - Creating private and public keys
+2024-08-08 12:35:20,667 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-08 12:35:20,668 - CAPIFInvokerConnector - INFO - Logging in to CAPIF
+2024-08-08 12:35:20,885 - CAPIFInvokerConnector - INFO - Logged in to CAPIF successfully
+2024-08-08 12:35:20,887 - CAPIFInvokerConnector - INFO - Creating user in CAPIF
+2024-08-08 12:35:20,928 - CAPIFInvokerConnector - INFO - User created successfully
+2024-08-08 12:35:20,930 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token
+2024-08-08 12:35:21,501 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-08 12:35:21,506 - CAPIFInvokerConnector - INFO - Onboarding NetApp to CAPIF and creating signed certificate
+2024-08-08 12:35:21,970 - CAPIFInvokerConnector - INFO - NetApp onboarded and signed certificate created successfully
+2024-08-08 12:35:21,971 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-08 12:35:21,972 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-08 12:35:21,972 - CAPIFInvokerConnector - INFO - NetApp registered and onboarded successfully
+2024-08-08 12:35:41,031 - ServiceDiscoverer - INFO - Inicializando ServiceDiscoverer
+2024-08-08 12:35:41,033 - ServiceDiscoverer - INFO - Detalles de la API de NetApp cargados correctamente
+2024-08-08 12:35:41,033 - ServiceDiscoverer - INFO - ServiceDiscoverer inicializado correctamente
+2024-08-08 12:35:41,185 - ServiceDiscoverer - INFO - APIs de servicio descubiertos correctamente
+2024-08-08 12:35:41,186 - ServiceDiscoverer - INFO - Obteniendo el token de acceso para api_name=/nef/api/v1/3gpp-monitoring-event/, api_id=086da4e1d186926c033013dfc2a622, aef_id=AEFf2c4e3f71b4a462e666ebcecb76201
+2024-08-08 12:35:41,186 - ServiceDiscoverer - INFO - No existe un contexto de seguridad. Registrando un nuevo servicio de seguridad.
+2024-08-08 12:35:41,360 - ServiceDiscoverer - INFO - Servicio de seguridad registrado correctamente
+2024-08-08 12:35:41,363 - ServiceDiscoverer - INFO - Contexto de seguridad cacheado correctamente
+2024-08-08 12:35:41,481 - ServiceDiscoverer - INFO - Token de seguridad obtenido correctamente
+2024-08-08 12:35:41,481 - ServiceDiscoverer - INFO - Token de acceso obtenido correctamente
+2024-08-08 12:36:36,512 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-08 12:36:36,516 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized
+2024-08-08 12:36:36,519 - CAPIFInvokerConnector - INFO - Offboarding and deregistering NetApp
+2024-08-08 12:36:36,519 - CAPIFInvokerConnector - INFO - Offboarding NetApp
+2024-08-08 12:36:36,669 - CAPIFInvokerConnector - INFO - NetApp offboarded successfully
+2024-08-08 12:36:36,670 - CAPIFInvokerConnector - INFO - Logging in to CAPIF
+2024-08-08 12:36:36,932 - CAPIFInvokerConnector - INFO - Logged in to CAPIF successfully
+2024-08-08 12:36:36,934 - CAPIFInvokerConnector - INFO - Deregistering from CAPIF
+2024-08-08 12:36:37,066 - CAPIFInvokerConnector - INFO - Deregistered from CAPIF successfully
+2024-08-08 12:36:37,068 - CAPIFInvokerConnector - INFO - NetApp offboarded and deregistered successfully
+2024-08-08 12:36:55,379 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-08 12:36:55,379 - CAPIFProviderConnector - INFO - Realizando el offboarding del provider
+2024-08-08 12:36:55,506 - CAPIFProviderConnector - INFO - Offboarding realizado
+2024-08-08 12:36:55,617 - CAPIFProviderConnector - INFO - Eliminando usuario de CAPIF
+2024-08-08 12:36:55,702 - CAPIFProviderConnector - INFO - Usuario eliminado
