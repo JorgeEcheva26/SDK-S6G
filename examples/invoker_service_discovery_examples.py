@@ -1,6 +1,6 @@
 from evolved5g.sdk import CAPIFInvokerConnector, ServiceDiscoverer
 
-
+import emulator_utils
 
 def showcase_service_discovery():
     service_discoverer = ServiceDiscoverer(folder_path_for_certificates_and_api_key="/Users/IDB0128/Documents/OpenCapif/test_certificate_folder",
@@ -36,10 +36,7 @@ def showcase_retrieve_endpoint_url_from_nef():
 
 
 def showcase_access_token_retrieval_from_capif():
-    service_discoverer = ServiceDiscoverer(folder_path_for_certificates_and_api_key="/Users/IDB0128/Documents/OpenCapif/test_certificate_folder",
-                                           capif_host="capifcore",
-                                           capif_https_port=443
-                                           )
+    service_discoverer = ServiceDiscoverer(config_file=emulator_utils.get_discover_config_file())
     endpoints = service_discoverer.discover_service_apis()
     if len(endpoints)>0:
         ## The access token is always retrieved for a specific api name and a specific endpoint (that is mapped ton an api_id and aef_id)

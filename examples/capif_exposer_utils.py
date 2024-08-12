@@ -27,3 +27,6 @@ def get_demo_invoker_id()->str:
     """
 
     return "33c2f9b99814ddfb7b3e8b671f0d58"
+
+def get_provider_config_file()->str:
+    return "/Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/Config_files/Provider_config.json"

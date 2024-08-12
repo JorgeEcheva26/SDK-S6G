@@ -23,6 +23,11 @@ from evolved5g.swagger_client import (
     Cell,
 )
 import datetime
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# Ahora realiza tu solicitud HTTPS a 'localhost'
 
 from OpenSSL.SSL import FILETYPE_PEM
 from OpenSSL.crypto import (
@@ -38,6 +43,8 @@ import requests
 import json
 from uuid import uuid4
 import warnings
+from requests.exceptions import RequestsDependencyWarning
+warnings.filterwarnings("ignore", category=RequestsDependencyWarning)
 
 # Configuración básica del logger
 logging.basicConfig(
@@ -51,42 +58,45 @@ logging.basicConfig(
 
 class CAPIFInvokerConnector:
     """
-    Τhis class is responsbile for onboarding an Invoker (ex. a NetApp) to CAPIF
+    Τhis class is responsbile for onboarding an Invoker (ex. a Invoker) to CAPIF
     """
-    def __init__(self, 
-                 folder_to_store_certificates: str, 
-                 capif_host: str, 
-                 register_host: str, 
-                 capif_http_port: str, 
-                 capif_https_port: str, 
-                 capif_register_port: str, 
-                 capif_netapp_username: str, 
-                 capif_netapp_password: str, 
-                 capif_register_username: str, 
-                 capif_register_password: str, 
-                 capif_callback_url: str, 
-                 description: str, 
-                 csr_common_name: str, 
-                 csr_organizational_unit: str, 
-                 csr_organization: str, 
-                 crs_locality: str, 
-                 csr_state_or_province_name, 
-                 csr_country_name, 
-                 csr_email_address):
+    def __init__(self,
+                 config_file: str ):
 
         # Inicializar logger
         self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.info("Initializing CAPIFInvokerConnector")
 
-        # Resto del código original
-        self.folder_to_store_certificates = os.path.join(
-            folder_to_store_certificates.strip(), ""
-        )
-        capif_http_port = str(capif_http_port)
-        capif_https_port = str(capif_https_port)
-        capif_register_port = str(capif_register_port)
-        register_host = str(register_host)
+        # Cargar configuración desde archivo si es necesario
+        config = self.__load_config_file(config_file)
+
         
+        
+
+        # Asignar valores desde variables de entorno o desde el archivo de configuración
+        self.folder_to_store_certificates = os.getenv('FOLDER_TO_STORE_CERTIFICATES', config.get('folder_to_store_certificates','')).strip()
+        
+        capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
+        register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
+        capif_http_port = str(os.getenv('CAPIF_HTTP_PORT', config.get('capif_http_port', '')).strip())
+        capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
+        capif_register_port = str(os.getenv('CAPIF_REGISTER_PORT', config.get('capif_register_port', '')).strip())
+        capif_invoker_username = os.getenv('CAPIF_INVOKER_USERNAME', config.get('capif_invoker_username', '')).strip()
+        capif_invoker_password = os.getenv('CAPIF_INVOKER_PASSWORD', config.get('capif_invoker_password', '')).strip()
+        capif_register_username = os.getenv('CAPIF_REGISTER_USERNAME', config.get('capif_register_username', '')).strip()
+        capif_register_password = os.getenv('CAPIF_REGISTER_PASSWORD', config.get('capif_register_password', '')).strip()
+        capif_callback_url = os.getenv('CAPIF_CALLBACK_URL', config.get('capif_callback_url', '')).strip()
+        description = os.getenv('DESCRIPTION', config.get('description', '')).strip()
+        csr_common_name = os.getenv('CSR_COMMON_NAME', config.get('csr_common_name', '')).strip()
+        csr_organizational_unit = os.getenv('CSR_ORGANIZATIONAL_UNIT', config.get('csr_organizational_unit', '')).strip()
+        csr_organization = os.getenv('CSR_ORGANIZATION', config.get('csr_organization', '')).strip()
+        crs_locality = os.getenv('CRS_LOCALITY', config.get('crs_locality', '')).strip()
+        csr_state_or_province_name = os.getenv('CSR_STATE_OR_PROVINCE_NAME', config.get('csr_state_or_province_name', '')).strip()
+        csr_country_name = os.getenv('CSR_COUNTRY_NAME', config.get('csr_country_name', '')).strip()
+        csr_email_address = os.getenv('CSR_EMAIL_ADDRESS', config.get('csr_email_address', '')).strip()
+
+
+        # Resto del código original para inicializar URLs y otros atributos
         if len(capif_http_port) == 0 or int(capif_http_port) == 80:
             self.capif_http_url = "http://" + capif_host.strip() + "/"
         else:
@@ -111,10 +121,10 @@ class CAPIFInvokerConnector:
         self.capif_callback_url = self.__add_trailing_slash_to_url_if_missing(
             capif_callback_url.strip()
         )
-        self.capif_register_username = str(capif_register_username)
-        self.capif_register_password = str(capif_register_password)
-        self.capif_netapp_username = capif_netapp_username
-        self.capif_netapp_password = capif_netapp_password
+        self.capif_register_username = capif_register_username
+        self.capif_register_password = capif_register_password
+        self.capif_invoker_username = capif_invoker_username
+        self.capif_invoker_password = capif_invoker_password
         self.description = description
         self.csr_common_name = "invoker_" + csr_common_name
         self.csr_organizational_unit = csr_organizational_unit
@@ -124,16 +134,25 @@ class CAPIFInvokerConnector:
         self.csr_country_name = csr_country_name
         self.csr_email_address = csr_email_address
         self.capif_api_details_filename = "capif_api_security_context_details.json"
-        self.capif_api_details = self.__load_netapp_api_details()
+        self.capif_api_details = self.__load_invoker_api_details()
         self.logger.info("CAPIFInvokerConnector initialized")
+
+    def __load_config_file(self, config_file: str):
+            """Carga el archivo de configuración."""
+            try:
+                with open(config_file, 'r') as file:
+                    return json.load(file)
+            except FileNotFoundError:
+                self.logger.warning(f"Configuration file {config_file} not found. Using defaults or environment variables.")
+                return {}
 
     def __add_trailing_slash_to_url_if_missing(self, url):
         if url[len(url) - 1] != "/":
             url = url + "/"
         return url
 
-    def register_and_onboard_netapp(self) -> None:
-        self.logger.info("Registering and onboarding NetApp")
+    def register_and_onboard_Invoker(self) -> None:
+        self.logger.info("Registering and onboarding Invoker")
         try:
             public_key = self.__create_private_and_public_keys()
             log_result = self.__log_to_capif()
@@ -144,26 +163,26 @@ class CAPIFInvokerConnector:
             capif_onboarding_url = capif_postauth_info["ccf_onboarding_url"]
             capif_discover_url = capif_postauth_info["ccf_discover_url"]
             capif_access_token = capif_postauth_info["access_token"]
-            api_invoker_id = self.__onboard_netapp_to_capif_and_create_the_signed_certificate(
+            api_invoker_id = self.__onboard_invoker_to_capif_and_create_the_signed_certificate(
                 public_key, capif_onboarding_url, capif_access_token
             )
             self.__write_to_file(self.csr_common_name, api_invoker_id, capif_discover_url)
-            self.logger.info("NetApp registered and onboarded successfully")
+            self.logger.info("Invoker registered and onboarded successfully")
         except Exception as e:
-            self.logger.error(f"Error during NetApp registration and onboarding: {e}")
+            self.logger.error(f"Error during Invoker registration and onboarding: {e}")
             raise
 
-    def __load_netapp_api_details(self):
-        self.logger.debug("Loading NetApp API details")
+    def __load_invoker_api_details(self):
+        self.logger.debug("Loading Invoker API details")
         with open(
             self.folder_to_store_certificates + self.capif_api_details_filename, "r"
         ) as openfile:
             return json.load(openfile)
 
-    def offboard_netapp(self) -> None:
-        self.logger.info("Offboarding NetApp")
+    def offboard_Invoker(self) -> None:
+        self.logger.info("Offboarding Invoker")
         try:
-            capif_api_details = self.__load_netapp_api_details()
+            capif_api_details = self.__load_invoker_api_details()
             url = (
                 self.capif_https_url
                 + "api-invoker-management/v1/onboardedInvokers/"
@@ -182,21 +201,21 @@ class CAPIFInvokerConnector:
                 verify=self.folder_to_store_certificates + "ca.crt",
             )
             response.raise_for_status()
-            self.logger.info("NetApp offboarded successfully")
+            self.logger.info("Invoker offboarded successfully")
         except Exception as e:
-            self.logger.error(f"Error during NetApp offboarding: {e}")
+            self.logger.error(f"Error during Invoker offboarding: {e}")
             raise
 
-    def offboard_and_deregister_netapp(self) -> None:
-        self.logger.info("Offboarding and deregistering NetApp")
+    def offboard_and_deregister_Invoker(self) -> None:
+        self.logger.info("Offboarding and deregistering Invoker")
         try:
-            self.offboard_netapp()
+            self.offboard_Invoker()
             log_result = self.__log_to_capif()
             admintoken = log_result["access_token"]
             self.de_register_from_capif(admintoken)
-            self.logger.info("NetApp offboarded and deregistered successfully")
+            self.logger.info("Invoker offboarded and deregistered successfully")
         except Exception as e:
-            self.logger.error(f"Error during NetApp offboarding and deregistering: {e}")
+            self.logger.error(f"Error during Invoker offboarding and deregistering: {e}")
             raise
 
     def __create_private_and_public_keys(self) -> str:
@@ -256,8 +275,8 @@ class CAPIFInvokerConnector:
         try:
             url = self.capif_register_url + "createUser"
             payload = {
-                "username": self.capif_netapp_username,
-                "password": self.capif_netapp_password,
+                "username": self.capif_invoker_username,
+                "password": self.capif_invoker_password,
                 "description": self.description,
                 "email": self.csr_email_address,
                 "enterprise": self.csr_organization,
@@ -307,7 +326,7 @@ class CAPIFInvokerConnector:
                 "GET",
                 url,
                 headers={"Content-Type": "application/json"},
-                auth=HTTPBasicAuth(self.capif_netapp_username, self.capif_netapp_password),
+                auth=HTTPBasicAuth(self.capif_invoker_username, self.capif_invoker_password),
                 verify=False,
             )
 
@@ -333,10 +352,10 @@ class CAPIFInvokerConnector:
             self.logger.error(f"Error during caching security context: {e}")
             raise
 
-    def __onboard_netapp_to_capif_and_create_the_signed_certificate(
+    def __onboard_invoker_to_capif_and_create_the_signed_certificate(
         self, public_key, capif_onboarding_url, capif_access_token
     ):
-        self.logger.info("Onboarding NetApp to CAPIF and creating signed certificate")
+        self.logger.info("Onboarding Invoker to CAPIF and creating signed certificate")
         try:
             url = self.capif_https_url + capif_onboarding_url
             payload_dict = {
@@ -374,10 +393,10 @@ class CAPIFInvokerConnector:
                 )
             )
             certification_file.close()
-            self.logger.info("NetApp onboarded and signed certificate created successfully")
+            self.logger.info("Invoker onboarded and signed certificate created successfully")
             return response_payload["apiInvokerId"]
         except Exception as e:
-            self.logger.error(f"Error during onboarding NetApp to CAPIF: {e}")
+            self.logger.error(f"Error during onboarding Invoker to CAPIF: {e}")
             raise
 
     def __write_to_file(self, csr_common_name, api_invoker_id, discover_services_url):
@@ -407,24 +426,7 @@ class CAPIFProviderConnector:
 
     def __init__(
             self,
-            certificates_folder: str,
-            description: str,
-            capif_host: str,
-            capif_http_port: str,
-            capif_https_port: str,
-            capif_netapp_username,
-            capif_netapp_password: str,
-            csr_common_name: str,
-            csr_organizational_unit: str,
-            csr_organization: str,
-            crs_locality: str,
-            csr_state_or_province_name,
-            csr_country_name,
-            csr_email_address,
-            capif_register_host:str,
-            capif_register_port:str,
-            capif_register_username:str,
-            capif_register_password:str
+            config_file: str
     ):
         """
         :param certificates_folder: The folder where certificates will be created and stored.
@@ -432,8 +434,8 @@ class CAPIFProviderConnector:
         :param capif_host:
         :param capif_http_port:
         :param capif_https_port:
-        :param capif_netapp_username: The CAPIF username of your netapp
-        :param capif_netapp_password: The CAPIF password  of your netapp
+        :param capif_provider_username: The CAPIF username of your provider
+        :param capif_provider_password: The CAPIF password  of your provider
         :param csr_common_name: The CommonName that will be used in the generated X.509 certificate
         :param csr_organizational_unit:The OrganizationalUnit that will be used in the generated X.509 certificate
         :param csr_organization: The Organization that will be used in the generated X.509 certificate
@@ -447,10 +449,31 @@ class CAPIFProviderConnector:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.info("Initializing CAPIFIProviderConnector")
 
+        config = self.__load_config_file(config_file)
+
+        certificates_folder=os.getenv('CERTIFICATES_FOLDER', config.get('certificates_folder', '')).strip()
+        capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
+        capif_register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
+        capif_http_port = str(os.getenv('CAPIF_HTTP_PORT', config.get('capif_http_port', '')).strip())
+        capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
+        capif_register_port = str(os.getenv('CAPIF_REGISTER_PORT', config.get('capif_register_port', '')).strip())
+        capif_provider_username = os.getenv('CAPIF_PROVIDER_USERNAME', config.get('capif_provider_username', '')).strip()
+        capif_provider_password = os.getenv('CAPIF_PROVIDER_PASSWORD', config.get('capif_provider_password', '')).strip()
+        capif_register_username = os.getenv('CAPIF_REGISTER_USERNAME', config.get('capif_register_username', '')).strip()
+        capif_register_password = os.getenv('CAPIF_REGISTER_PASSWORD', config.get('capif_register_password', '')).strip()
+        description = os.getenv('DESCRIPTION', config.get('description', '')).strip()
+        csr_common_name = os.getenv('CSR_COMMON_NAME', config.get('csr_common_name', '')).strip()
+        csr_organizational_unit = os.getenv('CSR_ORGANIZATIONAL_UNIT', config.get('csr_organizational_unit', '')).strip()
+        csr_organization = os.getenv('CSR_ORGANIZATION', config.get('csr_organization', '')).strip()
+        crs_locality = os.getenv('CRS_LOCALITY', config.get('crs_locality', '')).strip()
+        csr_state_or_province_name = os.getenv('CSR_STATE_OR_PROVINCE_NAME', config.get('csr_state_or_province_name', '')).strip()
+        csr_country_name = os.getenv('CSR_COUNTRY_NAME', config.get('csr_country_name', '')).strip()
+        csr_email_address = os.getenv('CSR_EMAIL_ADDRESS', config.get('csr_email_address', '')).strip()
+
         
         self.certificates_folder = os.path.join(certificates_folder.strip(), "")
         self.description = description
-        self.csr_common_name = capif_netapp_username
+        self.csr_common_name = capif_provider_username
         # make sure the parameters are str
         capif_http_port = str(capif_http_port)
         self.capif_https_port = str(capif_https_port)
@@ -476,8 +499,8 @@ class CAPIFProviderConnector:
 
 
         self.capif_host = capif_host.strip()
-        self.capif_netapp_username = capif_netapp_username
-        self.capif_netapp_password = capif_netapp_password
+        self.capif_provider_username = capif_provider_username
+        self.capif_provider_password = capif_provider_password
 
         self.capif_register_host=capif_register_host
         self.capif_register_port=capif_register_port
@@ -492,16 +515,6 @@ class CAPIFProviderConnector:
         self.csr_country_name = csr_country_name
         self.csr_email_address = csr_email_address
 
-    def __store_certificate_authority_file(self):
-        url = self.capif_http_url + "ca-root"
-        response = requests.request(
-            "GET", url, headers={"Content-Type": "application/json"}
-        )
-        response.raise_for_status()
-        response_payload = json.loads(response.text)
-        with open(self.certificates_folder + "ca.crt", "wb+") as ca_root:
-            ca_root.write(bytes(response_payload["certificate"], "utf-8"))
-
     def __store_certificate(self) -> None:
         """
         Retrieves and stores the cert_server.pem from CAPIF
@@ -514,6 +527,16 @@ class CAPIFProviderConnector:
         )
         os.system(cmd)
         print("cert_server.pem succesfully generated!")
+
+    def __load_config_file(self, config_file: str):
+            """Carga el archivo de configuración."""
+            try:
+                with open(config_file, 'r') as file:
+                    return json.load(file)
+            except FileNotFoundError:
+                self.logger.warning(f"Configuration file {config_file} not found. Using defaults or environment variables.")
+                return {}
+
 
     def __create_private_and_public_keys(self, api_prov_func_role) -> bytes:
         """
@@ -552,7 +575,7 @@ class CAPIFProviderConnector:
         return public_key
 
     def __onboard_exposer_to_capif(self, access_token, capif_onboarding_url):
-        self.logger.info("Realizando el onboarding")
+        self.logger.info("Onboarding Provider to CAPIF")
         url = self.capif_https_url + capif_onboarding_url
         payload = {
             "apiProvFuncs": [
@@ -597,51 +620,13 @@ class CAPIFProviderConnector:
         )
         
         response.raise_for_status()
-        self.logger.info("Onboarding completado")
+        self.logger.info("Onboarding completed")
         response_payload = json.loads(response.text)
         return response_payload
-
-    def __register_to_capif(self):
-        self.logger.info("Loggeandose en CAPIF")
-        url = self.capif_register_url + "login"
-        
-        response = requests.request(
-            "POST",
-            url,
-            headers={"Content-Type": "application/json"},
-            auth=HTTPBasicAuth(self.capif_register_username, self.capif_register_password),
-            verify=False
-        )
-        response.raise_for_status()
-        self.logger.info("Loggeo completado")
-
-        response_payload = json.loads(response.text)
-        return response_payload
- 
-    def __perform_authorization(self) -> str:
-        """
-        :return: the access_token from CAPIF
-        """
-
-        url = self.capif_http_url + "getauth"
-
-        payload = dict()
-        payload["username"] = self.capif_netapp_username
-        payload["password"] = self.capif_netapp_password
-
-        response = requests.request(
-            "POST",
-            url,
-            headers={"Content-Type": "application/json"},
-            data=json.dumps(payload),
-        )
-        response.raise_for_status()
-        response_payload = json.loads(response.text)
-
-        return response_payload["access_token"]
-
+   
+    
     def __write_to_file(self, onboarding_response, capif_registration_id, publish_url,uuid):
-        self.logger.info("Guardando los datos más relevantes del onboarding")
+        self.logger.info("Saving the most relevant onboarding data")
         for func_provile in onboarding_response["apiProvFuncs"]:
             with open(
                     self.certificates_folder
@@ -668,16 +653,16 @@ class CAPIFProviderConnector:
                 data[key] = value
 
             json.dump(data, outfile)
-        self.logger.info("Datos guardados")
+        self.logger.info("Data saved")
 
     def __create_user(self,admin_token):
 
 
-        self.logger.info("Creando usuario de CAPIF")
+        self.logger.info("Creating CAPIF user as an admin")
         url=self.capif_register_url + "createUser" 
         payload = dict()
-        payload["username"] = self.capif_netapp_username
-        payload["password"] = self.capif_netapp_password
+        payload["username"] = self.capif_provider_username
+        payload["password"] = self.capif_provider_password
         payload["description"]=self.description
         payload["email"]=self.csr_email_address
         payload["enterprise"]=self.csr_organization
@@ -696,7 +681,7 @@ class CAPIFProviderConnector:
             verify=False
         )
         response.raise_for_status()
-        self.logger.info("Usuario creado correctamente")
+        self.logger.info("User properly created")
         response_payload = json.loads(response.text)
         return response_payload
  
@@ -704,22 +689,22 @@ class CAPIFProviderConnector:
 
         url = self.capif_register_url + "getauth"
 
-        self.logger.info("Obteniendo autorización de CAPIF")
+        self.logger.info("Acquiring authorization by CAPIF")
         
 
         response = requests.request(
             "GET",
             url,
             headers={"Content-Type": "application/json"},
-            auth=HTTPBasicAuth(self.capif_netapp_username, self.capif_netapp_password),
+            auth=HTTPBasicAuth(self.capif_provider_username, self.capif_provider_password),
             verify=False
         )
         
         response.raise_for_status()
-        self.logger.info("Autorización recibida")
+        self.logger.info("Authorization acquired")
         response_payload = json.loads(response.text)
         ca_root_file = open(self.certificates_folder + "ca.crt", "wb+")
-        self.logger.info("Guardando certificado de autoridad")
+        self.logger.info("Saving authority certification")
         ca_root_file.write(bytes(response_payload["ca_root"], "utf-8"))
         return response_payload
 
@@ -730,7 +715,7 @@ class CAPIFProviderConnector:
         
         self.__store_certificate()
         # register provider to CAPIF
-        registration_result = self.__register_to_capif()
+        registration_result = self.__log_to_capif()
         admintoken =registration_result["access_token"]
         response=self.__create_user(admintoken)
         uuid=response["uuid"]
@@ -790,6 +775,7 @@ class CAPIFProviderConnector:
             ),
             verify=self.certificates_folder + "ca.crt",
         )
+        
         response.raise_for_status()
         capif_response = response.text
 
@@ -809,6 +795,7 @@ class CAPIFProviderConnector:
 
     def __log_to_capif(self):
 
+        self.logger.info("Logging in CAPIF as an admin")
         url = self.capif_register_url + "login"
         
         response = requests.request(
@@ -819,17 +806,19 @@ class CAPIFProviderConnector:
             verify=False
         )
         response.raise_for_status()
+        self.logger.info("Logging completed")
+
         response_payload = json.loads(response.text)
         return response_payload
     
     def offboard_nef(self) ->None:
-        self.logger.info("Realizando el offboarding del provider")
+        self.logger.info("Offboarding the provider")
         capif_api_details = self.__load_nef_api_details()
         url = self.capif_https_url+ "api-provider-management/v1/registrations/" +capif_api_details["capif_registration_id"]
 
         signed_key_crt_path = self.certificates_folder + "dummy_amf.crt"
         private_key_path = self.certificates_folder + "AMF_private_key.key"
-        print(self.certificates_folder + "ca.crt")
+        
         response = requests.request(
             "DELETE",
             url,
@@ -837,7 +826,7 @@ class CAPIFProviderConnector:
             verify=self.certificates_folder + "ca.crt"
         )
         response.raise_for_status()
-        self.logger.info("Offboarding realizado")
+        self.logger.info("Offboarding performed")
 
     def __load_nef_api_details(self):
         with open(
@@ -847,7 +836,7 @@ class CAPIFProviderConnector:
                 return json.load(openfile)
 
     def de_register_from_capif(self,admin_token):
-        self.logger.info("Eliminando usuario de CAPIF")
+        self.logger.info("Deleting CAPIF user")
         capif_api_details=self.__load_nef_api_details()
 
         url = self.capif_register_url + "deleteUser/" + capif_api_details["uuid"]
@@ -864,7 +853,7 @@ class CAPIFProviderConnector:
             verify=False
         )
         response.raise_for_status()
-        self.logger.info("Usuario eliminado")
+        self.logger.info("User deleted")
  
 class ServiceDiscoverer:
     class ServiceDiscovererException(Exception):
@@ -872,40 +861,55 @@ class ServiceDiscoverer:
 
     def __init__(
             self,
-            folder_path_for_certificates_and_api_key: str,
-            capif_host: str,
-            capif_https_port: int,
+            config_file
     ):
         self.logger = logging.getLogger(self.__class__.__name__)
-        self.logger.info("Inicializando ServiceDiscoverer")
+        self.logger.info("Initializing ServiceDiscoverer")
+
+        config = self.__load_config_file(config_file)
+
+        capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
+        capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
+        folder_path_for_certificates_and_api_key = str(os.getenv('FOLDER_PATH_FOR_CERTIFICATES_AND_API_KEY', config.get('folder_path_for_certificates_and_api_key', '')).strip())
+        
         self.capif_host = capif_host
         self.capif_https_port = capif_https_port
         self.folder_to_store_certificates_and_api_key = os.path.join(
             folder_path_for_certificates_and_api_key.strip(), ""
         )
-        self.capif_api_details = self.__load_netapp_api_details()
+        self.capif_api_details = self.__load_provider_api_details()
         self.signed_key_crt_path = (
                 self.folder_to_store_certificates_and_api_key
                 + self.capif_api_details["csr_common_name"] + ".crt"
         )
         self.private_key_path = self.folder_to_store_certificates_and_api_key + "private.key"
         self.ca_root_path = self.folder_to_store_certificates_and_api_key + "ca.crt"
-        self.logger.info("ServiceDiscoverer inicializado correctamente")
+        self.logger.info("ServiceDiscoverer initialized correctly")
 
-    def get_api_invoker_id(self):
-        return self.capif_api_details["api_invoker_id"]
+    def get_api_provider_id(self):
+        return self.capif_api_details["api_provider_id"]
+    
+    def __load_config_file(self, config_file: str):
+            """Carga el archivo de configuración."""
+            try:
+                with open(config_file, 'r') as file:
+                    return json.load(file)
+            except FileNotFoundError:
+                self.logger.warning(f"Configuration file {config_file} not found. Using defaults or environment variables.")
+                return {}
 
-    def __load_netapp_api_details(self):
+
+    def __load_provider_api_details(self):
         try:
             with open(
                     self.folder_to_store_certificates_and_api_key + "capif_api_security_context_details.json",
                     "r",
             ) as openfile:
                 details = json.load(openfile)
-            self.logger.info("Detalles de la API de NetApp cargados correctamente")
+            self.logger.info("Api invoker details correctly loaded")
             return details
         except Exception as e:
-            self.logger.error("Error al cargar detalles de la API de NetApp: %s", str(e))
+            self.logger.error("Error while loading Api invoker details: %s", str(e))
             raise
 
     def _add_trailing_slash_to_url_if_missing(self, url):
@@ -920,22 +924,22 @@ class ServiceDiscoverer:
         :param aef_id: El aef_id relevante devuelto por descubrir servicios
         :return: El token de acceso (jwt)
         """
-        self.logger.info("Obteniendo el token de acceso para api_name=%s, api_id=%s, aef_id=%s", api_name, api_id, aef_id)
+        self.logger.info("Getting access token for api_name=%s, api_id=%s, aef_id=%s", api_name, api_id, aef_id)
 
         if self.__security_context_does_not_exist():
-            self.logger.info("No existe un contexto de seguridad. Registrando un nuevo servicio de seguridad.")
+            self.logger.info("There is no security context. Registering a new security service.")
             self.capif_api_details["registered_security_contexes"] = []
             self.capif_api_details["registered_security_contexes"].append({"api_id": api_id, "aef_id": aef_id})
             self.__register_security_service(api_id, aef_id)
             self.__cache_security_context()
         elif self.__security_context_for_given_api_id_and_aef_id_does_not_exist(api_id, aef_id):
-            self.logger.info("El contexto de seguridad para api_id=%s y aef_id=%s no existe. Actualizando el servicio de seguridad.", api_id, aef_id)
+            self.logger.info("The security context for api_id=%s and aef_id=%s does not exist. Updating the security service.", api_id, aef_id)
             self.capif_api_details["registered_security_contexes"].append({"api_id": api_id, "aef_id": aef_id})
             self.__update_security_service(api_id, aef_id)
             self.__cache_security_context()
 
         token_dic = self.__get_security_token(api_name, aef_id)
-        self.logger.info("Token de acceso obtenido correctamente")
+        self.logger.info("Access token successfully obtained")
         return token_dic["access_token"]
 
     def __security_context_does_not_exist(self):
@@ -952,9 +956,9 @@ class ServiceDiscoverer:
                     self.folder_to_store_certificates_and_api_key + "capif_api_security_context_details.json", "w"
             ) as outfile:
                 json.dump(self.capif_api_details, outfile)
-            self.logger.info("Contexto de seguridad cacheado correctamente")
+            self.logger.info("Security context saved correctly")
         except Exception as e:
-            self.logger.error("Error al cachear el contexto de seguridad: %s", str(e))
+            self.logger.error("Error when saving the security context: %s", str(e))
             raise
 
     def __update_security_service(self, api_id, aef_id):
@@ -1029,9 +1033,9 @@ class ServiceDiscoverer:
                                     verify=self.ca_root_path
                                     )
             response.raise_for_status()
-            self.logger.info("Servicio de seguridad registrado correctamente")
+            self.logger.info("Security service properly registered")
         except requests.RequestException as e:
-            self.logger.error("Error al registrar el servicio de seguridad: %s", str(e))
+            self.logger.error("Error when registering the security service: %s", str(e))
             raise
 
     def __get_security_token(self, api_name, aef_id):
@@ -1060,10 +1064,10 @@ class ServiceDiscoverer:
                                      )
             response.raise_for_status()
             response_payload = response.json()
-            self.logger.info("Token de seguridad obtenido correctamente")
+            self.logger.info("Security token successfully obtained")
             return response_payload
         except requests.RequestException as e:
-            self.logger.error("Error al obtener el token de seguridad: %s", str(e))
+            self.logger.error("Error obtaining the security token: %s", str(e))
             raise
 
     def discover_service_apis(self):
@@ -1081,10 +1085,10 @@ class ServiceDiscoverer:
             )
             response.raise_for_status()
             response_payload = response.json()
-            self.logger.info("APIs de servicio descubiertos correctamente")
+            self.logger.info("Service APIs successfully discovered")
             return response_payload
         except requests.RequestException as e:
-            self.logger.error("Error al descubrir los APIs de servicio: %s", str(e))
+            self.logger.error("Error discovering service APIs: %s", str(e))
             raise
 
     def retrieve_api_description_by_name(self, api_name):
@@ -1093,19 +1097,19 @@ class ServiceDiscoverer:
         :param api_name: Nombre del API
         :return: Descripción del API
         """
-        self.logger.info("Recuperando la descripción del API para api_name=%s", api_name)
+        self.logger.info("Retrieving the API description for api_name=%s", api_name)
         capif_apifs = self.discover_service_apis()
         endpoints = [api for api in capif_apifs["serviceAPIDescriptions"] if api["apiName"] == api_name]
         if not endpoints:
             error_message = (
                 f"Could not find available endpoints for api_name: {api_name}. "
-                "Make sure that a) your NetApp is registered and onboarded to CAPIF and "
+                "Make sure that a) your Invoker is registered and onboarded to CAPIF and "
                 "b) the NEF emulator has been registered and onboarded to CAPIF"
             )
             self.logger.error(error_message)
             raise ServiceDiscoverer.ServiceDiscovererException(error_message)
         else:
-            self.logger.info("Descripción del API recuperada correctamente")
+            self.logger.info("API description successfully retrieved")
             return endpoints[0]
 
     def retrieve_specific_resource_name(self, api_name, resource_name):
@@ -1115,7 +1119,7 @@ class ServiceDiscoverer:
         :param resource_name: Nombre del recurso
         :return: URL del recurso específico
         """
-        self.logger.info("Recuperando la URL para resource_name=%s en api_name=%s", resource_name, api_name)
+        self.logger.info("Retrieving the URL for resource_name=%s in api_name=%s", resource_name, api_name)
         api_description = self.retrieve_api_description_by_name(api_name)
         version_dictionary = api_description["aefProfiles"][0]["versions"][0]
         version = version_dictionary["apiVersion"]
@@ -1133,7 +1137,7 @@ class ServiceDiscoverer:
             if api_name.endswith("/"):
                 api_name = api_name[:-1]
             result_url = api_name + "/" + version + uri
-            self.logger.info("URL del recurso específico recuperada correctamente: %s", result_url)
+            self.logger.info("URL of the specific resource successfully retrieved: %s", result_url)
             return result_url
 
 

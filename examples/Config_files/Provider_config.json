@@ -1,0 +1,22 @@
+{
+    "certificates_folder":"/Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/",
+    "capif_host": "capifcore",
+    "register_host": "localhost",
+    "capif_http_port": "8080",
+    "capif_https_port": "443",
+    "capif_register_port": "8084",
+    "capif_provider_username":"test_nef_015",
+    "capif_provider_password":"testpassword",
+    "capif_register_username": "admin",
+    "capif_register_password": "password123",
+    "capif_callback_url": "http://localhost:5000",
+    "description": "Dummy provider",
+    "csr_common_name": "test03",
+    "csr_organizational_unit": "test_app_ou",
+    "csr_organization": "test_app_o",
+    "crs_locality": "Madrid",
+    "csr_state_or_province_name": "Madrid",
+    "csr_country_name": "ES",
+    "csr_email_address": "test@example.com"
+  }
+  

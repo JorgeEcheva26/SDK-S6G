@@ -45,3 +45,9 @@ def get_capif_https_port()->int:
     :return:
     """
     return 443
+def get_invoker_config_file()->str:
+    return "/Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/Config_files/Invoker_config.json"
+def get_provider_config_file()->str:
+    return "/Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/Config_files/Provider_config.json"
+def get_discover_config_file()->str:
+    return "/Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/Config_files/Discover_config.json"
