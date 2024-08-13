@@ -94,6 +94,7 @@ class CAPIFInvokerConnector:
         csr_state_or_province_name = os.getenv('CSR_STATE_OR_PROVINCE_NAME', config.get('csr_state_or_province_name', '')).strip()
         csr_country_name = os.getenv('CSR_COUNTRY_NAME', config.get('csr_country_name', '')).strip()
         csr_email_address = os.getenv('CSR_EMAIL_ADDRESS', config.get('csr_email_address', '')).strip()
+        uuid = os.getenv('UUID', config.get('uuid', '')).strip()
 
 
         # Resto del código original para inicializar URLs y otros atributos
@@ -135,6 +136,7 @@ class CAPIFInvokerConnector:
         self.csr_email_address = csr_email_address
         self.capif_api_details_filename = "capif_api_security_context_details.json"
         self.capif_api_details = self.__load_invoker_api_details()
+        self.uuid=uuid
         self.logger.info("CAPIFInvokerConnector initialized")
 
     def __load_config_file(self, config_file: str):
@@ -155,10 +157,6 @@ class CAPIFInvokerConnector:
         self.logger.info("Registering and onboarding Invoker")
         try:
             public_key = self.__create_private_and_public_keys()
-            log_result = self.__log_to_capif()
-            admintoken = log_result["access_token"]
-            postcreation = self.__create_user(admintoken)
-            self.uuid = postcreation["uuid"]
             capif_postauth_info = self.__save_capif_ca_root_file_and_get_auth_token()
             capif_onboarding_url = capif_postauth_info["ccf_onboarding_url"]
             capif_discover_url = capif_postauth_info["ccf_discover_url"]
@@ -179,7 +177,7 @@ class CAPIFInvokerConnector:
         ) as openfile:
             return json.load(openfile)
 
-    def offboard_Invoker(self) -> None:
+    def __offboard_Invoker(self) -> None:
         self.logger.info("Offboarding Invoker")
         try:
             capif_api_details = self.__load_invoker_api_details()
@@ -209,10 +207,8 @@ class CAPIFInvokerConnector:
     def offboard_and_deregister_Invoker(self) -> None:
         self.logger.info("Offboarding and deregistering Invoker")
         try:
-            self.offboard_Invoker()
-            log_result = self.__log_to_capif()
-            admintoken = log_result["access_token"]
-            self.de_register_from_capif(admintoken)
+            self.__offboard_Invoker()
+            
             self.logger.info("Invoker offboarded and deregistered successfully")
         except Exception as e:
             self.logger.error(f"Error during Invoker offboarding and deregistering: {e}")
@@ -250,54 +246,8 @@ class CAPIFInvokerConnector:
             self.logger.error(f"Error during key creation: {e}")
             raise
 
-    def __log_to_capif(self):
-        self.logger.info("Logging in to CAPIF")
-        try:
-            url = self.capif_register_url + "login"
-
-            response = requests.request(
-                "POST",
-                url,
-                headers={"Content-Type": "application/json"},
-                auth=HTTPBasicAuth(self.capif_register_username, self.capif_register_password),
-                verify=False,
-            )
-            response.raise_for_status()
-            response_payload = json.loads(response.text)
-            self.logger.info("Logged in to CAPIF successfully")
-            return response_payload
-        except Exception as e:
-            self.logger.error(f"Error during login to CAPIF: {e}")
-            raise
-
-    def __create_user(self, admin_token):
-        self.logger.info("Creating user in CAPIF")
-        try:
-            url = self.capif_register_url + "createUser"
-            payload = {
-                "username": self.capif_invoker_username,
-                "password": self.capif_invoker_password,
-                "description": self.description,
-                "email": self.csr_email_address,
-                "enterprise": self.csr_organization,
-                "country": self.crs_locality,
-                "purpose": "SDK for SAFE 6G",
-            }
-            headers = {
-                "Authorization": "Bearer {}".format(admin_token),
-                "Content-Type": "application/json",
-            }
-
-            response = requests.request(
-                "POST", url, headers=headers, data=json.dumps(payload), verify=False
-            )
-            response.raise_for_status()
-            response_payload = json.loads(response.text)
-            self.logger.info("User created successfully")
-            return response_payload
-        except Exception as e:
-            self.logger.error(f"Error during user creation in CAPIF: {e}")
-            raise
+    
+    
 
     def de_register_from_capif(self, admin_token):
         self.logger.info("Deregistering from CAPIF")
@@ -469,6 +419,7 @@ class CAPIFProviderConnector:
         csr_state_or_province_name = os.getenv('CSR_STATE_OR_PROVINCE_NAME', config.get('csr_state_or_province_name', '')).strip()
         csr_country_name = os.getenv('CSR_COUNTRY_NAME', config.get('csr_country_name', '')).strip()
         csr_email_address = os.getenv('CSR_EMAIL_ADDRESS', config.get('csr_email_address', '')).strip()
+        uuid=os.getenv('UUID', config.get('uuid', '')).strip()
 
         
         self.certificates_folder = os.path.join(certificates_folder.strip(), "")
@@ -514,6 +465,7 @@ class CAPIFProviderConnector:
         self.csr_state_or_province_name = csr_state_or_province_name
         self.csr_country_name = csr_country_name
         self.csr_email_address = csr_email_address
+        self.uuid=uuid
 
     def __store_certificate(self) -> None:
         """
@@ -625,7 +577,7 @@ class CAPIFProviderConnector:
         return response_payload
    
     
-    def __write_to_file(self, onboarding_response, capif_registration_id, publish_url,uuid):
+    def __write_to_file(self, onboarding_response, capif_registration_id, publish_url):
         self.logger.info("Saving the most relevant onboarding data")
         for func_provile in onboarding_response["apiProvFuncs"]:
             with open(
@@ -644,7 +596,7 @@ class CAPIFProviderConnector:
         ) as outfile:
             data = {
                 "capif_registration_id": capif_registration_id,
-                "uuid":uuid,
+                "uuid":self.uuid,
                 "publish_url": publish_url,
             }
             for api_prov_func in onboarding_response["apiProvFuncs"]:
@@ -655,35 +607,7 @@ class CAPIFProviderConnector:
             json.dump(data, outfile)
         self.logger.info("Data saved")
 
-    def __create_user(self,admin_token):
-
-
-        self.logger.info("Creating CAPIF user as an admin")
-        url=self.capif_register_url + "createUser" 
-        payload = dict()
-        payload["username"] = self.capif_provider_username
-        payload["password"] = self.capif_provider_password
-        payload["description"]=self.description
-        payload["email"]=self.csr_email_address
-        payload["enterprise"]=self.csr_organization
-        payload["country"]=self.crs_locality
-        payload["purpose"]="SDK for SAFE 6G"
-        headers = {
-            "Authorization": "Bearer {}".format(admin_token),
-            "Content-Type": "application/json",
-        }
-        
-        response = requests.request(
-            "POST",
-            url,
-            headers=headers,
-            data=json.dumps(payload),
-            verify=False
-        )
-        response.raise_for_status()
-        self.logger.info("User properly created")
-        response_payload = json.loads(response.text)
-        return response_payload
+    
  
     def __save_capif_ca_root_file_and_get_auth_token(self):
 
@@ -714,25 +638,18 @@ class CAPIFProviderConnector:
         # retrieve store the .pem certificate from CAPIF
         
         self.__store_certificate()
-        # register provider to CAPIF
-        registration_result = self.__log_to_capif()
-        admintoken =registration_result["access_token"]
-        response=self.__create_user(admintoken)
-        uuid=response["uuid"]
         capif_postauth_info = self.__save_capif_ca_root_file_and_get_auth_token()
         capif_onboarding_url = capif_postauth_info["ccf_api_onboarding_url"]
         access_token = capif_postauth_info["access_token"]
         ccf_publish_url=capif_postauth_info["ccf_publish_url"]
-        #capif_registration_id = registration_result["id"]
-        #ccf_publish_url = registration_result["ccf_publish_url"]
-        #capif_onboarding_url = registration_result["ccf_api_onboarding_url"]
+        
 
         onboarding_response = self.__onboard_exposer_to_capif(
             access_token, capif_onboarding_url
         )
         capif_registration_id=onboarding_response["apiProvDomId"]
         self.__write_to_file(
-            onboarding_response, capif_registration_id, ccf_publish_url,uuid
+            onboarding_response, capif_registration_id, ccf_publish_url
         )
 
 
@@ -788,28 +705,12 @@ class CAPIFProviderConnector:
     def offboard_and_deregister_nef(self):
         
         self.offboard_nef()
-        log_result = self.__log_to_capif()
-        admintoken =log_result["access_token"]
-        self.de_register_from_capif(admintoken)
-
-
-    def __log_to_capif(self):
-
-        self.logger.info("Logging in CAPIF as an admin")
-        url = self.capif_register_url + "login"
         
-        response = requests.request(
-            "POST",
-            url,
-            headers={"Content-Type": "application/json"},
-            auth=HTTPBasicAuth(self.capif_register_username, self.capif_register_password),
-            verify=False
-        )
-        response.raise_for_status()
-        self.logger.info("Logging completed")
+        
+        
 
-        response_payload = json.loads(response.text)
-        return response_payload
+
+    
     
     def offboard_nef(self) ->None:
         self.logger.info("Offboarding the provider")
@@ -835,25 +736,8 @@ class CAPIFProviderConnector:
             ) as openfile:
                 return json.load(openfile)
 
-    def de_register_from_capif(self,admin_token):
-        self.logger.info("Deleting CAPIF user")
-        capif_api_details=self.__load_nef_api_details()
-
-        url = self.capif_register_url + "deleteUser/" + capif_api_details["uuid"]
-        
-        headers = {
-            "Authorization": "Bearer {}".format(admin_token),
-            "Content-Type": "application/json",
-        }
-        response = requests.request(
-            "DELETE",
-            url,
-            headers=headers,
-            data=None,
-            verify=False
-        )
-        response.raise_for_status()
-        self.logger.info("User deleted")
+    
+    
  
 class ServiceDiscoverer:
     class ServiceDiscovererException(Exception):
