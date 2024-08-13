@@ -10,7 +10,7 @@ from evolved5g.sdk import CAPIFInvokerConnector, ServiceDiscoverer
 import emulator_utils
 
 def showcase_offboard_and_deregister_invoker():
-    capif_connector = CAPIFInvokerConnector(config_file=emulator_utils.get_invoker_config_file())
+    capif_connector = CAPIFInvokerConnector(config_file=emulator_utils.get_config_file())
     capif_connector.offboard_and_deregister_Invoker()
     print("COMPLETADO")
 

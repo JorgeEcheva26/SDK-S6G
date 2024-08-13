@@ -1,5 +1,5 @@
 from evolved5g.sdk import CAPIFProviderConnector, CAPIFLogger, CAPIFAuditor
-import capif_exposer_utils
+import emulator_utils
 
 def showcase_save_log_to_capif():
     """
@@ -21,14 +21,14 @@ def showcase_save_log_to_capif():
            If your CAPIF instance does not have any NetApps registered, you can run example "netapp_capif_connector_examples.py"
     """
 
-    capif_logger = CAPIFLogger(certificates_folder=capif_exposer_utils.nef_exposer_get_certificate_folder(),
+    capif_logger = CAPIFLogger(certificates_folder=emulator_utils.nef_exposer_get_certificate_folder(),
                                capif_host="capifcore",
                                capif_https_port="443"
                                )
     log_entries = []
 
     service_description = capif_logger.get_capif_service_description(capif_service_api_description_json_full_path=
-                                                        capif_exposer_utils.nef_exposer_get_sample_api_description_path_that_is_stored_in_capif())
+                                                        emulator_utils.nef_exposer_get_sample_api_description_path_that_is_stored_in_capif())
 
     api_id = service_description["apiId"]
     log_entry = CAPIFLogger.LogEntry(apiId = api_id,
@@ -50,12 +50,12 @@ def showcase_save_log_to_capif():
     # When you register a Network App to CAPIF it is assigned an api invoker id.
     # You can find api invoker ids in the mongo database of CAPIF. http://localhost:8082/db/capif/invokerdetails
     # If your CAPIF instance does not have any Network Apps registered, you can run example "netapp_capif_connector_examples.py"
-    api_invoker_id = capif_exposer_utils.get_demo_invoker_id()
+    api_invoker_id = emulator_utils.get_demo_invoker_id()
 
     capif_logger.save_log(api_invoker_id,log_entries)
 
 def showcase_quering_the_capif_log():
-    capif_auditor = CAPIFAuditor(certificates_folder=capif_exposer_utils.nef_exposer_get_certificate_folder(),
+    capif_auditor = CAPIFAuditor(certificates_folder=emulator_utils.nef_exposer_get_certificate_folder(),
                                  capif_host="capifcore",
                                  capif_https_port="443")
 
@@ -63,7 +63,7 @@ def showcase_quering_the_capif_log():
     # When you register a Network App to CAPIF it is assigned an api invoker id.
     # You can find api invoker ids in the mongo database of CAPIF. http://localhost:8082/db/capif/invokerdetails
     # If your CAPIF instance does not have any Network Apps registered, you can run example "netapp_capif_connector_examples.py"
-    api_invoker_id = capif_exposer_utils.get_demo_invoker_id()
+    api_invoker_id = emulator_utils.get_demo_invoker_id()
 
     print("Filtering log for invoker" + api_invoker_id)
     query_results_1 = capif_auditor.query_log(api_invoker_id= api_invoker_id)
@@ -74,7 +74,7 @@ def showcase_quering_the_capif_log():
     # in the relevant .json file that was created during onboarding of the Provider to CAPIF
     # The helper method below reads that file:
     service_description = capif_auditor.get_capif_service_description(capif_service_api_description_json_full_path=
-                                                                      capif_exposer_utils.nef_exposer_get_sample_api_description_path_that_is_stored_in_capif())
+                                                                      emulator_utils.nef_exposer_get_sample_api_description_path_that_is_stored_in_capif())
     api_id = service_description["apiId"]
     print("Filtering log for invoker" + api_invoker_id + " and api_id " + api_id)
     query_results_2 = capif_auditor.query_log(api_invoker_id= api_invoker_id, api_id = api_id)

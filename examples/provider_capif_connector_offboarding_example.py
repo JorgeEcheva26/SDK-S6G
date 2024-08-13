@@ -1,11 +1,10 @@
 from evolved5g.sdk import CAPIFProviderConnector
-import capif_exposer_utils
-
+import emulator_utils
 def offboard_capif_nef_connector():
     """
 
     """
-    capif_connector = CAPIFProviderConnector(config_file=capif_exposer_utils.get_provider_config_file())
+    capif_connector = CAPIFProviderConnector(config_file=emulator_utils.get_config_file())
 
     capif_connector.offboard_and_deregister_nef()
     print("COMPLETADO")

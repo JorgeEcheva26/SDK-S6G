@@ -10,7 +10,7 @@ def showcase_capif_connector():
         It is a low level class part of the SDK that is not required to use while creating invokers
     """
 
-    capif_connector = CAPIFInvokerConnector(config_file=emulator_utils.get_invoker_config_file())
+    capif_connector = CAPIFInvokerConnector(config_file=emulator_utils.get_config_file())
 
     capif_connector.register_and_onboard_Invoker()
     print("COMPLETADO")

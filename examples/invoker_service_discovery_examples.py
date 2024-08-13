@@ -36,7 +36,7 @@ def showcase_retrieve_endpoint_url_from_nef():
 
 
 def showcase_access_token_retrieval_from_capif():
-    service_discoverer = ServiceDiscoverer(config_file=emulator_utils.get_discover_config_file())
+    service_discoverer = ServiceDiscoverer(config_file=emulator_utils.get_config_file())
     endpoints = service_discoverer.discover_service_apis()
     if len(endpoints)>0:
         ## The access token is always retrieved for a specific api name and a specific endpoint (that is mapped ton an api_id and aef_id)

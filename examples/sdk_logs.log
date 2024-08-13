@@ -897,3 +897,134 @@
 2024-08-12 13:32:36,781 - CAPIFProviderConnector - INFO - Logging completed
 2024-08-12 13:32:36,781 - CAPIFProviderConnector - INFO - Deleting CAPIF user
 2024-08-12 13:32:36,972 - CAPIFProviderConnector - INFO - User deleted
+2024-08-13 09:25:33,127 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-13 09:25:33,130 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized
+2024-08-13 09:25:33,130 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-13 09:25:33,130 - CAPIFInvokerConnector - INFO - Creating private and public keys
+2024-08-13 09:25:34,014 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-13 09:25:34,014 - CAPIFInvokerConnector - INFO - Logging in to CAPIF
+2024-08-13 09:25:34,143 - CAPIFInvokerConnector - INFO - Logged in to CAPIF successfully
+2024-08-13 09:25:34,143 - CAPIFInvokerConnector - INFO - Creating user in CAPIF
+2024-08-13 09:25:34,202 - CAPIFInvokerConnector - INFO - User created successfully
+2024-08-13 09:25:34,202 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token
+2024-08-13 09:25:34,344 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-13 09:25:34,344 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate
+2024-08-13 09:25:34,528 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-13 09:25:34,529 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-13 09:25:34,530 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-13 09:25:34,530 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-13 09:25:52,965 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-13 09:26:53,634 - CAPIFProviderConnector - INFO - Logging in CAPIF as an admin
+2024-08-13 09:26:53,778 - CAPIFProviderConnector - INFO - Logging completed
+2024-08-13 09:26:53,779 - CAPIFProviderConnector - INFO - Creating CAPIF user as an admin
+2024-08-13 09:26:53,831 - CAPIFProviderConnector - INFO - User properly created
+2024-08-13 09:26:53,831 - CAPIFProviderConnector - INFO - Acquiring authorization by CAPIF
+2024-08-13 09:26:53,960 - CAPIFProviderConnector - INFO - Authorization acquired
+2024-08-13 09:26:53,961 - CAPIFProviderConnector - INFO - Saving authority certification
+2024-08-13 09:26:53,961 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-13 09:26:56,750 - CAPIFProviderConnector - INFO - Onboarding completed
+2024-08-13 09:26:56,751 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-13 09:26:56,766 - CAPIFProviderConnector - INFO - Data saved
+2024-08-13 09:27:08,681 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-13 09:27:08,683 - ServiceDiscoverer - INFO - Api invoker details correctly loaded
+2024-08-13 09:27:08,683 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-13 09:27:08,828 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-13 09:27:08,829 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitor-event/, api_id=ad42982c23de131e38f69a4417a8e5, aef_id=AEFfa5d2536e3317362689d530552ca29
+2024-08-13 09:27:08,829 - ServiceDiscoverer - INFO - There is no security context. Registering a new security service.
+2024-08-13 09:27:08,947 - ServiceDiscoverer - INFO - Security service properly registered
+2024-08-13 09:27:08,949 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-13 09:27:09,056 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-13 09:27:09,057 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-13 09:27:23,407 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-13 09:27:23,412 - ServiceDiscoverer - INFO - Api invoker details correctly loaded
+2024-08-13 09:27:23,414 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-13 09:27:23,584 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-13 09:27:23,584 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitor-event/, api_id=ad42982c23de131e38f69a4417a8e5, aef_id=AEFfa5d2536e3317362689d530552ca29
+2024-08-13 09:27:23,949 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-13 09:27:23,949 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-13 09:27:31,507 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-13 09:27:31,510 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized
+2024-08-13 09:27:31,510 - CAPIFInvokerConnector - INFO - Offboarding and deregistering Invoker
+2024-08-13 09:27:31,510 - CAPIFInvokerConnector - INFO - Offboarding Invoker
+2024-08-13 09:27:31,598 - CAPIFInvokerConnector - INFO - Invoker offboarded successfully
+2024-08-13 09:27:31,599 - CAPIFInvokerConnector - INFO - Logging in to CAPIF
+2024-08-13 09:27:31,682 - CAPIFInvokerConnector - INFO - Logged in to CAPIF successfully
+2024-08-13 09:27:31,682 - CAPIFInvokerConnector - INFO - Deregistering from CAPIF
+2024-08-13 09:27:31,770 - CAPIFInvokerConnector - INFO - Deregistered from CAPIF successfully
+2024-08-13 09:27:31,771 - CAPIFInvokerConnector - INFO - Invoker offboarded and deregistered successfully
+2024-08-13 09:27:43,200 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-13 09:27:43,201 - CAPIFProviderConnector - INFO - Offboarding the provider
+2024-08-13 09:27:43,257 - CAPIFProviderConnector - INFO - Offboarding performed
+2024-08-13 09:27:43,257 - CAPIFProviderConnector - INFO - Logging in CAPIF as an admin
+2024-08-13 09:27:43,335 - CAPIFProviderConnector - INFO - Logging completed
+2024-08-13 09:27:43,336 - CAPIFProviderConnector - INFO - Deleting CAPIF user
+2024-08-13 09:27:43,396 - CAPIFProviderConnector - INFO - User deleted
+2024-08-13 11:05:41,062 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-13 11:05:41,064 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized
+2024-08-13 11:05:41,064 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-13 11:05:41,064 - CAPIFInvokerConnector - INFO - Creating private and public keys
+2024-08-13 11:05:41,661 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-13 11:05:41,661 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token
+2024-08-13 11:05:41,770 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-13 11:05:41,771 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate
+2024-08-13 11:05:41,909 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-13 11:05:41,909 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-13 11:05:41,918 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-13 11:05:41,918 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-13 11:20:25,815 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-13 11:21:26,084 - CAPIFProviderConnector - INFO - Acquiring authorization by CAPIF
+2024-08-13 11:21:26,190 - CAPIFProviderConnector - INFO - Authorization acquired
+2024-08-13 11:21:26,192 - CAPIFProviderConnector - INFO - Saving authority certification
+2024-08-13 11:21:26,192 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-13 11:21:29,495 - CAPIFProviderConnector - INFO - Onboarding completed
+2024-08-13 11:21:29,496 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-13 11:21:29,499 - CAPIFProviderConnector - INFO - Data saved
+2024-08-13 12:00:15,374 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-13 12:00:18,014 - CAPIFProviderConnector - INFO - Acquiring authorization by CAPIF
+2024-08-13 12:00:39,987 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-13 12:01:40,589 - CAPIFProviderConnector - INFO - Acquiring authorization by CAPIF
+2024-08-13 12:01:41,071 - CAPIFProviderConnector - INFO - Authorization acquired
+2024-08-13 12:01:41,079 - CAPIFProviderConnector - INFO - Saving authority certification
+2024-08-13 12:01:41,080 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-13 12:01:47,338 - CAPIFProviderConnector - INFO - Onboarding completed
+2024-08-13 12:01:47,339 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-13 12:01:47,344 - CAPIFProviderConnector - INFO - Data saved
+2024-08-13 12:05:36,031 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-13 12:05:36,034 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized
+2024-08-13 12:05:36,034 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-13 12:05:36,034 - CAPIFInvokerConnector - INFO - Creating private and public keys
+2024-08-13 12:05:36,462 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-13 12:05:36,462 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token
+2024-08-13 12:05:36,566 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-13 12:05:36,566 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate
+2024-08-13 12:05:36,767 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-13 12:05:36,767 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-13 12:05:36,768 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-13 12:05:36,768 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-13 12:05:48,430 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-13 12:05:48,431 - ServiceDiscoverer - INFO - Api invoker details correctly loaded
+2024-08-13 12:05:48,431 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-13 12:05:48,483 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-13 12:05:48,483 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitor-event/, api_id=f9bee030fa847c912b6a850c2b4f0c, aef_id=AEF45c8825be0ae04014ffea95b7f1c19
+2024-08-13 12:05:48,483 - ServiceDiscoverer - INFO - There is no security context. Registering a new security service.
+2024-08-13 12:05:48,603 - ServiceDiscoverer - INFO - Security service properly registered
+2024-08-13 12:05:48,605 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-13 12:05:48,699 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-13 12:05:48,699 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-13 12:06:00,806 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-13 12:06:00,807 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized
+2024-08-13 12:06:00,807 - CAPIFInvokerConnector - INFO - Offboarding and deregistering Invoker
+2024-08-13 12:06:00,807 - CAPIFInvokerConnector - INFO - Offboarding Invoker
+2024-08-13 12:06:00,843 - CAPIFInvokerConnector - INFO - Invoker offboarded successfully
+2024-08-13 12:06:00,844 - CAPIFInvokerConnector - INFO - Invoker offboarded and deregistered successfully
+2024-08-13 12:08:01,123 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-13 12:08:08,475 - CAPIFProviderConnector - INFO - Acquiring authorization by CAPIF
+2024-08-13 12:08:08,596 - CAPIFProviderConnector - INFO - Authorization acquired
+2024-08-13 12:08:08,599 - CAPIFProviderConnector - INFO - Saving authority certification
+2024-08-13 12:08:08,599 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-13 12:08:11,058 - CAPIFProviderConnector - INFO - Onboarding completed
+2024-08-13 12:08:11,059 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-13 12:08:11,063 - CAPIFProviderConnector - INFO - Data saved
+2024-08-13 12:08:28,613 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-13 12:08:28,614 - CAPIFProviderConnector - INFO - Offboarding the provider
+2024-08-13 12:08:28,657 - CAPIFProviderConnector - INFO - Offboarding performed
