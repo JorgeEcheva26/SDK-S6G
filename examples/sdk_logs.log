@@ -1028,3 +1028,77 @@
 2024-08-13 12:08:28,613 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
 2024-08-13 12:08:28,614 - CAPIFProviderConnector - INFO - Offboarding the provider
 2024-08-13 12:08:28,657 - CAPIFProviderConnector - INFO - Offboarding performed
+2024-08-13 13:22:03,072 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-13 13:23:03,335 - CAPIFProviderConnector - INFO - Acquiring authorization by CAPIF
+2024-08-13 13:23:03,455 - CAPIFProviderConnector - INFO - Authorization acquired
+2024-08-13 13:23:03,456 - CAPIFProviderConnector - INFO - Saving authority certification
+2024-08-13 13:23:03,457 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-13 13:23:04,961 - CAPIFProviderConnector - INFO - Onboarding completed
+2024-08-13 13:23:04,961 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-13 13:23:04,965 - CAPIFProviderConnector - INFO - Data saved
+2024-08-13 13:37:48,954 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-13 13:38:49,215 - CAPIFProviderConnector - INFO - Acquiring authorization by CAPIF
+2024-08-13 13:38:49,328 - CAPIFProviderConnector - INFO - Authorization acquired
+2024-08-13 13:38:49,328 - CAPIFProviderConnector - INFO - Saving authority certification
+2024-08-13 13:38:49,329 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-13 13:38:50,934 - CAPIFProviderConnector - INFO - Onboarding completed
+2024-08-13 13:38:50,934 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-13 13:38:50,938 - CAPIFProviderConnector - INFO - Data saved
+2024-08-13 13:39:07,736 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-14 09:27:56,013 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-14 09:27:56,021 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-14 09:27:56,022 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-14 09:27:56,022 - CAPIFInvokerConnector - INFO - Creating private and public keys for the Invoker cert
+2024-08-14 09:27:56,775 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-14 09:27:56,776 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-14 09:27:56,925 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-14 09:27:56,925 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF
+2024-08-14 09:27:57,375 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-14 09:27:57,376 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-14 09:27:57,377 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-14 09:27:57,377 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-14 09:29:03,717 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-14 09:29:03,719 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-14 09:29:03,720 - CAPIFInvokerConnector - INFO - Offboarding and deregistering Invoker
+2024-08-14 09:29:03,720 - CAPIFInvokerConnector - INFO - Offboarding Invoker
+2024-08-14 09:29:03,815 - CAPIFInvokerConnector - INFO - Invoker offboarded successfully
+2024-08-14 09:29:03,815 - CAPIFInvokerConnector - INFO - Invoker offboarded and deregistered successfully
+2024-08-14 10:24:52,667 - CAPIFProviderConnector - INFO - Initializing CAPIFProviderConnector
+2024-08-14 10:24:52,674 - CAPIFProviderConnector - INFO - Configuration file /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/Config_files/config.json loaded successfully
+2024-08-14 10:24:52,675 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized successfully
+2024-08-14 10:25:23,586 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-14 10:25:23,586 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-14 10:25:23,587 - CAPIFProviderConnector - INFO - Retrieve capif_cert_server.pem , process may take a few minutes
+2024-08-14 10:26:23,913 - CAPIFProviderConnector - INFO - cert_server.pem succesfully generated!
+2024-08-14 10:26:23,915 - CAPIFProviderConnector - INFO - Acquiring authorization by CAPIF
+2024-08-14 10:26:24,036 - CAPIFProviderConnector - INFO - Authorization acquired with username and password provided by the CAPIF administrator
+2024-08-14 10:26:24,038 - CAPIFProviderConnector - INFO - Saving authority certification
+2024-08-14 10:26:24,039 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-14 10:26:25,639 - CAPIFProviderConnector - INFO - Onboarding completed
+2024-08-14 10:26:25,639 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-14 10:26:25,644 - CAPIFProviderConnector - INFO - Data saved
+2024-08-14 10:27:04,628 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-14 10:27:04,630 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-14 10:49:26,039 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-14 10:49:26,040 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-14 10:49:26,040 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-14 10:50:26,269 - CAPIFProviderConnector - INFO - cert_server.pem successfully generated!
+2024-08-14 10:50:26,270 - CAPIFProviderConnector - INFO - Acquiring authorization from CAPIF
+2024-08-14 10:50:26,383 - CAPIFProviderConnector - INFO - Authorization acquired successfully
+2024-08-14 10:50:26,385 - CAPIFProviderConnector - INFO - CA root certificate saved successfully
+2024-08-14 10:50:26,385 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-14 10:50:28,113 - CAPIFProviderConnector - INFO - Onboarding completed successfully
+2024-08-14 10:50:28,114 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-14 10:50:28,119 - CAPIFProviderConnector - INFO - Data saved
+2024-08-14 10:50:49,083 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-14 10:50:49,084 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-14 10:55:34,994 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-14 10:55:34,995 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-14 10:55:34,996 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-14 10:55:34,996 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/capif_provider_details.json
+2024-08-14 10:55:34,997 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-14 10:55:34,997 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/nef_api_description_sample.json
+2024-08-14 10:55:34,997 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-14 10:55:34,998 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capifcore/published-apis/v1/APFeff99416ed8b99a6cb3a687d250b0c/service-apis
+2024-08-14 10:55:35,047 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-14 10:55:35,047 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/CAPIF_nef_api_description_sample.json

@@ -1,5 +1,6 @@
 import os
 import logging
+import subprocess
 from typing import List, Union, Optional
 from requests.auth import HTTPBasicAuth
 from evolved5g import swagger_client
@@ -137,7 +138,7 @@ class CAPIFInvokerConnector:
         self.capif_api_details_filename = "capif_api_security_context_details.json"
         self.capif_api_details = self.__load_invoker_api_details()
         self.uuid=uuid
-        self.logger.info("CAPIFInvokerConnector initialized")
+        self.logger.info("CAPIFInvokerConnector initialized with the config.json parameters")
 
     def __load_config_file(self, config_file: str):
             """Carga el archivo de configuración."""
@@ -215,7 +216,7 @@ class CAPIFInvokerConnector:
             raise
 
     def __create_private_and_public_keys(self) -> str:
-        self.logger.info("Creating private and public keys")
+        self.logger.info("Creating private and public keys for the Invoker cert")
         try:
             private_key_path = self.folder_to_store_certificates + "private.key"
             csr_file_path = self.folder_to_store_certificates + "cert_req.csr"
@@ -249,26 +250,9 @@ class CAPIFInvokerConnector:
     
     
 
-    def de_register_from_capif(self, admin_token):
-        self.logger.info("Deregistering from CAPIF")
-        try:
-            url = self.capif_register_url + "deleteUser/" + self.capif_api_details["uuid"]
-
-            headers = {
-                "Authorization": "Bearer {}".format(admin_token),
-                "Content-Type": "application/json",
-            }
-            response = requests.request(
-                "DELETE", url, headers=headers, data=None, verify=False
-            )
-            response.raise_for_status()
-            self.logger.info("Deregistered from CAPIF successfully")
-        except Exception as e:
-            self.logger.error(f"Error during deregistration from CAPIF: {e}")
-            raise
-
+    
     def __save_capif_ca_root_file_and_get_auth_token(self):
-        self.logger.info("Saving CAPIF CA root file and getting auth token")
+        self.logger.info("Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator")
         try:
             url = self.capif_register_url + "getauth"
 
@@ -290,22 +274,10 @@ class CAPIFInvokerConnector:
             self.logger.error(f"Error during saving CAPIF CA root file and getting auth token: {e}")
             raise
 
-    def __cache_security_context(self):
-        self.logger.info("Caching security context")
-        try:
-            with open(
-                self.folder_to_store_certificates + "capif_api_security_context_details.json", "w"
-            ) as outfile:
-                json.dump(self.capif_api_details, outfile)
-            self.logger.info("Security context cached successfully")
-        except Exception as e:
-            self.logger.error(f"Error during caching security context: {e}")
-            raise
-
     def __onboard_invoker_to_capif_and_create_the_signed_certificate(
         self, public_key, capif_onboarding_url, capif_access_token
     ):
-        self.logger.info("Onboarding Invoker to CAPIF and creating signed certificate")
+        self.logger.info("Onboarding Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF")
         try:
             url = self.capif_https_url + capif_onboarding_url
             payload_dict = {
@@ -373,112 +345,115 @@ class CAPIFProviderConnector:
     """
     Τhis class is responsible for onboarding an exposer (eg. NEF emulator) to CAPIF
     """
-
-    def __init__(
-            self,
-            config_file: str
-    ):
+    def __init__(self, config_file: str):
         """
-        :param certificates_folder: The folder where certificates will be created and stored.
-        :param description: A short description of the Provider
-        :param capif_host:
-        :param capif_http_port:
-        :param capif_https_port:
-        :param capif_provider_username: The CAPIF username of your provider
-        :param capif_provider_password: The CAPIF password  of your provider
-        :param csr_common_name: The CommonName that will be used in the generated X.509 certificate
-        :param csr_organizational_unit:The OrganizationalUnit that will be used in the generated X.509 certificate
-        :param csr_organization: The Organization that will be used in the generated X.509 certificate
-        :param crs_locality: The Locality that will be used in the generated X.509 certificate
-        :param csr_state_or_province_name: The StateOrProvinceName that will be used in the generated X.509 certificate
-        :param csr_country_name: The CountryName that will be used in the generated X.509 certificate
-        :param csr_email_address: The email that will be used in the generated X.509 certificate
-
+        Inicializa el conector CAPIFProvider con los parámetros especificados en el archivo de configuración.
         """
-        # add the trailing slash if it is not already there using os.path.join
         self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.info("Initializing CAPIFIProviderConnector")
 
-        config = self.__load_config_file(config_file)
+        try:
+            config = self.__load_config_file(config_file)
+            self.logger.debug("Configuration loaded successfully")
+        except FileNotFoundError as e:
+            self.logger.error(f"Config file not found: {e}")
+            raise
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Error parsing config file: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Unexpected error loading config file: {e}")
+            raise
 
-        certificates_folder=os.getenv('CERTIFICATES_FOLDER', config.get('certificates_folder', '')).strip()
-        capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
-        capif_register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
-        capif_http_port = str(os.getenv('CAPIF_HTTP_PORT', config.get('capif_http_port', '')).strip())
-        capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
-        capif_register_port = str(os.getenv('CAPIF_REGISTER_PORT', config.get('capif_register_port', '')).strip())
-        capif_provider_username = os.getenv('CAPIF_PROVIDER_USERNAME', config.get('capif_provider_username', '')).strip()
-        capif_provider_password = os.getenv('CAPIF_PROVIDER_PASSWORD', config.get('capif_provider_password', '')).strip()
-        capif_register_username = os.getenv('CAPIF_REGISTER_USERNAME', config.get('capif_register_username', '')).strip()
-        capif_register_password = os.getenv('CAPIF_REGISTER_PASSWORD', config.get('capif_register_password', '')).strip()
-        description = os.getenv('DESCRIPTION', config.get('description', '')).strip()
-        csr_common_name = os.getenv('CSR_COMMON_NAME', config.get('csr_common_name', '')).strip()
-        csr_organizational_unit = os.getenv('CSR_ORGANIZATIONAL_UNIT', config.get('csr_organizational_unit', '')).strip()
-        csr_organization = os.getenv('CSR_ORGANIZATION', config.get('csr_organization', '')).strip()
-        crs_locality = os.getenv('CRS_LOCALITY', config.get('crs_locality', '')).strip()
-        csr_state_or_province_name = os.getenv('CSR_STATE_OR_PROVINCE_NAME', config.get('csr_state_or_province_name', '')).strip()
-        csr_country_name = os.getenv('CSR_COUNTRY_NAME', config.get('csr_country_name', '')).strip()
-        csr_email_address = os.getenv('CSR_EMAIL_ADDRESS', config.get('csr_email_address', '')).strip()
-        uuid=os.getenv('UUID', config.get('uuid', '')).strip()
+        try:
+            certificates_folder = os.getenv('CERTIFICATES_FOLDER', config.get('certificates_folder', '')).strip()
+            capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
+            capif_register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
+            capif_http_port = str(os.getenv('CAPIF_HTTP_PORT', config.get('capif_http_port', '')).strip())
+            capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
+            capif_register_port = str(os.getenv('CAPIF_REGISTER_PORT', config.get('capif_register_port', '')).strip())
+            capif_provider_username = os.getenv('CAPIF_PROVIDER_USERNAME', config.get('capif_provider_username', '')).strip()
+            capif_provider_password = os.getenv('CAPIF_PROVIDER_PASSWORD', config.get('capif_provider_password', '')).strip()
+            capif_register_username = os.getenv('CAPIF_REGISTER_USERNAME', config.get('capif_register_username', '')).strip()
+            capif_register_password = os.getenv('CAPIF_REGISTER_PASSWORD', config.get('capif_register_password', '')).strip()
+            description = os.getenv('DESCRIPTION', config.get('description', '')).strip()
+            csr_common_name = os.getenv('CSR_COMMON_NAME', config.get('csr_common_name', '')).strip()
+            csr_organizational_unit = os.getenv('CSR_ORGANIZATIONAL_UNIT', config.get('csr_organizational_unit', '')).strip()
+            csr_organization = os.getenv('CSR_ORGANIZATION', config.get('csr_organization', '')).strip()
+            crs_locality = os.getenv('CRS_LOCALITY', config.get('crs_locality', '')).strip()
+            csr_state_or_province_name = os.getenv('CSR_STATE_OR_PROVINCE_NAME', config.get('csr_state_or_province_name', '')).strip()
+            csr_country_name = os.getenv('CSR_COUNTRY_NAME', config.get('csr_country_name', '')).strip()
+            csr_email_address = os.getenv('CSR_EMAIL_ADDRESS', config.get('csr_email_address', '')).strip()
+            uuid = os.getenv('UUID', config.get('uuid', '')).strip()
 
+            if not capif_host:
+                self.logger.warning("CAPIF_HOST is not provided; defaulting to an empty string")
+            if not capif_provider_username:
+                self.logger.error("CAPIF_PROVIDER_USERNAME is required but not provided")
+                raise ValueError("CAPIF_PROVIDER_USERNAME is required")
+
+            self.certificates_folder = os.path.join(certificates_folder.strip(), "")
+            self.description = description
+            self.capif_host = capif_host.strip()
+            self.capif_provider_username = capif_provider_username
+            self.capif_provider_password = capif_provider_password
+            self.capif_register_host = capif_register_host
+            self.capif_register_port = capif_register_port
+            self.capif_register_username = capif_register_username
+            self.capif_register_password = capif_register_password
+            self.csr_common_name = csr_common_name
+            self.csr_organizational_unit = csr_organizational_unit
+            self.csr_organization = csr_organization
+            self.crs_locality = crs_locality
+            self.csr_state_or_province_name = csr_state_or_province_name
+            self.csr_country_name = csr_country_name
+            self.csr_email_address = csr_email_address
+            self.uuid = uuid
+            
+            capif_http_port = str(capif_http_port)
+            self.capif_https_port = str(capif_https_port)
+            
+            if len(capif_http_port) == 0 or int(capif_http_port) == 80:
+                self.capif_http_url = f"http://{capif_host.strip()}/"
+            else:
+                self.capif_http_url = f"http://{capif_host.strip()}:{capif_http_port.strip()}/"
+
+            if len(self.capif_https_port) == 0 or int(self.capif_https_port) == 443:
+                self.capif_https_url = f"https://{capif_host.strip()}/"
+            else:
+                self.capif_https_url = f"https://{capif_host.strip()}:{self.capif_https_port.strip()}/"
+
+            if len(capif_register_port) == 0:
+                self.capif_register_url = f"https://{capif_register_host.strip()}:8084/"
+            else:
+                self.capif_register_url = f"https://{capif_register_host.strip()}:{capif_register_port.strip()}/"
+
+            self.logger.info("CAPIFProviderConnector initialized with the config.json parameters")
         
-        self.certificates_folder = os.path.join(certificates_folder.strip(), "")
-        self.description = description
-        self.csr_common_name = capif_provider_username
-        # make sure the parameters are str
-        capif_http_port = str(capif_http_port)
-        self.capif_https_port = str(capif_https_port)
-        
-        if len(capif_http_port) == 0 or int(capif_http_port) == 80:
-            self.capif_http_url = "http://" + capif_host.strip() + "/"
-        else:
-            self.capif_http_url = (
-                    "http://" + capif_host.strip() + ":" + capif_http_port.strip() + "/"
-            )
-
-        if len(self.capif_https_port ) == 0 or int(self.capif_https_port ) == 443:
-            self.capif_https_url = "https://" + capif_host.strip() + "/"
-        else:
-            self.capif_https_url = (
-                    "https://" + capif_host.strip() + ":" + self.capif_https_port .strip() + "/"
-            )
-
-        if len(capif_register_port) == 0 :
-            self.capif_register_url = "https://" + capif_register_host.strip() + ":8084/"
-        else:
-            self.capif_register_url = "https://" + capif_register_host.strip() + ":" + capif_register_port.strip() + "/"    
-
-
-        self.capif_host = capif_host.strip()
-        self.capif_provider_username = capif_provider_username
-        self.capif_provider_password = capif_provider_password
-
-        self.capif_register_host=capif_register_host
-        self.capif_register_port=capif_register_port
-        self.capif_register_username=capif_register_username
-        self.capif_register_password=capif_register_password
-
-        self.csr_common_name = csr_common_name
-        self.csr_organizational_unit = csr_organizational_unit
-        self.csr_organization = csr_organization
-        self.crs_locality = crs_locality
-        self.csr_state_or_province_name = csr_state_or_province_name
-        self.csr_country_name = csr_country_name
-        self.csr_email_address = csr_email_address
-        self.uuid=uuid
+        except Exception as e:
+            self.logger.error(f"Error during initialization: {e}")
+            raise
 
     def __store_certificate(self) -> None:
-        """
-        Retrieves and stores the cert_server.pem from CAPIF
-        """
-        print("Retrieve capif_cert_server.pem , process may take a few minutes")
-        cmd = "openssl s_client -connect {0}:{1}  | openssl x509 -text > {2}/capif_cert_server.pem".format(
-            self.capif_host,
-            self.capif_https_port,
-            self.certificates_folder
-        )
-        os.system(cmd)
-        print("cert_server.pem succesfully generated!")
+    #Retrieves and stores the cert_server.pem from CAPIF.
+        self.logger.info("Retrieving capif_cert_server.pem, this may take a few minutes.")
+
+        cmd = f"openssl s_client -connect {self.capif_host}:{self.capif_https_port} | openssl x509 -text > {self.certificates_folder}/capif_cert_server.pem"
+        
+        try:
+            subprocess.run(cmd, shell=True, check=True)
+            cert_file = os.path.join(self.certificates_folder, "capif_cert_server.pem")
+            if os.path.exists(cert_file) and os.path.getsize(cert_file) > 0:
+                self.logger.info("cert_server.pem successfully generated!")
+            else:
+                self.logger.error("Failed to generate cert_server.pem.")
+                raise FileNotFoundError(f"Certificate file not found at {cert_file}")
+        except subprocess.CalledProcessError as e:
+            self.logger.error(f"Command failed: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Error occurred: {e}")
+            raise
 
     def __load_config_file(self, config_file: str):
             """Carga el archivo de configuración."""
@@ -489,252 +464,315 @@ class CAPIFProviderConnector:
                 self.logger.warning(f"Configuration file {config_file} not found. Using defaults or environment variables.")
                 return {}
 
-
     def __create_private_and_public_keys(self, api_prov_func_role) -> bytes:
         """
-        Creates 2 keys in folder folder_to_store_certificates. An api_prov_func_role_private.key and a api_prov_func_role_private.public.csr key"
+        Creates private and public keys in the certificates folder.
         :return: The contents of the public key
         """
-        private_key_path = (
-                self.certificates_folder + api_prov_func_role + "_private_key.key"
-        )
-        csr_file_path = self.certificates_folder + api_prov_func_role + "_public.csr"
+        private_key_path = os.path.join(self.certificates_folder, f"{api_prov_func_role}_private_key.key")
+        csr_file_path = os.path.join(self.certificates_folder, f"{api_prov_func_role}_public.csr")
 
-        # create public/private key
+        # Create key pair
         key = PKey()
         key.generate_key(TYPE_RSA, 2048)
 
-        # Generate CSR
+        # Create CSR
         req = X509Req()
+        subject = req.get_subject()
+        subject.CN = api_prov_func_role.lower()
+        subject.O = self.csr_organization
+        subject.OU = self.csr_organizational_unit
+        subject.L = self.crs_locality
+        subject.ST = self.csr_state_or_province_name
+        subject.C = self.csr_country_name
+        subject.emailAddress = self.csr_email_address
 
-        # The role should always be put in the certificate .lower() by convention
-        req.get_subject().CN = api_prov_func_role.lower()
-        req.get_subject().O = self.csr_organization
-        req.get_subject().OU = self.csr_organizational_unit
-        req.get_subject().L = self.crs_locality
-        req.get_subject().ST = self.csr_state_or_province_name
-        req.get_subject().C = self.csr_country_name
-        req.get_subject().emailAddress = self.csr_email_address
         req.set_pubkey(key)
         req.sign(key, "sha256")
 
-        with open(csr_file_path, "wb+") as f:
-            f.write(dump_certificate_request(FILETYPE_PEM, req))
+        # Write CSR and private key to files
+        with open(csr_file_path, "wb") as csr_file:
             public_key = dump_certificate_request(FILETYPE_PEM, req)
-        with open(private_key_path, "wb+") as f:
-            f.write(dump_privatekey(FILETYPE_PEM, key))
+            csr_file.write(public_key)
+            
+        with open(private_key_path, "wb") as private_key_file:
+            private_key_file.write(dump_privatekey(FILETYPE_PEM, key))
 
         return public_key
 
     def __onboard_exposer_to_capif(self, access_token, capif_onboarding_url):
         self.logger.info("Onboarding Provider to CAPIF")
-        url = self.capif_https_url + capif_onboarding_url
+
+        url = f"{self.capif_https_url}{capif_onboarding_url}"
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json",
+        }
+
         payload = {
             "apiProvFuncs": [
-                {
-                    "regInfo": {"apiProvPubKey": ""},
-                    "apiProvFuncRole": "AEF",
-                    "apiProvFuncInfo": "dummy_aef",
-                },
-                {
-                    "regInfo": {"apiProvPubKey": ""},
-                    "apiProvFuncRole": "APF",
-                    "apiProvFuncInfo": "dummy_apf",
-                },
-                {
-                    "regInfo": {"apiProvPubKey": ""},
-                    "apiProvFuncRole": "AMF",
-                    "apiProvFuncInfo": "dummy_amf",
-                },
+                {"regInfo": {"apiProvPubKey": ""}, "apiProvFuncRole": role, "apiProvFuncInfo": f"dummy_{role.lower()}"}
+                for role in ["AEF", "APF", "AMF"]
             ],
             "apiProvDomInfo": "This is provider",
             "suppFeat": "fff",
             "failReason": "string",
             "regSec": access_token,
         }
+
         for api_func in payload["apiProvFuncs"]:
-            public_key = self.__create_private_and_public_keys(
-                api_func["apiProvFuncRole"]
-            )
+            public_key = self.__create_private_and_public_keys(api_func["apiProvFuncRole"])
             api_func["regInfo"]["apiProvPubKey"] = public_key.decode("utf-8")
 
-        headers = {
-            "Authorization": "Bearer {}".format(access_token),
-            "Content-Type": "application/json",
-        }
-
-        response = requests.request(
-            "POST",
-            url,
-            headers=headers,
-            data=json.dumps(payload),
-            verify=self.certificates_folder + "ca.crt",
-        )
-        
-        response.raise_for_status()
-        self.logger.info("Onboarding completed")
-        response_payload = json.loads(response.text)
-        return response_payload
+        try:
+            response = requests.post(
+                url,
+                headers=headers,
+                data=json.dumps(payload),
+                verify=os.path.join(self.certificates_folder, "ca.crt"),
+            )
+            response.raise_for_status()
+            self.logger.info("Onboarding completed successfully")
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            self.logger.error(f"Onboarding failed: {e}")
+            raise
    
     
     def __write_to_file(self, onboarding_response, capif_registration_id, publish_url):
         self.logger.info("Saving the most relevant onboarding data")
-        for func_provile in onboarding_response["apiProvFuncs"]:
-            with open(
-                    self.certificates_folder
-                    + "dummy_"
-                    + func_provile["apiProvFuncRole"].lower()
-                    + ".crt",
-                    "wb",
-            ) as certification_file:
-                certification_file.write(
-                    bytes(func_provile["regInfo"]["apiProvCert"], "utf-8")
-                )
 
-        with open(
-                self.certificates_folder + "capif_provider_details.json", "w"
-        ) as outfile:
+        for func_provile in onboarding_response["apiProvFuncs"]:
+            role = func_provile["apiProvFuncRole"].lower()
+            cert_path = os.path.join(self.certificates_folder, f"dummy_{role}.crt")
+            with open(cert_path, "wb") as cert_file:
+                cert_file.write(func_provile["regInfo"]["apiProvCert"].encode("utf-8"))
+
+        provider_details_path = os.path.join(self.certificates_folder, "capif_provider_details.json")
+        with open(provider_details_path, "w") as outfile:
             data = {
                 "capif_registration_id": capif_registration_id,
-                "uuid":self.uuid,
+                "uuid": self.uuid,
                 "publish_url": publish_url,
+                **{f"{api_prov_func['apiProvFuncRole']}_api_prov_func_id": api_prov_func["apiProvFuncId"]
+                for api_prov_func in onboarding_response["apiProvFuncs"]}
             }
-            for api_prov_func in onboarding_response["apiProvFuncs"]:
-                key = api_prov_func["apiProvFuncRole"] + "_api_prov_func_id"
-                value = api_prov_func["apiProvFuncId"]
-                data[key] = value
+            json.dump(data, outfile, indent=4)
 
-            json.dump(data, outfile)
         self.logger.info("Data saved")
 
     
  
     def __save_capif_ca_root_file_and_get_auth_token(self):
+        url = f"{self.capif_register_url}getauth"
+        self.logger.info("Acquiring authorization from CAPIF")
 
-        url = self.capif_register_url + "getauth"
+        try:
+            response = requests.get(
+                url,
+                headers={"Content-Type": "application/json"},
+                auth=HTTPBasicAuth(self.capif_provider_username, self.capif_provider_password),
+                verify=False
+            )
+            response.raise_for_status()
 
-        self.logger.info("Acquiring authorization by CAPIF")
-        
+            self.logger.info("Authorization acquired successfully")
 
-        response = requests.request(
-            "GET",
-            url,
-            headers={"Content-Type": "application/json"},
-            auth=HTTPBasicAuth(self.capif_provider_username, self.capif_provider_password),
-            verify=False
-        )
-        
-        response.raise_for_status()
-        self.logger.info("Authorization acquired")
-        response_payload = json.loads(response.text)
-        ca_root_file = open(self.certificates_folder + "ca.crt", "wb+")
-        self.logger.info("Saving authority certification")
-        ca_root_file.write(bytes(response_payload["ca_root"], "utf-8"))
-        return response_payload
+            response_payload = response.json()
+            ca_root_file_path = os.path.join(self.certificates_folder, "ca.crt")
+
+            with open(ca_root_file_path, "wb") as ca_root_file:
+                ca_root_file.write(response_payload["ca_root"].encode("utf-8"))
+
+            self.logger.info("CA root certificate saved successfully")
+            return response_payload
+
+        except requests.exceptions.RequestException as e:
+            self.logger.error(f"Error acquiring authorization: {e}")
+            raise
 
     
     def register_and_onboard_provider(self) -> None:
-        
-        # retrieve store the .pem certificate from CAPIF
-        
+        """
+        Retrieves and stores the certificate from CAPIF, acquires authorization, and registers the provider.
+        """
+        # Store the certificate
         self.__store_certificate()
+        
+        # Retrieve CA root file and get authorization token
         capif_postauth_info = self.__save_capif_ca_root_file_and_get_auth_token()
+
+        # Extract necessary information
         capif_onboarding_url = capif_postauth_info["ccf_api_onboarding_url"]
         access_token = capif_postauth_info["access_token"]
-        ccf_publish_url=capif_postauth_info["ccf_publish_url"]
-        
+        ccf_publish_url = capif_postauth_info["ccf_publish_url"]
 
+        # Onboard provider to CAPIF
         onboarding_response = self.__onboard_exposer_to_capif(
             access_token, capif_onboarding_url
         )
-        capif_registration_id=onboarding_response["apiProvDomId"]
+
+        # Save onboarding details to file
+        capif_registration_id = onboarding_response["apiProvDomId"]
         self.__write_to_file(
             onboarding_response, capif_registration_id, ccf_publish_url
         )
 
 
 
-    def publish_services(self, service_api_description_json_full_path) -> dict:
+    def publish_services(self, service_api_description_json_full_path: str) -> dict:
         """
-            :param service_api_description_json_full_path: The full path fo the service_api_description.json that contains
-            the endpoints that will be published
-            :return: The published services dictionary that was saved in CAPIF
+        Publishes services to CAPIF and returns the published services dictionary.
 
+        :param service_api_description_json_full_path: The full path of the service_api_description.json containing
+        the endpoints to be published.
+        :return: The published services dictionary that was saved in CAPIF.
         """
+        self.logger.info("Starting the service publication process")
 
-        with open(
-                self.certificates_folder + "capif_provider_details.json", "r"
-        ) as openfile:
-            file = json.load(openfile)
-            publish_url = file["publish_url"]
-            AEF_api_prov_func_id = file["AEF_api_prov_func_id"]
-            APF_api_prov_func_id = file["APF_api_prov_func_id"]
-            print(AEF_api_prov_func_id)
-            print(APF_api_prov_func_id)
+        # Load provider details
+        provider_details_path = os.path.join(self.certificates_folder, "capif_provider_details.json")
+        self.logger.info(f"Loading provider details from {provider_details_path}")
+        
+        try:
+            with open(provider_details_path, "r") as file:
+                provider_details = json.load(file)
+                publish_url = provider_details["publish_url"]
+                AEF_api_prov_func_id = provider_details["AEF_api_prov_func_id"]
+                APF_api_prov_func_id = provider_details["APF_api_prov_func_id"]
+                self.logger.info("Provider details loaded successfully")
+                self.logger.debug(f"Publish URL: {publish_url}")
+                self.logger.debug(f"AEF API Provider Function ID: {AEF_api_prov_func_id}")
+                self.logger.debug(f"APF API Provider Function ID: {APF_api_prov_func_id}")
+        except FileNotFoundError:
+            self.logger.error(f"Provider details file not found: {provider_details_path}")
+            raise
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Error decoding JSON from file {provider_details_path}: {e}")
+            raise
 
-        url = self.capif_https_url + publish_url.replace(
-            "<apfId>", APF_api_prov_func_id
+        # Read and modify service API description
+        self.logger.info(f"Reading and modifying service API description from {service_api_description_json_full_path}")
+        
+        try:
+            with open(service_api_description_json_full_path, "r") as service_file:
+                data = json.load(service_file)
+                for profile in data.get("aefProfiles", []):
+                    profile["aefId"] = AEF_api_prov_func_id
+                self.logger.info("Service API description modified successfully")
+        except FileNotFoundError:
+            self.logger.error(f"Service API description file not found: {service_api_description_json_full_path}")
+            raise
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Error decoding JSON from file {service_api_description_json_full_path}: {e}")
+            raise
+
+        # Publish services
+        url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}"
+        cert = (
+            os.path.join(self.certificates_folder, "dummy_apf.crt"),
+            os.path.join(self.certificates_folder, "APF_private_key.key"),
         )
-
-        with open(service_api_description_json_full_path, "rb") as service_file:
-            data = json.load(service_file)
-            for profile in data["aefProfiles"]:
-                profile["aefId"] = AEF_api_prov_func_id
-
-        response = requests.request(
-            "POST",
-            url,
-            headers={"Content-Type": "application/json"},
-            data=json.dumps(data),
-            cert=(
-                self.certificates_folder + "dummy_apf.crt",
-                self.certificates_folder + "APF_private_key.key",
-            ),
-            verify=self.certificates_folder + "ca.crt",
-        )
         
-        response.raise_for_status()
-        capif_response = response.text
+        self.logger.info(f"Publishing services to URL: {url}")
 
-        file_name = os.path.basename(service_api_description_json_full_path)
-        with open(self.certificates_folder + "CAPIF_" + file_name, "w") as outfile:
-            outfile.write(capif_response)
+        try:
+            response = requests.post(
+                url,
+                headers={"Content-Type": "application/json"},
+                data=json.dumps(data),
+                cert=cert,
+                verify=os.path.join(self.certificates_folder, "ca.crt"),
+            )
+            response.raise_for_status()
+            self.logger.info("Services published successfully")
 
-        return json.loads(capif_response)
+            # Save response to file
+            capif_response = response.text
+            file_name = os.path.basename(service_api_description_json_full_path)
+            output_path = os.path.join(self.certificates_folder, f"CAPIF_{file_name}")
+            with open(output_path, "w") as outfile:
+                outfile.write(capif_response)
+            self.logger.info(f"CAPIF response saved to {output_path}")
 
-    def offboard_and_deregister_nef(self):
+            return json.loads(capif_response)
+
+        except requests.RequestException as e:
+            self.logger.error(f"Request to CAPIF failed: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Unexpected error during service publication: {e}")
+            raise
+
+
+    def offboard_and_deregister_nef(self) -> None:
+        """
+        Offboards and deregisters the NEF (Network Exposure Function).
+        """
+        try:
+            self.offboard_nef()
+            self.logger.info("NEF offboarded and deregistered successfully.")
+        except Exception as e:
+            self.logger.error(f"Failed to offboard and deregister NEF: {e}")
+            raise
         
-        self.offboard_nef()
-        
-        
-        
+    def offboard_nef(self) -> None:
+        """
+        Offboards the NEF (Network Exposure Function) from CAPIF.
+        """
+        try:
+            self.logger.info("Offboarding the provider")
+            
+            # Load CAPIF API details
+            capif_api_details = self.__load_nef_api_details()
+            url = f"{self.capif_https_url}api-provider-management/v1/registrations/{capif_api_details['capif_registration_id']}"
+
+            # Define certificate paths
+            cert_paths = (
+                os.path.join(self.certificates_folder, "dummy_amf.crt"),
+                os.path.join(self.certificates_folder, "AMF_private_key.key")
+            )
+
+            # Send DELETE request to offboard the provider
+            response = requests.delete(
+                url,
+                cert=cert_paths,
+                verify=os.path.join(self.certificates_folder, "ca.crt")
+            )
+            
+            response.raise_for_status()
+            self.logger.info("Offboarding performed successfully")
+
+        except requests.exceptions.RequestException as e:
+            self.logger.error(f"Error offboarding NEF: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Unexpected error: {e}")
+            raise
 
 
-    
-    
-    def offboard_nef(self) ->None:
-        self.logger.info("Offboarding the provider")
-        capif_api_details = self.__load_nef_api_details()
-        url = self.capif_https_url+ "api-provider-management/v1/registrations/" +capif_api_details["capif_registration_id"]
-
-        signed_key_crt_path = self.certificates_folder + "dummy_amf.crt"
-        private_key_path = self.certificates_folder + "AMF_private_key.key"
+    def __load_nef_api_details(self) -> dict:
+        """
+        Loads NEF API details from the CAPIF provider details JSON file.
         
-        response = requests.request(
-            "DELETE",
-            url,
-            cert=(signed_key_crt_path, private_key_path),
-            verify=self.certificates_folder + "ca.crt"
-        )
-        response.raise_for_status()
-        self.logger.info("Offboarding performed")
-
-    def __load_nef_api_details(self):
-        with open(
-                    self.certificates_folder + "capif_provider_details.json",
-                    "r",
-            ) as openfile:
-                return json.load(openfile)
+        :return: A dictionary containing NEF API details.
+        :raises FileNotFoundError: If the CAPIF provider details file is not found.
+        :raises json.JSONDecodeError: If there is an error decoding the JSON file.
+        """
+        file_path = os.path.join(self.certificates_folder, "capif_provider_details.json")
+        
+        try:
+            with open(file_path, "r") as file:
+                return json.load(file)
+        except FileNotFoundError:
+            self.logger.error(f"File not found: {file_path}")
+            raise
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Error decoding JSON from file {file_path}: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Unexpected error while loading NEF API details: {e}")
+            raise
 
     
     
@@ -1024,4 +1062,4 @@ class ServiceDiscoverer:
             self.logger.info("URL of the specific resource successfully retrieved: %s", result_url)
             return result_url
 
-
+    
