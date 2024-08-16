@@ -1102,3 +1102,376 @@
 2024-08-14 10:55:34,998 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capifcore/published-apis/v1/APFeff99416ed8b99a6cb3a687d250b0c/service-apis
 2024-08-14 10:55:35,047 - CAPIFProviderConnector - INFO - Services published successfully
 2024-08-14 10:55:35,047 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/CAPIF_nef_api_description_sample.json
+2024-08-14 12:38:43,315 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-14 12:38:43,318 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-14 12:38:43,318 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-14 12:38:43,318 - CAPIFInvokerConnector - INFO - Creating private and public keys for the Invoker cert
+2024-08-14 12:38:43,761 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-14 12:38:43,761 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-14 12:38:43,871 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-14 12:38:43,871 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF
+2024-08-14 12:38:43,927 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-14 12:38:43,928 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-14 12:38:43,930 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-14 12:38:43,930 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-14 12:38:53,868 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-14 12:38:53,869 - ServiceDiscoverer - INFO - Api invoker details correctly loaded
+2024-08-14 12:38:53,869 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-14 12:38:53,920 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-14 12:38:53,920 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitor-event/ and api_id: a95a28bd191380802167f003c2a6a0, aef_id: AEFc227880e662fd78b681b97e4713128
+2024-08-14 12:38:53,920 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitor-event/, api_id=a95a28bd191380802167f003c2a6a0, aef_id=AEFc227880e662fd78b681b97e4713128
+2024-08-14 12:38:53,921 - ServiceDiscoverer - INFO - There is no security context. Registering a new security service.
+2024-08-14 12:38:54,004 - ServiceDiscoverer - INFO - Security service properly registered
+2024-08-14 12:38:54,005 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-14 12:38:54,102 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-14 12:38:54,102 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-14 12:38:54,103 - ServiceDiscoverer - INFO - Access token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzYzMTkzNCwianRpIjoiZTEzM2NjMjgtZmQ0Ni00YzYzLTk0ZjgtZGJkZWQ4YjE2MzgxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IklOVmNmOTZjMmU3Zjg5MTg0ZDEyZWI1MzM5OTE5ZmZmNyIsIm5iZiI6MTcyMzYzMTkzNCwiZXhwIjoxNzIzNjMyNTM0LCJpc3MiOiJJTlZjZjk2YzJlN2Y4OTE4NGQxMmViNTMzOTkxOWZmZjciLCJzY29wZSI6IjNncHAjQUVGYzIyNzg4MGU2NjJmZDc4YjY4MWI5N2U0NzEzMTI4Oi9uZWYvYXBpL3YxLzNncHAtbW9uaXRvci1ldmVudC8ifQ.CV873HhL6aS31XcJdOhezOvvoUfunw57vG4e_F6z5A5jvA2oJC5mARyh3THtqz2hlTdSpFfkmCBLjc80EycUD-_q2vDNo4Mt16trGEOIQitBjdSqy5euWtzve9oexmdXiIVFwb14Ou5-laP6vN3s7fbx6PF-czSA-36C4jo2TiLXvPnjZbndP3wWQ-Cga96Ummh1S8gh5rJeeE2-xJxcu2Ms2iB4nKYORCOZ0UOk_q39nY4HmB6_vJRBdtJXKkPzO8fe8BaCnNuUJXIH2cc-5YClYAwm_2RnGo2trV8SdULK2MRLRYoUtwd4eo8wVOknvI7vxOIkEMBAAFrc52I82A
+2024-08-14 12:38:54,103 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitoring-event/ and api_id: d8ec2a5082fe0aece5593f44f8e9a7, aef_id: AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 12:38:54,103 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitoring-event/, api_id=d8ec2a5082fe0aece5593f44f8e9a7, aef_id=AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 12:38:54,103 - ServiceDiscoverer - INFO - The security context for api_id=d8ec2a5082fe0aece5593f44f8e9a7 and aef_id=AEFd0c5caa9387171b8cfef585355e072 does not exist. Updating the security service.
+2024-08-14 12:38:54,128 - ServiceDiscoverer - ERROR - Error al actualizar el servicio de seguridad: 500 Server Error: INTERNAL SERVER ERROR for url: https://capifcore:443/capif-security/v1/trustedInvokers/INVcf96c2e7f89184d12eb5339919fff7/update
+2024-08-14 12:58:37,683 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-14 12:58:37,685 - ServiceDiscoverer - INFO - Api invoker details correctly loaded
+2024-08-14 12:58:37,685 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-14 12:58:37,745 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-14 12:58:37,746 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitor-event/ and api_id: a95a28bd191380802167f003c2a6a0, aef_id: AEFc227880e662fd78b681b97e4713128
+2024-08-14 12:58:37,746 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitor-event/, api_id=a95a28bd191380802167f003c2a6a0, aef_id=AEFc227880e662fd78b681b97e4713128
+2024-08-14 12:59:09,150 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-14 12:59:09,153 - ServiceDiscoverer - INFO - Api invoker details correctly loaded
+2024-08-14 12:59:09,153 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-14 12:59:09,229 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-14 12:59:09,229 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitor-event/ and api_id: a95a28bd191380802167f003c2a6a0, aef_id: AEFc227880e662fd78b681b97e4713128
+2024-08-14 12:59:09,229 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitor-event/, api_id=a95a28bd191380802167f003c2a6a0, aef_id=AEFc227880e662fd78b681b97e4713128
+2024-08-14 12:59:09,340 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-14 12:59:09,341 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-14 12:59:09,341 - ServiceDiscoverer - INFO - Access token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzYzMzE0OSwianRpIjoiMjZmNzJhZmEtNjdmYi00MWIxLWEzNGUtNTJjYjViODdkMTNkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IklOVmNmOTZjMmU3Zjg5MTg0ZDEyZWI1MzM5OTE5ZmZmNyIsIm5iZiI6MTcyMzYzMzE0OSwiZXhwIjoxNzIzNjMzNzQ5LCJpc3MiOiJJTlZjZjk2YzJlN2Y4OTE4NGQxMmViNTMzOTkxOWZmZjciLCJzY29wZSI6IjNncHAjQUVGYzIyNzg4MGU2NjJmZDc4YjY4MWI5N2U0NzEzMTI4Oi9uZWYvYXBpL3YxLzNncHAtbW9uaXRvci1ldmVudC8ifQ.NsPPzT7wUWKwYpmn5WAYbwZfbP6JHL48QNBLNXcjO4ONyydOXX11O5c6c9rO_4omnZZ2Sq1Y8JXu1yTF-k90G7i3HewjqRSEw24xG4wAAgFiGb7Y7jZ_PpGJL5nkaPrGpjdRtAFb-BupqBBGpMHz3dU0UxUEFgFzT1QgomCF73epcORml29A3FUm_K-BCAEOBsWzO2ivmW8ctlIQ5KsejNyVlwNa4_H3Gg7gku9iT-prLTzTX6xHYloCZGouRZggVH6wc6JBjcgCooYCtWE9al7S19ZZwEJPPI1MaIYO_ZZh1stgc2A-lyu3Gd8UfCxmuy0qc4Nysp9zAxE22jnd1A
+2024-08-14 12:59:09,341 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitoring-event/ and api_id: d8ec2a5082fe0aece5593f44f8e9a7, aef_id: AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 12:59:09,341 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitoring-event/, api_id=d8ec2a5082fe0aece5593f44f8e9a7, aef_id=AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 12:59:09,341 - ServiceDiscoverer - INFO - The security context for api_id=d8ec2a5082fe0aece5593f44f8e9a7 and aef_id=AEFd0c5caa9387171b8cfef585355e072 does not exist. Updating the security service.
+2024-08-14 12:59:09,376 - ServiceDiscoverer - ERROR - Error when registering the security service: 403 Client Error: FORBIDDEN for url: https://capifcore:443/capif-security/v1/trustedInvokers/INVcf96c2e7f89184d12eb5339919fff7
+2024-08-14 13:04:29,550 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-14 13:04:29,562 - ServiceDiscoverer - INFO - Api invoker details correctly loaded
+2024-08-14 13:04:29,562 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-14 13:04:29,624 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-14 13:04:29,624 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitor-event/ and api_id: a95a28bd191380802167f003c2a6a0, aef_id: AEFc227880e662fd78b681b97e4713128
+2024-08-14 13:04:29,625 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitor-event/, api_id=a95a28bd191380802167f003c2a6a0, aef_id=AEFc227880e662fd78b681b97e4713128
+2024-08-14 13:04:29,710 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-14 13:04:29,710 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-14 13:04:29,710 - ServiceDiscoverer - INFO - Access token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzYzMzQ2OSwianRpIjoiNDU4MDkxZWUtNjc0MS00ZmNiLWE3NDQtOWI4NzlmNDAyZGM3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IklOVmNmOTZjMmU3Zjg5MTg0ZDEyZWI1MzM5OTE5ZmZmNyIsIm5iZiI6MTcyMzYzMzQ2OSwiZXhwIjoxNzIzNjM0MDY5LCJpc3MiOiJJTlZjZjk2YzJlN2Y4OTE4NGQxMmViNTMzOTkxOWZmZjciLCJzY29wZSI6IjNncHAjQUVGYzIyNzg4MGU2NjJmZDc4YjY4MWI5N2U0NzEzMTI4Oi9uZWYvYXBpL3YxLzNncHAtbW9uaXRvci1ldmVudC8ifQ.tKVo9TMEjeRs0K7IVvLFk7COYKIve5HSLP4bLq777XVW-gA-fDc_v2uzFIGgJGlEO8G4Ph-o4Fnl0uwXWI_u4geDURSWSbDOVLlXGxuQUQEzCcy2sa4KXRH5XuakUVOWcGUiWv7s24Y1hGTOK3w3WuU7JaSytl7jeOWNszVTCuUopgjvqX6mY_LQkwRs6x6ZqaaLz240HClcAbVEY8t_QpqYhh3uzo244dD9OGhsIcXBxBhRJ-Kg7ayj92piAAXJLCMhpCgH32UNBzps8A3MeoU167nyvJ-qLWVM3l7RE6wPHSE4IhfC-S1dDc3tbmHDcn8BAh4DVCZMApGX_w_BoQ
+2024-08-14 13:04:29,710 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitoring-event/ and api_id: d8ec2a5082fe0aece5593f44f8e9a7, aef_id: AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 13:04:29,711 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitoring-event/, api_id=d8ec2a5082fe0aece5593f44f8e9a7, aef_id=AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 13:04:29,711 - ServiceDiscoverer - INFO - The security context for api_id=d8ec2a5082fe0aece5593f44f8e9a7 and aef_id=AEFd0c5caa9387171b8cfef585355e072 does not exist. Updating the security service.
+2024-08-14 13:04:29,737 - ServiceDiscoverer - ERROR - Error when registering the security service: 403 Client Error: FORBIDDEN for url: https://capifcore:443/capif-security/v1/trustedInvokers/INVcf96c2e7f89184d12eb5339919fff7
+2024-08-14 13:17:50,322 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-14 13:17:50,324 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-14 13:17:50,324 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-14 13:17:50,370 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-14 13:17:50,371 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitor-event/ and api_id: a95a28bd191380802167f003c2a6a0, aef_id: AEFc227880e662fd78b681b97e4713128
+2024-08-14 13:17:50,371 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitor-event/, api_id=a95a28bd191380802167f003c2a6a0, aef_id=AEFc227880e662fd78b681b97e4713128
+2024-08-14 13:17:50,444 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-14 13:17:50,445 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-14 13:17:50,445 - ServiceDiscoverer - INFO - Access token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzYzNDI3MCwianRpIjoiMDhiMGExMjEtOTcyNC00YjU2LWIyZTQtYzg0NTZlMjJhYmU4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IklOVmNmOTZjMmU3Zjg5MTg0ZDEyZWI1MzM5OTE5ZmZmNyIsIm5iZiI6MTcyMzYzNDI3MCwiZXhwIjoxNzIzNjM0ODcwLCJpc3MiOiJJTlZjZjk2YzJlN2Y4OTE4NGQxMmViNTMzOTkxOWZmZjciLCJzY29wZSI6IjNncHAjQUVGYzIyNzg4MGU2NjJmZDc4YjY4MWI5N2U0NzEzMTI4Oi9uZWYvYXBpL3YxLzNncHAtbW9uaXRvci1ldmVudC8ifQ.bGkncNEQcjoDhqPvr15jyDg7uj4uKdW01bERPKv7xmzi4YWFTst-p7EOTjikLqp1BJ0VFngYqxInZQRtFasQg0aUtZOV_rZuqbvXKz6tlRZ1oAxWGVMceYa1L1J0gH8rjvDOB8-JkyWE84UaGMDTxKYWPVp4INli5hMHwuUp6nwriasPJEWAruSqSHs-LwABLANksfQosKqGkqTu75VxRcsTS2jp_fiHOyUvt4nwPT3h7R8QqXuy3z1L16BNGLa1h1plEO2QoboXMaBn63XwhGCupKk-BRIxp9XtNAm29gJSWP_W_ucpe5JeTnNGZybc4lvMKXZ971McrGUUgVbYGw
+2024-08-14 13:17:50,445 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitoring-event/ and api_id: d8ec2a5082fe0aece5593f44f8e9a7, aef_id: AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 13:17:50,445 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitoring-event/, api_id=d8ec2a5082fe0aece5593f44f8e9a7, aef_id=AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 13:17:50,445 - ServiceDiscoverer - INFO - The security context for api_id=d8ec2a5082fe0aece5593f44f8e9a7 and aef_id=AEFd0c5caa9387171b8cfef585355e072 does not exist. Updating the security service.
+2024-08-14 13:17:50,469 - ServiceDiscoverer - ERROR - Error when registering the security service: 403 Client Error: FORBIDDEN for url: https://capifcore:443/capif-security/v1/trustedInvokers/INVcf96c2e7f89184d12eb5339919fff7
+2024-08-14 13:18:59,564 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-14 13:18:59,566 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-14 13:18:59,566 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-14 13:18:59,616 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-14 13:18:59,616 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitor-event/ and api_id: a95a28bd191380802167f003c2a6a0, aef_id: AEFc227880e662fd78b681b97e4713128
+2024-08-14 13:18:59,617 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitor-event/, api_id=a95a28bd191380802167f003c2a6a0, aef_id=AEFc227880e662fd78b681b97e4713128
+2024-08-14 13:18:59,743 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-14 13:18:59,744 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-14 13:18:59,744 - ServiceDiscoverer - INFO - Access token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzYzNDMzOSwianRpIjoiMzcxM2QwNzItM2JjNS00NGMxLThmNzAtZjRjZGFhZDRkNzY4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IklOVmNmOTZjMmU3Zjg5MTg0ZDEyZWI1MzM5OTE5ZmZmNyIsIm5iZiI6MTcyMzYzNDMzOSwiZXhwIjoxNzIzNjM0OTM5LCJpc3MiOiJJTlZjZjk2YzJlN2Y4OTE4NGQxMmViNTMzOTkxOWZmZjciLCJzY29wZSI6IjNncHAjQUVGYzIyNzg4MGU2NjJmZDc4YjY4MWI5N2U0NzEzMTI4Oi9uZWYvYXBpL3YxLzNncHAtbW9uaXRvci1ldmVudC8ifQ.jIagCMSzeowrGBpZcOu8Qh__oFrZ_eL0DWpF7-11V0-7Ce8mlH8S9uwQn4TyMp58EaR5e-QIkHuPoOLgPf2QiSIKuZ1PVqvIC5--yoyUo9lTdR3uWaMV1AOBdzGTpThnc9NDrXXcbg-V9iFh1eTBPslcJiUGI2B8D2oNko-CBlajmGE6audevPTui-n4z7HU4B6cYcpQD7oA5--3bAdJrNlYkfVFwMQ-XEEyaHkvBKHgvKisqrjTQTHZsSCIslzjej-euoysvpZPLXMlFjCw-vSEwpuQnRPCDr1_GXZ4ixsR7EmqWe_3UdfmST92-i7mtZQMJ4Ri8yQ_dntKGOyuGg
+2024-08-14 13:18:59,744 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitoring-event/ and api_id: d8ec2a5082fe0aece5593f44f8e9a7, aef_id: AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 13:18:59,744 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitoring-event/, api_id=d8ec2a5082fe0aece5593f44f8e9a7, aef_id=AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 13:18:59,745 - ServiceDiscoverer - INFO - The security context for api_id=d8ec2a5082fe0aece5593f44f8e9a7 and aef_id=AEFd0c5caa9387171b8cfef585355e072 does not exist. Updating the security service.
+2024-08-14 13:18:59,783 - ServiceDiscoverer - ERROR - Error when registering the security service: 403 Client Error: FORBIDDEN for url: https://capifcore:443/capif-security/v1/trustedInvokers/INVcf96c2e7f89184d12eb5339919fff7
+2024-08-14 13:21:50,881 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-14 13:21:50,883 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-14 13:21:50,883 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-14 13:21:50,929 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-14 13:21:50,929 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitor-event/ and api_id: a95a28bd191380802167f003c2a6a0, aef_id: AEFc227880e662fd78b681b97e4713128
+2024-08-14 13:21:50,929 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitor-event/, api_id=a95a28bd191380802167f003c2a6a0, aef_id=AEFc227880e662fd78b681b97e4713128
+2024-08-14 13:21:50,997 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-14 13:21:50,997 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-14 13:21:50,997 - ServiceDiscoverer - INFO - Access token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzYzNDUxMCwianRpIjoiYmUxZWQxMTQtZmE3YS00YzJkLWIzZTUtNDJlZjdjZWViODM4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IklOVmNmOTZjMmU3Zjg5MTg0ZDEyZWI1MzM5OTE5ZmZmNyIsIm5iZiI6MTcyMzYzNDUxMCwiZXhwIjoxNzIzNjM1MTEwLCJpc3MiOiJJTlZjZjk2YzJlN2Y4OTE4NGQxMmViNTMzOTkxOWZmZjciLCJzY29wZSI6IjNncHAjQUVGYzIyNzg4MGU2NjJmZDc4YjY4MWI5N2U0NzEzMTI4Oi9uZWYvYXBpL3YxLzNncHAtbW9uaXRvci1ldmVudC8ifQ.lGbSZitZi9p-yPrez3zyJVQqK0aqTfX9H7VOn8yuhDRERVI5XCeWBBtHKGFljjqaOrI24H5b_LJNnMiTctl0Wa4oakS4-k9Yx-dAIhhVV9qwvEslF1H9iGcWEssszXO1Ok0M2lwpYfiHE_Rkj60jBHe4p1vp8R-opr87pT4HrWS5dEOoQphfW3o1ONOrVnRF_IEBUmSZWEyMMvPEeSO3n0aAPAYmxIqpoA6xzNc7vwPW_jvjWLxiC9qvutxV5ZvZoi3CIxB0Aem0Ckrw6hZ8_QQYgdzbxLSwMYWgi4gA5itMeuppId59MCCi13PaCzbBOIvPes9j-G01IJ9CYP7OhA
+2024-08-14 13:21:50,998 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitoring-event/ and api_id: d8ec2a5082fe0aece5593f44f8e9a7, aef_id: AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 13:21:50,998 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitoring-event/, api_id=d8ec2a5082fe0aece5593f44f8e9a7, aef_id=AEFd0c5caa9387171b8cfef585355e072
+2024-08-14 13:21:50,998 - ServiceDiscoverer - INFO - The security context for api_id=d8ec2a5082fe0aece5593f44f8e9a7 and aef_id=AEFd0c5caa9387171b8cfef585355e072 does not exist. Updating the security service.
+2024-08-14 13:21:51,001 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-14 13:21:51,031 - ServiceDiscoverer - ERROR - Error when registering the security service: 403 Client Error: FORBIDDEN for url: https://capifcore:443/capif-security/v1/trustedInvokers/INVcf96c2e7f89184d12eb5339919fff7
+2024-08-14 13:30:34,442 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-14 13:30:34,459 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-14 13:30:34,459 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-14 13:31:34,983 - CAPIFProviderConnector - INFO - cert_server.pem successfully generated!
+2024-08-14 13:31:34,985 - CAPIFProviderConnector - INFO - Acquiring authorization from CAPIF
+2024-08-14 13:31:35,269 - CAPIFProviderConnector - INFO - Authorization acquired successfully
+2024-08-14 13:31:35,277 - CAPIFProviderConnector - INFO - CA root certificate saved successfully
+2024-08-14 13:31:35,277 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-14 13:31:38,815 - CAPIFProviderConnector - INFO - Onboarding completed successfully
+2024-08-14 13:31:38,817 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-14 13:31:38,836 - CAPIFProviderConnector - INFO - Data saved
+2024-08-14 13:32:07,228 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-14 13:32:07,230 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-14 13:32:07,231 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-14 13:32:07,231 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/capif_provider_details.json
+2024-08-14 13:32:07,232 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-14 13:32:07,232 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/nef_api_description_sample.json
+2024-08-14 13:32:07,233 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-14 13:32:07,234 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capifcore/published-apis/v1/APFecc9db28727dafb613b49fd800d5a1/service-apis
+2024-08-14 13:32:07,321 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-14 13:32:07,323 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/CAPIF_nef_api_description_sample.json
+2024-08-14 13:32:34,635 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-14 13:32:34,651 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-14 13:32:34,651 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-14 13:32:34,651 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/capif_provider_details.json
+2024-08-14 13:32:34,653 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-14 13:32:34,657 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/nef_api_description_sample.json
+2024-08-14 13:32:34,657 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-14 13:32:34,660 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capifcore/published-apis/v1/APFecc9db28727dafb613b49fd800d5a1/service-apis
+2024-08-14 13:32:34,794 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-14 13:32:34,796 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/CAPIF_nef_api_description_sample.json
+2024-08-14 13:33:36,625 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-14 13:33:36,633 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-14 13:33:36,633 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-14 13:33:36,633 - CAPIFInvokerConnector - INFO - Creating private and public keys for the Invoker cert
+2024-08-14 13:33:37,258 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-14 13:33:37,258 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-14 13:33:37,388 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-14 13:33:37,389 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF
+2024-08-14 13:33:37,705 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-14 13:33:37,706 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-14 13:33:37,708 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-14 13:33:37,708 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-14 13:33:56,321 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-14 13:33:56,322 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-14 13:33:56,322 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-14 13:33:56,514 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-14 13:33:56,514 - ServiceDiscoverer - INFO - Retrieving access token for api name: hello_api_demo_v2 and api_id: f19bf0db7a756a728d5c24e510e343, aef_id: AEF20d6a7b8349eec3c8e0b9f4315817c
+2024-08-14 13:33:56,514 - ServiceDiscoverer - INFO - Getting access token for api_name=hello_api_demo_v2, api_id=f19bf0db7a756a728d5c24e510e343, aef_id=AEF20d6a7b8349eec3c8e0b9f4315817c
+2024-08-14 13:33:56,514 - ServiceDiscoverer - INFO - There is no security context. Registering a new security service.
+2024-08-14 13:33:56,515 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-14 13:33:56,736 - ServiceDiscoverer - INFO - Security service properly registered
+2024-08-14 13:33:56,835 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-14 13:33:56,835 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-14 13:33:56,835 - ServiceDiscoverer - INFO - Access token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzYzNTIzNiwianRpIjoiYTNjZjFkNGMtZGE4NC00NDYwLWI3NmQtZWE5NmRlNDA3NzY4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IklOVjllOWI0YzEwYTVmNjllYjdlYjU1Y2Y2YjA2NTUxZCIsIm5iZiI6MTcyMzYzNTIzNiwiZXhwIjoxNzIzNjM1ODM2LCJpc3MiOiJJTlY5ZTliNGMxMGE1ZjY5ZWI3ZWI1NWNmNmIwNjU1MWQiLCJzY29wZSI6IjNncHAjQUVGMjBkNmE3YjgzNDllZWMzYzhlMGI5ZjQzMTU4MTdjOmhlbGxvX2FwaV9kZW1vX3YyIn0.T45teIKCvCvFZEPMMGuRzD-iurg88JFLHuJcFVybmGKHN2uQff1rN3m2K-LcNh3AJzaVIF0YYsM-ZKOJ_IavW8aQMbq6FBnlpQGrPJuxJ_gx7NfbvIj7euim0543ho0DqOlH7hFFJCmFmOtNoX4rJnbOXFYrx_n27Ybv-_uzXQJvUqRfWaaf_osv5NhS6iIgEEd9-FQurrHWqRk4fj9BUEI6Tqdzkrh2-GFKNkNP0-EHZruKEDkG7ILkKKaQVGT565rdleQ2Qscjv5McI1g6kqn5bR1NYoZwVycuerxLPdACZBKPS0paJmMGV3CdzZLYUcnx_b60BWD44E8uOFl1yg
+2024-08-14 13:33:56,836 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitor-event-2/ and api_id: 6c0d33bcedc6afaa7a12d80ff83a98, aef_id: AEF5921c66aaa8e3e0527aedbda213fe0
+2024-08-14 13:33:56,836 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitor-event-2/, api_id=6c0d33bcedc6afaa7a12d80ff83a98, aef_id=AEF5921c66aaa8e3e0527aedbda213fe0
+2024-08-14 13:33:56,836 - ServiceDiscoverer - INFO - The security context for api_id=6c0d33bcedc6afaa7a12d80ff83a98 and aef_id=AEF5921c66aaa8e3e0527aedbda213fe0 does not exist. Updating the security service.
+2024-08-14 13:33:56,837 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-14 13:33:56,862 - ServiceDiscoverer - ERROR - Error when registering the security service: 403 Client Error: FORBIDDEN for url: https://capifcore:443/capif-security/v1/trustedInvokers/INV9e9b4c10a5f69eb7eb55cf6b06551d
+2024-08-16 09:22:35,579 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-16 09:22:35,581 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-16 09:22:35,581 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-16 09:23:35,888 - CAPIFProviderConnector - INFO - cert_server.pem successfully generated!
+2024-08-16 09:23:35,890 - CAPIFProviderConnector - INFO - Acquiring authorization from CAPIF
+2024-08-16 09:23:36,103 - CAPIFProviderConnector - INFO - Authorization acquired successfully
+2024-08-16 09:23:36,105 - CAPIFProviderConnector - INFO - CA root certificate saved successfully
+2024-08-16 09:23:36,105 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-16 09:23:39,291 - CAPIFProviderConnector - INFO - Onboarding completed successfully
+2024-08-16 09:23:39,293 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-16 09:23:39,297 - CAPIFProviderConnector - INFO - Data saved
+2024-08-16 09:23:57,306 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-16 09:23:57,307 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-16 09:23:57,307 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-16 09:23:57,307 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/capif_provider_details.json
+2024-08-16 09:23:57,308 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-16 09:23:57,309 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/nef_api_description_sample.json
+2024-08-16 09:23:57,315 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-16 09:23:57,316 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capifcore/published-apis/v1/APF337265ea2c50a7b4609a87e100e34a/service-apis
+2024-08-16 09:23:57,445 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-16 09:23:57,446 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/CAPIF_nef_api_description_sample.json
+2024-08-16 09:25:57,653 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-16 09:25:57,656 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-16 09:25:57,656 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-16 09:25:57,657 - CAPIFInvokerConnector - INFO - Creating private and public keys for the Invoker cert
+2024-08-16 09:25:58,836 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-16 09:25:58,837 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-16 09:25:58,957 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-16 09:25:58,958 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF
+2024-08-16 09:25:59,083 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-16 09:25:59,083 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-16 09:25:59,084 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-16 09:25:59,085 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-16 09:35:18,380 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 09:35:18,382 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 09:35:18,383 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 09:35:18,468 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 09:35:18,468 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitoring-event-2/ and api_id: 287afe5315b2070ad9ecaa74877bfd, aef_id: AEF0c39e058c1c2aa5e4ff2ed268a4cc1
+2024-08-16 09:38:09,627 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 09:38:09,629 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 09:38:09,629 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 09:38:09,672 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 09:38:09,672 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitoring-event-2/ and api_id: 287afe5315b2070ad9ecaa74877bfd, aef_id: AEF0c39e058c1c2aa5e4ff2ed268a4cc1
+2024-08-16 09:38:09,673 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitoring-event-2/, api_id=287afe5315b2070ad9ecaa74877bfd, aef_id=AEF0c39e058c1c2aa5e4ff2ed268a4cc1
+2024-08-16 09:38:09,673 - ServiceDiscoverer - INFO - There is no security context. Registering a new security service.
+2024-08-16 09:38:09,674 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-16 09:38:09,769 - ServiceDiscoverer - INFO - Security service properly registered
+2024-08-16 09:38:09,846 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-16 09:38:09,846 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-16 09:38:09,846 - ServiceDiscoverer - INFO - Access token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzc5Mzg4OSwianRpIjoiYjczN2FlMWItMzBkOC00MmYzLWEyZmMtYTA0NjAxN2Q1NzMxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IklOVmQ5NjIzNWY0MzcyMzQ1YWZmMDBhMzlhODg4OWVhOSIsIm5iZiI6MTcyMzc5Mzg4OSwiZXhwIjoxNzIzNzk0NDg5LCJpc3MiOiJJTlZkOTYyMzVmNDM3MjM0NWFmZjAwYTM5YTg4ODllYTkiLCJzY29wZSI6IjNncHAjQUVGMGMzOWUwNThjMWMyYWE1ZTRmZjJlZDI2OGE0Y2MxOi9uZWYvYXBpL3YxLzNncHAtbW9uaXRvcmluZy1ldmVudC0yLyJ9.W01BAg45z0Z-vB4Clg9hNpS6c8vs7lMRFLjYFj0l-xncSTWsJB1wDTXWVd9K2czsasKp7NkGTrVLVQnLzh366VRqeqx_oJYnVWJTZVV5psD4KbsXR9Y_Oh5fRxMH5H6-DdWCgPUF22gLTzjdqENeUdkohKqWk1uF1m3vwCSFmLmRuFAKd2ubVrATq75OdEdC6tF2LIQzGULC1SVb_okDUJCOYYHseC6O3VtkczKLGz8bREg8yS_U3qK6lB2fyPITyyaZWB2LZgz3woIuZ8Z7q1_Jhn_r_z1E5YJ1neRyhh1QzjirmbyDdJrZFK1r9OSDwshMsKq7sIsfaxg5zWZw8Q
+2024-08-16 09:41:08,325 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 09:41:08,326 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 09:41:08,327 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 09:41:08,372 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 09:41:08,372 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitoring-event-2/ and api_id: 287afe5315b2070ad9ecaa74877bfd, aef_id: AEF0c39e058c1c2aa5e4ff2ed268a4cc1
+2024-08-16 09:41:08,372 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitoring-event-2/, api_id=287afe5315b2070ad9ecaa74877bfd, aef_id=AEF0c39e058c1c2aa5e4ff2ed268a4cc1
+2024-08-16 09:41:08,442 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-16 09:41:08,443 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-16 09:41:08,443 - ServiceDiscoverer - INFO - Access token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzc5NDA2OCwianRpIjoiZjdkODg3MzctZGM1Yi00MzFmLWEyNTYtMzg4OGI4MjM3ZmNmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IklOVmQ5NjIzNWY0MzcyMzQ1YWZmMDBhMzlhODg4OWVhOSIsIm5iZiI6MTcyMzc5NDA2OCwiZXhwIjoxNzIzNzk0NjY4LCJpc3MiOiJJTlZkOTYyMzVmNDM3MjM0NWFmZjAwYTM5YTg4ODllYTkiLCJzY29wZSI6IjNncHAjQUVGMGMzOWUwNThjMWMyYWE1ZTRmZjJlZDI2OGE0Y2MxOi9uZWYvYXBpL3YxLzNncHAtbW9uaXRvcmluZy1ldmVudC0yLyJ9.jm--ZgQWhBoox6TnGi9_3UZHPdtY__KLWWZSLoSd3Bciu0WGzyU8o1_MNwsW_Dd6q69TEHpPnBnzAT1yH56hDfU6wRcFO05j-R2EvZpYzOB6QTNWAW2LvJM3Z6sO__JE_2Hm9OkNbf2yWhbu89D4AAg9MMwUZnoeH4XfPMzWWuvYBRkE_pU0ab-6KrmyJasWYroiw-h7iioctnPppl8FAtk1yp_N38NOGJGgcMm5vRuKpKwu8qN-6_EFIteOC3JzqgqdogETcBinNMmvsb5x9j3k6RpXAsE6qj9b3K4_SjXrRDKvZ--ziNZY4Xr_pa0eiE0pqjSJt6vRBqC9oAQetg
+2024-08-16 09:41:08,443 - ServiceDiscoverer - INFO - Retrieving access token for api name: hello_api_demo_v2 and api_id: 1d2480461b009afc947568be355fd0, aef_id: AEF33b42525379d60dc7bff99d7b44dfb
+2024-08-16 09:41:08,443 - ServiceDiscoverer - INFO - Getting access token for api_name=hello_api_demo_v2, api_id=1d2480461b009afc947568be355fd0, aef_id=AEF33b42525379d60dc7bff99d7b44dfb
+2024-08-16 09:41:08,443 - ServiceDiscoverer - INFO - The security context for api_id=1d2480461b009afc947568be355fd0 and aef_id=AEF33b42525379d60dc7bff99d7b44dfb does not exist. Updating the security service.
+2024-08-16 09:41:08,444 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-16 09:41:08,476 - ServiceDiscoverer - ERROR - Error al actualizar el servicio de seguridad: 500 Server Error: INTERNAL SERVER ERROR for url: https://capifcore:443/capif-security/v1/trustedInvokers/INVd96235f4372345aff00a39a8889ea9/update
+2024-08-16 09:51:49,350 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 09:51:49,363 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 09:51:49,363 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 09:51:49,414 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 09:51:49,414 - ServiceDiscoverer - INFO - Retrieving access token for api name: /nef/api/v1/3gpp-monitoring-event-2/ and api_id: 287afe5315b2070ad9ecaa74877bfd, aef_id: AEF0c39e058c1c2aa5e4ff2ed268a4cc1
+2024-08-16 09:51:49,414 - ServiceDiscoverer - INFO - Getting access token for api_name=/nef/api/v1/3gpp-monitoring-event-2/, api_id=287afe5315b2070ad9ecaa74877bfd, aef_id=AEF0c39e058c1c2aa5e4ff2ed268a4cc1
+2024-08-16 09:51:49,494 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-16 09:51:49,494 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-16 09:51:49,494 - ServiceDiscoverer - INFO - Access token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzc5NDcwOSwianRpIjoiYmMxOTBkOTAtZDYzMC00ZjhjLTgxMmUtN2FmYzEwYjVlYjM0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IklOVmQ5NjIzNWY0MzcyMzQ1YWZmMDBhMzlhODg4OWVhOSIsIm5iZiI6MTcyMzc5NDcwOSwiZXhwIjoxNzIzNzk1MzA5LCJpc3MiOiJJTlZkOTYyMzVmNDM3MjM0NWFmZjAwYTM5YTg4ODllYTkiLCJzY29wZSI6IjNncHAjQUVGMGMzOWUwNThjMWMyYWE1ZTRmZjJlZDI2OGE0Y2MxOi9uZWYvYXBpL3YxLzNncHAtbW9uaXRvcmluZy1ldmVudC0yLyJ9.cZNGFyIKRiQZCwMt5dllA3K91u26FvRXNOCPj-NtzoJB5QeKaH4BIxzIm5kQF0bW4oSLibzwc021lbYWTBsF5-dvO5W6wiAsy0sWh88eoe_0m7eozbt5tmu3zo6XcTUDT84PWA7AsaP05QNOVXzv3eiWloOOO49FxxKXgcH9ehIH5B4PFZK_WVBzgO5GHTRywttgVL1qMnWAj2FPtJLsk59MBoVqFMTyEtDXBTjoNBCDpZ2aVyCPj9zYlzqYT95X44jiDyOeGf64Chp6qEVh9j8VuOgB_qoGz8hSGXyziC9Ifn6-4kiTxhGiGIr8xKwKU6WMpgznMvdctLYFDOw1cw
+2024-08-16 09:51:49,494 - ServiceDiscoverer - INFO - Retrieving access token for api name: hello_api_demo_v2 and api_id: 1d2480461b009afc947568be355fd0, aef_id: AEF33b42525379d60dc7bff99d7b44dfb
+2024-08-16 09:51:49,494 - ServiceDiscoverer - INFO - Getting access token for api_name=hello_api_demo_v2, api_id=1d2480461b009afc947568be355fd0, aef_id=AEF33b42525379d60dc7bff99d7b44dfb
+2024-08-16 09:51:49,528 - ServiceDiscoverer - ERROR - Error obtaining the security token: 400 Client Error: BAD REQUEST for url: https://capifcore:443/capif-security/v1/securities/INVd96235f4372345aff00a39a8889ea9/token
+2024-08-16 11:33:33,758 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 11:33:33,761 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 11:33:33,761 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 11:33:33,832 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 11:35:15,934 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 11:35:15,955 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 11:35:15,955 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 11:35:16,072 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 11:35:16,072 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-16 11:35:16,073 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 11:35:16,073 - ServiceDiscoverer - INFO - There is no security context. Registering a new security service.
+2024-08-16 11:35:16,109 - ServiceDiscoverer - ERROR - Error when registering the security service: 403 Client Error: FORBIDDEN for url: https://capifcore:443/capif-security/v1/trustedInvokers/INVd96235f4372345aff00a39a8889ea9
+2024-08-16 11:42:52,863 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-16 11:42:52,871 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-16 11:42:52,871 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-16 11:43:53,698 - CAPIFProviderConnector - INFO - cert_server.pem successfully generated!
+2024-08-16 11:43:53,820 - CAPIFProviderConnector - INFO - Acquiring authorization from CAPIF
+2024-08-16 11:43:54,076 - CAPIFProviderConnector - INFO - Authorization acquired successfully
+2024-08-16 11:43:54,096 - CAPIFProviderConnector - INFO - CA root certificate saved successfully
+2024-08-16 11:43:54,097 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-16 11:43:58,701 - CAPIFProviderConnector - INFO - Onboarding completed successfully
+2024-08-16 11:43:58,702 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-16 11:43:58,709 - CAPIFProviderConnector - INFO - Data saved
+2024-08-16 11:44:18,551 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-16 11:44:18,555 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-16 11:44:18,555 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-16 11:44:18,555 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/capif_provider_details.json
+2024-08-16 11:44:18,556 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-16 11:44:18,557 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/nef_api_description_sample.json
+2024-08-16 11:44:18,558 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-16 11:44:18,558 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capifcore/published-apis/v1/APF6aa123068c65c9f0622dedb980fedd/service-apis
+2024-08-16 11:44:18,949 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-16 11:44:18,950 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/CAPIF_nef_api_description_sample.json
+2024-08-16 11:44:58,487 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-16 11:44:58,496 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-16 11:44:58,498 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-16 11:44:58,498 - CAPIFInvokerConnector - INFO - Creating private and public keys for the Invoker cert
+2024-08-16 11:45:00,170 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-16 11:45:00,170 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-16 11:45:00,648 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-16 11:45:00,649 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF
+2024-08-16 11:45:02,077 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-16 11:45:02,078 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-16 11:45:02,079 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-16 11:45:02,080 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-16 11:52:13,029 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 11:52:13,030 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 11:52:13,030 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 11:52:13,110 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 11:52:13,111 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-16 11:52:13,112 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 11:52:13,113 - ServiceDiscoverer - INFO - There is no security context. Registering a new security service.
+2024-08-16 11:52:13,315 - ServiceDiscoverer - INFO - Security service properly registered
+2024-08-16 11:52:13,318 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-16 11:52:13,469 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-16 11:52:13,470 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-16 11:56:27,692 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 11:56:27,694 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 11:56:27,694 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 11:56:27,780 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 11:56:27,781 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-16 11:56:27,782 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 11:56:27,782 - ServiceDiscoverer - INFO - There is no security context. Registering a new security service.
+2024-08-16 11:56:27,828 - ServiceDiscoverer - INFO - Security service properly registered
+2024-08-16 11:56:27,830 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-16 11:56:27,919 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-16 11:56:27,920 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-16 12:12:26,047 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 12:12:26,062 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:12:26,062 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 12:12:26,147 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 12:12:26,148 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-16 12:12:26,148 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:12:26,149 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:12:26,149 - ServiceDiscoverer - INFO - The security context for these APIs does not exist, updating security context
+2024-08-16 12:12:53,914 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 12:12:53,916 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:12:53,916 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 12:12:53,958 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 12:12:53,959 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-16 12:12:53,960 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:12:53,960 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:12:53,960 - ServiceDiscoverer - INFO - The security context for these APIs does not exist, updating security context
+2024-08-16 12:12:54,005 - ServiceDiscoverer - INFO - Servicio de seguridad actualizado correctamente
+2024-08-16 12:12:54,007 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-16 12:12:54,142 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-16 12:12:54,143 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-16 12:13:23,922 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 12:13:23,923 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:13:23,923 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 12:13:23,977 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 12:13:23,979 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-16 12:13:23,980 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:13:23,981 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:13:23,981 - ServiceDiscoverer - INFO - The security context for these APIs does not exist, updating security context
+2024-08-16 12:13:24,032 - ServiceDiscoverer - INFO - Servicio de seguridad actualizado correctamente
+2024-08-16 12:13:24,034 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-16 12:13:24,116 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-16 12:13:24,117 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-16 12:13:28,283 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 12:13:28,285 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:13:28,285 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 12:13:28,317 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 12:13:28,317 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-16 12:13:28,319 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:13:28,321 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:13:28,321 - ServiceDiscoverer - INFO - The security context for these APIs does not exist, updating security context
+2024-08-16 12:13:28,348 - ServiceDiscoverer - INFO - Servicio de seguridad actualizado correctamente
+2024-08-16 12:13:28,350 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-16 12:13:28,427 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-16 12:13:28,427 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-16 12:21:49,675 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 12:21:49,685 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:21:49,685 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 12:21:49,751 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 12:21:49,752 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-16 12:21:49,753 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:21:49,753 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:21:49,754 - ServiceDiscoverer - INFO - The security context for these APIs does not exist, updating security context
+2024-08-16 12:21:49,814 - ServiceDiscoverer - INFO - Security service correctly updated
+2024-08-16 12:21:49,856 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-16 12:21:50,007 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-16 12:21:50,007 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-16 12:21:50,008 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-16 12:24:13,587 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-16 12:24:13,589 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:24:13,589 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-16 12:24:13,658 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-16 12:24:13,658 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-16 12:24:13,659 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:24:13,660 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-16 12:24:13,660 - ServiceDiscoverer - INFO - The security context for these APIs does not exist, updating security context
+2024-08-16 12:24:13,695 - ServiceDiscoverer - INFO - Security service correctly updated
+2024-08-16 12:24:13,697 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-16 12:24:13,802 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-16 12:24:13,802 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-16 12:24:13,803 - ServiceDiscoverer - INFO - Security context saved correctly

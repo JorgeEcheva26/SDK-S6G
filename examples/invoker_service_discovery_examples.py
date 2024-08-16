@@ -37,18 +37,8 @@ def showcase_retrieve_endpoint_url_from_nef():
 
 def showcase_access_token_retrieval_from_capif():
     service_discoverer = ServiceDiscoverer(config_file=emulator_utils.get_config_file())
-    endpoints = service_discoverer.discover_service_apis()
-    if len(endpoints)>0:
-        ## The access token is always retrieved for a specific api name and a specific endpoint (that is mapped ton an api_id and aef_id)
-        ## For the purposes of the example we retrieve the fist available
-        api_name = endpoints["serviceAPIDescriptions"][0]["apiName"]
-        api_id =  endpoints["serviceAPIDescriptions"][0]["apiId"]
-        aef_id =  endpoints["serviceAPIDescriptions"][0]["aefProfiles"][0]["aefId"]
-        print("Retrieving access token for api name: " + api_name  + " and api_id: " + api_id)
-        access_token = service_discoverer.get_access_token(api_name,api_id,aef_id)
-        print(access_token)
-    else:
-        print("no endpoints have been registered. Make sure NEF has registered to CAPIF first")
+    service_discoverer.discover_and_get_access_tokens()
+    
 
 if __name__ == "__main__":
     #The following code assumes that you have already registered the net app to capif.

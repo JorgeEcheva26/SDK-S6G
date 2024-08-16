@@ -145,3 +145,59 @@
 2024-08-14 10:49:20,759 - CAPIF Register - INFO - Saving uuid in config.json
 2024-08-14 10:49:20,767 - CAPIF Register - INFO - Data saved
 2024-08-14 10:49:20,767 - CAPIF Register - INFO - 5b8cb92e-6ade-564f-b187-6966b4626c1d
+2024-08-14 12:38:18,858 - CAPIF Register - INFO - Initializing CAPIF Register
+2024-08-14 12:38:18,858 - CAPIF Register - INFO - Logging in to CAPIF
+2024-08-14 12:38:18,976 - CAPIF Register - INFO - Logged in to CAPIF successfully
+2024-08-14 12:38:18,976 - CAPIF Register - INFO - Creating user in CAPIF
+2024-08-14 12:38:19,028 - CAPIF Register - INFO - User created successfully
+2024-08-14 12:38:19,029 - CAPIF Register - INFO - Saving uuid in config.json
+2024-08-14 12:38:19,031 - CAPIF Register - INFO - Data saved
+2024-08-14 12:38:19,031 - CAPIF Register - INFO - ad190e5c-358c-5bcd-8d31-709fc0567dcc
+2024-08-14 13:30:20,065 - CAPIF Register - INFO - Initializing CAPIF Register
+2024-08-14 13:30:20,066 - CAPIF Register - INFO - Logging in to CAPIF
+2024-08-14 13:30:20,295 - CAPIF Register - INFO - Logged in to CAPIF successfully
+2024-08-14 13:30:20,295 - CAPIF Register - INFO - Creating user in CAPIF
+2024-08-14 13:30:20,369 - CAPIF Register - INFO - User created successfully
+2024-08-14 13:30:20,369 - CAPIF Register - INFO - Saving uuid in config.json
+2024-08-14 13:30:20,377 - CAPIF Register - INFO - Data saved
+2024-08-14 13:30:20,377 - CAPIF Register - INFO - 5b8cb92e-6ade-564f-b187-6966b4626c1d
+2024-08-14 13:33:25,504 - CAPIF Register - INFO - Initializing CAPIF Register
+2024-08-14 13:33:25,505 - CAPIF Register - INFO - Logging in to CAPIF
+2024-08-14 13:33:25,591 - CAPIF Register - INFO - Logged in to CAPIF successfully
+2024-08-14 13:33:25,592 - CAPIF Register - INFO - Creating user in CAPIF
+2024-08-14 13:33:25,621 - CAPIF Register - INFO - User created successfully
+2024-08-14 13:33:25,621 - CAPIF Register - INFO - Saving uuid in config.json
+2024-08-14 13:33:25,625 - CAPIF Register - INFO - Data saved
+2024-08-14 13:33:25,625 - CAPIF Register - INFO - ad190e5c-358c-5bcd-8d31-709fc0567dcc
+2024-08-16 09:22:12,303 - CAPIF Register - INFO - Initializing CAPIF Register
+2024-08-16 09:22:12,324 - CAPIF Register - INFO - Logging in to CAPIF
+2024-08-16 09:22:12,599 - CAPIF Register - INFO - Logged in to CAPIF successfully
+2024-08-16 09:22:12,599 - CAPIF Register - INFO - Creating user in CAPIF
+2024-08-16 09:22:12,683 - CAPIF Register - INFO - User created successfully
+2024-08-16 09:22:12,683 - CAPIF Register - INFO - Saving uuid in config.json
+2024-08-16 09:22:12,685 - CAPIF Register - INFO - Data saved
+2024-08-16 09:22:12,685 - CAPIF Register - INFO - 5b8cb92e-6ade-564f-b187-6966b4626c1d
+2024-08-16 09:25:39,176 - CAPIF Register - INFO - Initializing CAPIF Register
+2024-08-16 09:25:39,177 - CAPIF Register - INFO - Logging in to CAPIF
+2024-08-16 09:25:39,358 - CAPIF Register - INFO - Logged in to CAPIF successfully
+2024-08-16 09:25:39,358 - CAPIF Register - INFO - Creating user in CAPIF
+2024-08-16 09:25:39,408 - CAPIF Register - INFO - User created successfully
+2024-08-16 09:25:39,408 - CAPIF Register - INFO - Saving uuid in config.json
+2024-08-16 09:25:39,410 - CAPIF Register - INFO - Data saved
+2024-08-16 09:25:39,411 - CAPIF Register - INFO - ad190e5c-358c-5bcd-8d31-709fc0567dcc
+2024-08-16 11:42:40,264 - CAPIF Register - INFO - Initializing CAPIF Register
+2024-08-16 11:42:40,273 - CAPIF Register - INFO - Logging in to CAPIF
+2024-08-16 11:42:40,550 - CAPIF Register - INFO - Logged in to CAPIF successfully
+2024-08-16 11:42:40,551 - CAPIF Register - INFO - Creating user in CAPIF
+2024-08-16 11:42:40,690 - CAPIF Register - INFO - User created successfully
+2024-08-16 11:42:40,691 - CAPIF Register - INFO - Saving uuid in config.json
+2024-08-16 11:42:40,693 - CAPIF Register - INFO - Data saved
+2024-08-16 11:42:40,694 - CAPIF Register - INFO - 5b8cb92e-6ade-564f-b187-6966b4626c1d
+2024-08-16 11:44:26,029 - CAPIF Register - INFO - Initializing CAPIF Register
+2024-08-16 11:44:26,031 - CAPIF Register - INFO - Logging in to CAPIF
+2024-08-16 11:44:26,158 - CAPIF Register - INFO - Logged in to CAPIF successfully
+2024-08-16 11:44:26,158 - CAPIF Register - INFO - Creating user in CAPIF
+2024-08-16 11:44:26,211 - CAPIF Register - INFO - User created successfully
+2024-08-16 11:44:26,211 - CAPIF Register - INFO - Saving uuid in config.json
+2024-08-16 11:44:26,214 - CAPIF Register - INFO - Data saved
+2024-08-16 11:44:26,214 - CAPIF Register - INFO - ad190e5c-358c-5bcd-8d31-709fc0567dcc

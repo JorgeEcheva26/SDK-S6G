@@ -828,7 +828,7 @@ class ServiceDiscoverer:
                     "r",
             ) as openfile:
                 details = json.load(openfile)
-            self.logger.info("Api invoker details correctly loaded")
+            self.logger.info("Api provider details correctly loaded")
             return details
         except Exception as e:
             self.logger.error("Error while loading Api invoker details: %s", str(e))
@@ -839,38 +839,40 @@ class ServiceDiscoverer:
             url += "/"
         return url
 
-    def get_access_token(self, api_name, api_id, aef_id):
+    def get_security_context(self):
+        self.logger.info("Getting security context for all API's filtered")
+
+        if self.__security_context_does_not_exist():
+            self.logger.info("There is no security context. Registering a new security service.")
+            self.__register_security_service()
+            self.__cache_security_context()
+            
+        elif self.__security_context_exist():
+            self.logger.info("The security context for these APIs does not exist, updating security context")
+            self.__update_security_service()
+            self.__cache_security_context()
+
+
+    def get_access_token(self):
         """
         :param api_name: El nombre del API devuelto por descubrir servicios
         :param api_id: El id del API devuelto por descubrir servicios
         :param aef_id: El aef_id relevante devuelto por descubrir servicios
         :return: El token de acceso (jwt)
         """
-        self.logger.info("Getting access token for api_name=%s, api_id=%s, aef_id=%s", api_name, api_id, aef_id)
-
-        if self.__security_context_does_not_exist():
-            self.logger.info("There is no security context. Registering a new security service.")
-            self.capif_api_details["registered_security_contexes"] = []
-            self.capif_api_details["registered_security_contexes"].append({"api_id": api_id, "aef_id": aef_id})
-            self.__register_security_service(api_id, aef_id)
-            self.__cache_security_context()
-        elif self.__security_context_for_given_api_id_and_aef_id_does_not_exist(api_id, aef_id):
-            self.logger.info("The security context for api_id=%s and aef_id=%s does not exist. Updating the security service.", api_id, aef_id)
-            self.capif_api_details["registered_security_contexes"].append({"api_id": api_id, "aef_id": aef_id})
-            self.__update_security_service(api_id, aef_id)
-            self.__cache_security_context()
-
-        token_dic = self.__get_security_token(api_name, aef_id)
+        token_dic = self.__get_security_token()
         self.logger.info("Access token successfully obtained")
         return token_dic["access_token"]
 
     def __security_context_does_not_exist(self):
-        return "registered_security_contexes" not in self.capif_api_details
+        presaved_data = self.__load_provider_api_details()
 
-    def __security_context_for_given_api_id_and_aef_id_does_not_exist(self, api_id, aef_id):
-        contexes = self.capif_api_details.get("registered_security_contexes", [])
-        results = [c for c in contexes if c['api_id'] == api_id and c["aef_id"] == aef_id]
-        return len(results) == 0
+        return "registered_security_contexes" not in presaved_data
+
+    def __security_context_exist(self):
+        presaved_data = self.__load_provider_api_details()
+
+        return "registered_security_contexes" in presaved_data
 
     def __cache_security_context(self):
         try:
@@ -883,7 +885,7 @@ class ServiceDiscoverer:
             self.logger.error("Error when saving the security context: %s", str(e))
             raise
 
-    def __update_security_service(self, api_id, aef_id):
+    def __update_security_service(self):
         """
         :param api_id: El id del API devuelto por descubrir servicios
         :param aef_id: El aef_id devuelto por descubrir servicios
@@ -901,12 +903,24 @@ class ServiceDiscoverer:
             "supportedFeatures": "fff"
         }
 
-        for security_info in self.capif_api_details.get("registered_security_contexes", []):
-            payload["securityInfo"].append({
-                "prefSecurityMethods": ["OAUTH"],
-                "aefId": security_info["aef_id"],
-                "apiId": security_info["api_id"]
-            })
+        number_of_apis = len(self.capif_api_details["registered_security_contexes"])
+
+
+        for i in range(0,number_of_apis):
+        # Obteniendo los valores de api_id y aef_id para cada API
+            api_id = self.capif_api_details["registered_security_contexes"][i]["api_id"]
+            aef_id = self.capif_api_details["registered_security_contexes"][i]["aef_id"]
+        
+            security_info = {
+                "prefSecurityMethods": ["Oauth"],
+                "authenticationInfo": "string",
+                "authorizationInfo": "string",
+                "aefId": aef_id,
+                "apiId": api_id
+            }
+            
+            payload["securityInfo"].append(security_info)
+
 
         try:
             response = requests.post(url,
@@ -915,26 +929,21 @@ class ServiceDiscoverer:
                                     verify=self.ca_root_path
                                     )
             response.raise_for_status()
-            self.logger.info("Servicio de seguridad actualizado correctamente")
+            self.logger.info("Security service correctly updated")
         except requests.RequestException as e:
             self.logger.error("Error al actualizar el servicio de seguridad: %s", str(e))
             raise
 
-    def __register_security_service(self, api_id, aef_id):
+    def __register_security_service(self):
         """
         :param api_id: El id del API devuelto por descubrir servicios
         :param aef_id: El aef_id devuelto por descubrir servicios
         :return: None
         """
+
         url = f"https://{self.capif_host}:{self.capif_https_port}/capif-security/v1/trustedInvokers/{self.capif_api_details['api_invoker_id']}"
         payload = {
-            "securityInfo": [
-                {
-                    "prefSecurityMethods": ["Oauth"],
-                    "authenticationInfo": "string",
-                    "authorizationInfo": "string"
-                }
-            ],
+            "securityInfo": [],
             "notificationDestination": "https://mynotificationdest.com",
             "requestTestNotification": True,
             "websockNotifConfig": {
@@ -944,10 +953,26 @@ class ServiceDiscoverer:
             "supportedFeatures": "fff"
         }
 
-        for profile in payload["securityInfo"]:
-            profile["aefId"] = aef_id
-            profile["apiId"] = api_id
+        number_of_apis = len(self.capif_api_details["registered_security_contexes"])
 
+
+
+        for i in range(0,number_of_apis):
+        # Obteniendo los valores de api_id y aef_id para cada API
+            api_id = self.capif_api_details["registered_security_contexes"][i]["api_id"]
+            aef_id = self.capif_api_details["registered_security_contexes"][i]["aef_id"]
+        
+            security_info = {
+                "prefSecurityMethods": ["Oauth"],
+                "authenticationInfo": "string",
+                "authorizationInfo": "string",
+                "aefId": aef_id,
+                "apiId": api_id
+            }
+            
+            payload["securityInfo"].append(security_info)
+
+        
         try:
             response = requests.put(url,
                                     json=payload,
@@ -960,18 +985,31 @@ class ServiceDiscoverer:
             self.logger.error("Error when registering the security service: %s", str(e))
             raise
 
-    def __get_security_token(self, api_name, aef_id):
+    def __get_security_token(self):
         """
         :param api_name: El nombre del API devuelto por descubrir servicios
         :param aef_id: El aef_id relevante devuelto por descubrir servicios
         :return: El token de acceso (jwt)
         """
         url = f"https://{self.capif_host}:{self.capif_https_port}/capif-security/v1/securities/{self.capif_api_details['api_invoker_id']}/token"
+        # Construir el scope concatenando aef_id y api_name separados por un ';'
+        scope_parts = []
+
+        # Iterar sobre los contextos registrados y construir las partes del scope
+        for context in self.capif_api_details["registered_security_contexes"]:
+            aef_id = context["aef_id"]
+            api_name = context["api_name"]
+            scope_parts.append(f"{aef_id}:{api_name}")
+
+        # Unir todas las partes del scope con ';' y añadir el prefijo '3gpp#'
+        scope = "3gpp#" + ";".join(scope_parts)
+        
+        
         payload = {
             "grant_type": "client_credentials",
             "client_id": self.capif_api_details["api_invoker_id"],
             "client_secret": "string",
-            "scope": f"3gpp#{aef_id}:{api_name}"
+            "scope": scope
         }
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -1062,4 +1100,22 @@ class ServiceDiscoverer:
             self.logger.info("URL of the specific resource successfully retrieved: %s", result_url)
             return result_url
 
+    def save_security_token(self,token):
+        self.capif_api_details["access_token"]=token
+        self.__cache_security_context()
+
+    def discover_and_get_access_tokens(self):
+        endpoints = self.discover_service_apis()
+        if len(endpoints) > 0:
+            self.capif_api_details["registered_security_contexes"] = []
+            for service in endpoints["serviceAPIDescriptions"]:
+                api_name = service["apiName"]
+                api_id = service["apiId"]
+                aef_id = service["aefProfiles"][0]["aefId"]
+                self.capif_api_details["registered_security_contexes"].append({"api_name":api_name,"api_id": api_id, "aef_id": aef_id})
+            self.get_security_context()
+            token=self.get_access_token()
+            self.save_security_token(token)
+        else:
+            self.logger.error("No endpoints have been registered. Make sure NEF has registered to CAPIF first")
     
