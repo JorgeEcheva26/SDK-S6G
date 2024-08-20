@@ -135,8 +135,8 @@ class CAPIFInvokerConnector:
         self.csr_state_or_province_name = csr_state_or_province_name
         self.csr_country_name = csr_country_name
         self.csr_email_address = csr_email_address
-        self.capif_api_details_filename = "capif_api_security_context_details.json"
-        self.capif_api_details = self.__load_invoker_api_details()
+        self.capif_api_details_filename = "capif_api_security_context_details-"+uuid+".json"
+        #self.capif_api_details = self.__load_invoker_api_details()
         self.uuid=uuid
         self.logger.info("CAPIFInvokerConnector initialized with the config.json parameters")
 
@@ -209,7 +209,7 @@ class CAPIFInvokerConnector:
         self.logger.info("Offboarding and deregistering Invoker")
         try:
             self.__offboard_Invoker()
-            
+            self.__remove_context()
             self.logger.info("Invoker offboarded and deregistered successfully")
         except Exception as e:
             self.logger.error(f"Error during Invoker offboarding and deregistering: {e}")
@@ -247,7 +247,21 @@ class CAPIFInvokerConnector:
             self.logger.error(f"Error during key creation: {e}")
             raise
 
-    
+   
+
+    def __remove_context(self):
+        self.logger.info("Removing api security context")
+        try:
+            file_path = self.folder_to_store_certificates + self.capif_api_details_filename
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                self.logger.info(f"File {file_path} removed successfully.")
+            else:
+                self.logger.warning(f"File {file_path} does not exist.")
+        except Exception as e:
+            self.logger.error(f"Error during removing file: {e}")
+            raise
+
     
 
     
@@ -789,10 +803,13 @@ class ServiceDiscoverer:
         self.logger.info("Initializing ServiceDiscoverer")
 
         config = self.__load_config_file(config_file)
-
+        self.config_path = os.path.dirname(config_file)+"/"
         capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
         capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
         folder_path_for_certificates_and_api_key = str(os.getenv('FOLDER_PATH_FOR_CERTIFICATES_AND_API_KEY', config.get('folder_path_for_certificates_and_api_key', '')).strip())
+        uuid = os.getenv('UUID', config.get('uuid', '')).strip()
+
+        self.uuid=uuid
         
         self.capif_host = capif_host
         self.capif_https_port = capif_https_port
@@ -806,6 +823,7 @@ class ServiceDiscoverer:
         )
         self.private_key_path = self.folder_to_store_certificates_and_api_key + "private.key"
         self.ca_root_path = self.folder_to_store_certificates_and_api_key + "ca.crt"
+        
         self.logger.info("ServiceDiscoverer initialized correctly")
 
     def get_api_provider_id(self):
@@ -824,7 +842,7 @@ class ServiceDiscoverer:
     def __load_provider_api_details(self):
         try:
             with open(
-                    self.folder_to_store_certificates_and_api_key + "capif_api_security_context_details.json",
+                    self.folder_to_store_certificates_and_api_key + "capif_api_security_context_details-"+self.uuid+".json",
                     "r",
             ) as openfile:
                 details = json.load(openfile)
@@ -877,7 +895,7 @@ class ServiceDiscoverer:
     def __cache_security_context(self):
         try:
             with open(
-                    self.folder_to_store_certificates_and_api_key + "capif_api_security_context_details.json", "w"
+                    self.folder_to_store_certificates_and_api_key + "capif_api_security_context_details-"+self.uuid+".json", "w"
             ) as outfile:
                 json.dump(self.capif_api_details, outfile)
             self.logger.info("Security context saved correctly")
@@ -929,9 +947,9 @@ class ServiceDiscoverer:
                                     verify=self.ca_root_path
                                     )
             response.raise_for_status()
-            self.logger.info("Security service correctly updated")
+            self.logger.info("Security context correctly updated")
         except requests.RequestException as e:
-            self.logger.error("Error al actualizar el servicio de seguridad: %s", str(e))
+            self.logger.error("Error trying to update Security context: %s", str(e))
             raise
 
     def __register_security_service(self):
@@ -1030,12 +1048,28 @@ class ServiceDiscoverer:
             self.logger.error("Error obtaining the security token: %s", str(e))
             raise
 
+    
     def discover_service_apis(self):
         """
-        Descubre los APIs de servicio desde CAPIF.
+        Descubre los APIs de servicio desde CAPIF con filtros basados en un archivo JSON.
         :return: Payload JSON con los detalles de los APIs de servicio
         """
+        # Cargar los parámetros desde el archivo JSON
+        
+        json_path = self.config_path +"discover_filter.json"
+        with open(json_path, 'r') as f:
+            filters = json.load(f)
+
+        # Filtrar parámetros que no sean vacíos "
+        query_params = {k: v for k, v in filters.items() if v }
+
+        # Formar la URL con los parámetros de query
+        query_string = "&".join([f"{k}={v}" for k, v in query_params.items()])
         url = f"https://{self.capif_host}:{self.capif_https_port}/{self.capif_api_details['discover_services_url']}{self.capif_api_details['api_invoker_id']}"
+        
+        if query_string:
+            url += f"&{query_string}"
+        
         try:
             response = requests.get(
                 url,

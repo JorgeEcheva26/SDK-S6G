@@ -9,7 +9,7 @@ def showcase_capif_nef_connector():
     capif_connector.register_and_onboard_provider()
 
     
-    print("COMPLETADO")
+    print("COMPLETED")
 
 if __name__ == "__main__":
     #Let's register a NEF to CAPIF. This should happen exactly once

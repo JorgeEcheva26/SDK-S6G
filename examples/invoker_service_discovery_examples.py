@@ -45,4 +45,4 @@ if __name__ == "__main__":
     #showcase_service_discovery()
     #showcase_retrieve_endpoint_url_from_tsn()
     showcase_access_token_retrieval_from_capif()
-    print("COMPLETADO")
+    print("COMPLETED")

@@ -6,10 +6,10 @@
   "aef-id": "",
   "data-format": "",
   "api-cat": "",
-  "preferred-aef-loc": "OBJECT!!!!!",
+  "preferred-aef-loc": "",
   "req-api-prov-name": "",
   "supported-features": "",
   "api-supported-features": "",
-  "ue-ip-addr": "OBJECT!!!!!",
-  "service-kpis": "OBJECT!!!!!"
+  "ue-ip-addr": "",
+  "service-kpis": ""
 }

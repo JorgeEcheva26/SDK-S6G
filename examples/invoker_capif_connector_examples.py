@@ -13,7 +13,7 @@ def showcase_capif_connector():
     capif_connector = CAPIFInvokerConnector(config_file=emulator_utils.get_config_file())
 
     capif_connector.register_and_onboard_Invoker()
-    print("COMPLETADO")
+    print("COMPLETED")
 
 if __name__ == "__main__":
     #Let's register invoker to CAPIF. This should happen exactly once
