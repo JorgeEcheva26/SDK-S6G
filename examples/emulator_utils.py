@@ -55,10 +55,10 @@ def get_register_file()-> str :
 
 
 def nef_exposer_get_certificate_folder() -> str:
-    return "/Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder"
+    return "/Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder"
 
-def nef_exposer_get_sample_api_description_path() -> str:
-    return "/Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/nef_api_description_sample.json"
+def provider_exposer_get_sample_api_description_path() -> str:
+    return "/Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json"
 
 def nef_exposer_get_sample_api_description_path_that_is_stored_in_capif()->str:
     return "/Users/IDB0128/Documents/OpenCapif/test_certificate_folder/CAPIF_nef_api_description_sample.json"

@@ -515,7 +515,7 @@ class CAPIFProviderConnector:
         return public_key
 
     def __onboard_exposer_to_capif(self, access_token, capif_onboarding_url):
-        self.logger.info("Onboarding Provider to CAPIF")
+        self.logger.info("Onboarding Provider to CAPIF and waiting signed certificate by giving our public keys to CAPIF")
 
         url = f"{self.capif_https_url}{capif_onboarding_url}"
         headers = {
@@ -546,7 +546,7 @@ class CAPIFProviderConnector:
                 verify=os.path.join(self.certificates_folder, "ca.crt"),
             )
             response.raise_for_status()
-            self.logger.info("Onboarding completed successfully")
+            self.logger.info("Provider onboarded and signed certificate obtained successfully")
             return response.json()
         except requests.exceptions.RequestException as e:
             self.logger.error(f"Onboarding failed: {e}")
@@ -579,7 +579,7 @@ class CAPIFProviderConnector:
  
     def __save_capif_ca_root_file_and_get_auth_token(self):
         url = f"{self.capif_register_url}getauth"
-        self.logger.info("Acquiring authorization from CAPIF")
+        self.logger.info("Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator")
 
         try:
             response = requests.get(
@@ -598,7 +598,7 @@ class CAPIFProviderConnector:
             with open(ca_root_file_path, "wb") as ca_root_file:
                 ca_root_file.write(response_payload["ca_root"].encode("utf-8"))
 
-            self.logger.info("CA root certificate saved successfully")
+            self.logger.info("CAPIF CA root file saved and auth token obtained successfully")
             return response_payload
 
         except requests.exceptions.RequestException as e:
@@ -859,16 +859,12 @@ class ServiceDiscoverer:
 
     def get_security_context(self):
         self.logger.info("Getting security context for all API's filtered")
-
-        if self.__security_context_does_not_exist():
-            self.logger.info("There is no security context. Registering a new security service.")
-            self.__register_security_service()
-            self.__cache_security_context()
-            
-        elif self.__security_context_exist():
-            self.logger.info("The security context for these APIs does not exist, updating security context")
-            self.__update_security_service()
-            self.__cache_security_context()
+        
+           
+        
+        self.logger.info("Trying to update security context")
+        self.__update_security_service()
+        self.__cache_security_context()
 
 
     def get_access_token(self):
@@ -882,13 +878,13 @@ class ServiceDiscoverer:
         self.logger.info("Access token successfully obtained")
         return token_dic["access_token"]
 
-    def __security_context_does_not_exist(self):
-        presaved_data = self.__load_provider_api_details()
+    def __security_context_does_not_exist(self,presaved_data):
+        
 
         return "registered_security_contexes" not in presaved_data
 
-    def __security_context_exist(self):
-        presaved_data = self.__load_provider_api_details()
+    def __security_context_exist(self,presaved_data):
+        
 
         return "registered_security_contexes" in presaved_data
 
@@ -905,9 +901,11 @@ class ServiceDiscoverer:
 
     def __update_security_service(self):
         """
-        :param api_id: El id del API devuelto por descubrir servicios
-        :param aef_id: El aef_id devuelto por descubrir servicios
-        :return: None
+        Actualiza el servicio de seguridad.
+        
+        :param api_id: El id del API devuelto por descubrir servicios.
+        :param aef_id: El aef_id devuelto por descubrir servicios.
+        :return: None.
         """
         url = f"https://{self.capif_host}:{self.capif_https_port}/capif-security/v1/trustedInvokers/{self.capif_api_details['api_invoker_id']}/update"
         payload = {
@@ -923,12 +921,11 @@ class ServiceDiscoverer:
 
         number_of_apis = len(self.capif_api_details["registered_security_contexes"])
 
-
-        for i in range(0,number_of_apis):
-        # Obteniendo los valores de api_id y aef_id para cada API
+        for i in range(0, number_of_apis):
+            # Obteniendo los valores de api_id y aef_id para cada API
             api_id = self.capif_api_details["registered_security_contexes"][i]["api_id"]
             aef_id = self.capif_api_details["registered_security_contexes"][i]["aef_id"]
-        
+            
             security_info = {
                 "prefSecurityMethods": ["Oauth"],
                 "authenticationInfo": "string",
@@ -939,18 +936,26 @@ class ServiceDiscoverer:
             
             payload["securityInfo"].append(security_info)
 
-
         try:
             response = requests.post(url,
                                     json=payload,
                                     cert=(self.signed_key_crt_path, self.private_key_path),
-                                    verify=self.ca_root_path
-                                    )
+                                    verify=self.ca_root_path)
             response.raise_for_status()
             self.logger.info("Security context correctly updated")
+        
+        except requests.exceptions.HTTPError as http_err:
+            if response.status_code == 404:
+                self.logger.warning("Received 404 error, redirecting to register security service")
+                self.__register_security_service()
+            else:
+                self.logger.error("HTTP error occurred: %s", str(http_err))
+                raise
+
         except requests.RequestException as e:
             self.logger.error("Error trying to update Security context: %s", str(e))
             raise
+
 
     def __register_security_service(self):
         """
@@ -1138,18 +1143,47 @@ class ServiceDiscoverer:
         self.capif_api_details["access_token"]=token
         self.__cache_security_context()
 
-    def discover_and_get_access_tokens(self):
+    def get_tokens(self):
+        
+        self.get_security_context()
+        token=self.get_access_token()
+        self.save_security_token(token)
+        
+    
+    def discover(self):
         endpoints = self.discover_service_apis()
         if len(endpoints) > 0:
-            self.capif_api_details["registered_security_contexes"] = []
-            for service in endpoints["serviceAPIDescriptions"]:
+            self.save_api_discovered(endpoints)
+        else:
+            self.logger.error("No endpoints have been registered. Make sure a Provider has Published an API to CAPIF first")
+    
+    def save_api_discovered(self,endpoints):
+        self.capif_api_details["registered_security_contexes"] = []
+        for service in endpoints["serviceAPIDescriptions"]:
                 api_name = service["apiName"]
                 api_id = service["apiId"]
                 aef_id = service["aefProfiles"][0]["aefId"]
                 self.capif_api_details["registered_security_contexes"].append({"api_name":api_name,"api_id": api_id, "aef_id": aef_id})
-            self.get_security_context()
-            token=self.get_access_token()
-            self.save_security_token(token)
-        else:
-            self.logger.error("No endpoints have been registered. Make sure NEF has registered to CAPIF first")
-    
+        self.save_api_details()        
+
+    import json
+
+    def save_api_details(self):
+        try:
+            # Define the path to save the details
+            file_path = self.folder_to_store_certificates_and_api_key + "capif_api_security_context_details-" + self.uuid + ".json"
+            
+            # Save the details as a JSON file
+            with open(file_path, "w") as outfile:
+                json.dump(self.capif_api_details, outfile, indent=4)
+            
+            # Log the success of the operation
+            self.logger.info("API provider details correctly saved")
+
+        except Exception as e:
+            # Log any errors that occur during the save process
+            self.logger.error("Error while saving API provider details: %s", str(e))
+            raise
+
+        
+

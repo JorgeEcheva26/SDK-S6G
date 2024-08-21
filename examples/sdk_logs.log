@@ -1926,3 +1926,230 @@
 2024-08-20 11:37:02,088 - CAPIFInvokerConnector - INFO - Removing api security context
 2024-08-20 11:37:02,089 - CAPIFInvokerConnector - INFO - File /Users/IDB0128/Documents/OpenCapif/test_certificate_folder/capif_api_security_context_details-9075726b-2896-5c7c-8f4d-62ac90e2006d.json removed successfully.
 2024-08-20 11:37:02,089 - CAPIFInvokerConnector - INFO - Invoker offboarded and deregistered successfully
+2024-08-21 11:10:12,926 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-21 11:10:12,928 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-21 11:10:12,928 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-21 11:10:12,928 - CAPIFInvokerConnector - INFO - Creating private and public keys for the Invoker cert
+2024-08-21 11:10:13,456 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-21 11:10:13,456 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-21 11:10:13,577 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-21 11:10:13,578 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF
+2024-08-21 11:10:14,030 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-21 11:10:14,030 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-21 11:10:14,031 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-21 11:10:14,031 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-21 11:10:56,683 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-21 11:10:56,684 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-21 11:10:56,684 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-21 11:11:57,104 - CAPIFProviderConnector - INFO - cert_server.pem successfully generated!
+2024-08-21 11:11:57,105 - CAPIFProviderConnector - INFO - Acquiring authorization from CAPIF
+2024-08-21 11:11:57,232 - CAPIFProviderConnector - INFO - Authorization acquired successfully
+2024-08-21 11:11:57,234 - CAPIFProviderConnector - INFO - CA root certificate saved successfully
+2024-08-21 11:11:57,234 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF
+2024-08-21 11:11:59,815 - CAPIFProviderConnector - INFO - Onboarding completed successfully
+2024-08-21 11:11:59,816 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-21 11:11:59,819 - CAPIFProviderConnector - INFO - Data saved
+2024-08-21 11:18:25,598 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-21 11:18:25,599 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-21 11:18:25,600 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-21 11:18:25,600 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/capif_provider_details.json
+2024-08-21 11:18:25,607 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-21 11:18:25,607 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/nef_api_description_sample.json
+2024-08-21 11:18:25,608 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-21 11:18:25,612 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capifcore/published-apis/v1/APFb2e27a5e4a028e52ac8ef84968b93f/service-apis
+2024-08-21 11:18:25,870 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-21 11:18:25,871 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/CAPIF_nef_api_description_sample.json
+2024-08-21 11:23:36,986 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-21 11:23:36,987 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-21 11:23:36,987 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-21 11:23:36,988 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/capif_provider_details.json
+2024-08-21 11:23:36,988 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-21 11:23:36,989 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-21 11:23:36,989 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-21 11:23:36,989 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capifcore/published-apis/v1/APFb2e27a5e4a028e52ac8ef84968b93f/service-apis
+2024-08-21 11:23:37,041 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 403 Client Error: FORBIDDEN for url: https://capifcore/published-apis/v1/APFb2e27a5e4a028e52ac8ef84968b93f/service-apis
+2024-08-21 11:24:27,501 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-21 11:24:27,503 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-21 11:24:27,503 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-21 11:24:27,503 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/capif_provider_details.json
+2024-08-21 11:24:27,510 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-21 11:24:27,511 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-21 11:24:27,518 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-21 11:24:27,518 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capifcore/published-apis/v1/APFb2e27a5e4a028e52ac8ef84968b93f/service-apis
+2024-08-21 11:24:27,579 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-21 11:24:27,580 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/CAPIF_provider_api_description_sample.json
+2024-08-21 11:26:07,942 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-21 11:26:07,943 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-21 11:26:07,943 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-21 11:26:07,944 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/capif_provider_details.json
+2024-08-21 11:26:07,944 - CAPIFProviderConnector - ERROR - Provider details file not found: /Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/capif_provider_details.json
+2024-08-21 11:27:48,035 - CAPIFProviderConnector - INFO - Initializing CAPIFIProviderConnector
+2024-08-21 11:27:48,037 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-21 11:27:48,037 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-21 11:27:48,038 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/capif_provider_details.json
+2024-08-21 11:27:48,041 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-21 11:27:48,041 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-21 11:27:48,043 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-21 11:27:48,044 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capifcore/published-apis/v1/APFb2e27a5e4a028e52ac8ef84968b93f/service-apis
+2024-08-21 11:27:48,104 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-21 11:27:48,105 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/CAPIF_provider_api_description_sample.json
+2024-08-21 11:30:30,191 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 11:30:30,193 - ServiceDiscoverer - ERROR - Error while loading Api invoker details: [Errno 2] No such file or directory: '/Users/IDB0128/Documents/OpenCapif/test_certificate_folder/capif_api_security_context_details-9075726b-2896-5c7c-8f4d-62ac90e2006d.json'
+2024-08-21 11:32:32,485 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 11:32:32,487 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 11:32:32,487 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 11:32:32,734 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-21 11:32:32,735 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-21 11:32:32,735 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 11:32:32,735 - ServiceDiscoverer - INFO - There is no security context. Registering a new security service.
+2024-08-21 11:32:33,225 - ServiceDiscoverer - INFO - Security service properly registered
+2024-08-21 11:32:33,229 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 11:32:33,372 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-21 11:32:33,373 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-21 11:32:33,374 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 11:33:51,495 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 11:33:51,497 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 11:33:51,497 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 11:33:51,546 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-21 11:33:51,546 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-21 11:33:51,547 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 11:33:51,547 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 11:33:51,547 - ServiceDiscoverer - INFO - The security context for these APIs does not exist, updating security context
+2024-08-21 11:33:51,589 - ServiceDiscoverer - INFO - Security context correctly updated
+2024-08-21 11:33:51,590 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 11:33:51,679 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-21 11:33:51,680 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-21 11:33:51,681 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 11:37:26,024 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 11:37:26,028 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 11:37:26,028 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 11:37:26,075 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-21 11:37:26,075 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-21 11:37:26,076 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 11:37:26,076 - ServiceDiscoverer - INFO - The security context for these APIs does not exist, updating security context
+2024-08-21 11:37:26,108 - ServiceDiscoverer - INFO - Security context correctly updated
+2024-08-21 11:37:26,110 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 11:37:26,181 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-21 11:37:26,182 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-21 11:37:26,183 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 11:37:57,460 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 11:37:57,462 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 11:37:57,462 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 11:37:57,512 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-21 11:37:57,513 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-21 11:37:57,514 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 11:37:57,514 - ServiceDiscoverer - INFO - The security context for these APIs does not exist, updating security context
+2024-08-21 11:37:57,553 - ServiceDiscoverer - INFO - Security context correctly updated
+2024-08-21 11:37:57,554 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 11:37:57,623 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-21 11:37:57,623 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-21 11:37:57,624 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:20:54,388 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:20:54,397 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:20:54,398 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:21:27,917 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:21:27,919 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:21:27,919 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:21:28,019 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-21 12:21:28,020 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-21 12:22:16,872 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:22:16,877 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:22:16,877 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:22:16,878 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-21 12:22:16,878 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:22:16,878 - ServiceDiscoverer - INFO - The security context for these APIs does not exist, updating security context
+2024-08-21 12:22:16,955 - ServiceDiscoverer - INFO - Security context correctly updated
+2024-08-21 12:22:16,957 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:22:17,075 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-21 12:22:17,076 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-21 12:22:17,078 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:23:36,151 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-21 12:23:36,154 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-21 12:23:36,154 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-21 12:23:36,154 - CAPIFInvokerConnector - INFO - Creating private and public keys for the Invoker cert
+2024-08-21 12:23:37,051 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-21 12:23:37,052 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-21 12:23:37,207 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-21 12:23:37,208 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF
+2024-08-21 12:23:37,314 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-21 12:23:37,314 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-21 12:23:37,315 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-21 12:23:37,315 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-21 12:23:56,498 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:23:56,499 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:23:56,499 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:23:56,538 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-21 12:23:56,539 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-21 12:24:26,620 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:24:26,622 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:24:26,622 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:24:26,622 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-21 12:24:26,622 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:24:26,622 - ServiceDiscoverer - INFO - The security context for these APIs does not exist, updating security context
+2024-08-21 12:24:26,688 - ServiceDiscoverer - ERROR - Error trying to update Security context: 404 Client Error: NOT FOUND for url: https://capifcore:443/capif-security/v1/trustedInvokers/INV45fcba7e62b0d68b08c293d7e7e8f7/update
+2024-08-21 12:46:39,315 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:46:39,318 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:46:39,318 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:46:39,318 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-21 12:46:39,319 - ServiceDiscoverer - INFO - Trying to update security context
+2024-08-21 12:46:39,382 - ServiceDiscoverer - WARNING - Received 404 error, redirecting to register security service
+2024-08-21 12:46:39,440 - ServiceDiscoverer - INFO - Security service properly registered
+2024-08-21 12:46:39,443 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:46:39,523 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-21 12:46:39,523 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-21 12:46:39,524 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:46:52,662 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:46:52,663 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:46:52,663 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:46:52,664 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-21 12:46:52,664 - ServiceDiscoverer - INFO - Trying to update security context
+2024-08-21 12:46:52,709 - ServiceDiscoverer - INFO - Security context correctly updated
+2024-08-21 12:46:52,711 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:46:52,832 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-21 12:46:52,832 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-21 12:46:52,833 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:50:44,452 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:50:44,454 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:50:44,454 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:50:44,506 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-21 12:50:44,508 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-21 12:50:47,359 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:50:47,360 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:50:47,360 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:50:47,360 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-21 12:50:47,360 - ServiceDiscoverer - INFO - Trying to update security context
+2024-08-21 12:50:47,399 - ServiceDiscoverer - INFO - Security context correctly updated
+2024-08-21 12:50:47,400 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:50:47,474 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-21 12:50:47,474 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-21 12:50:47,477 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:51:10,909 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:51:10,911 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:51:10,911 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:51:10,949 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-21 12:51:10,951 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-21 12:52:11,263 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:52:11,266 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:52:11,266 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:52:11,266 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-21 12:52:11,266 - ServiceDiscoverer - INFO - Trying to update security context
+2024-08-21 12:52:11,321 - ServiceDiscoverer - INFO - Security context correctly updated
+2024-08-21 12:52:11,322 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:52:11,388 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-21 12:52:11,388 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-21 12:52:11,390 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:53:12,181 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:53:12,183 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:53:12,183 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:53:12,216 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-21 12:53:12,217 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-21 12:53:22,404 - ServiceDiscoverer - INFO - Initializing ServiceDiscoverer
+2024-08-21 12:53:22,405 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-21 12:53:22,405 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-21 12:53:22,405 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-21 12:53:22,405 - ServiceDiscoverer - INFO - Trying to update security context
+2024-08-21 12:53:22,443 - ServiceDiscoverer - INFO - Security context correctly updated
+2024-08-21 12:53:22,446 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-21 12:53:22,514 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-21 12:53:22,514 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-21 12:53:22,515 - ServiceDiscoverer - INFO - Security context saved correctly

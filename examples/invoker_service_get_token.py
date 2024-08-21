@@ -6,7 +6,7 @@ import emulator_utils
 
 def showcase_access_token_retrieval_from_capif():
     service_discoverer = ServiceDiscoverer(config_file=emulator_utils.get_config_file())
-    service_discoverer.discover()
+    service_discoverer.get_tokens()
     
 
 if __name__ == "__main__":

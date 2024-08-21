@@ -1,7 +1,7 @@
 {
-    "folder_to_store_certificates": "/Users/IDB0128/Documents/OpenCapif/test_certificate_folder/",
-    "certificates_folder": "/Users/IDB0128/Documents/OpenCapif/test_nef_certificate_folder/",
-    "folder_path_for_certificates_and_api_key": "/Users/IDB0128/Documents/OpenCapif/test_certificate_folder/",
+    "folder_to_store_certificates": "/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/",
+    "certificates_folder": "/Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/",
+    "folder_path_for_certificates_and_api_key": "/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/",
     "capif_host": "capifcore",
     "register_host": "localhost",
     "capif_http_port": "8080",
@@ -18,9 +18,9 @@
     "csr_state_or_province_name": "Madrid",
     "csr_country_name": "ES",
     "csr_email_address": "test@example.com",
-    "capif_invoker_username": "custom_example75",
+    "capif_invoker_username": "custom_invoker75",
     "capif_invoker_password": "pass123",
     "capif_provider_username": "custom_example75",
     "capif_provider_password": "pass123",
-    "uuid": "9075726b-2896-5c7c-8f4d-62ac90e2006d"
+    "uuid": "4f14958d-0143-50e8-b63c-359ec3ec595f"
 }
