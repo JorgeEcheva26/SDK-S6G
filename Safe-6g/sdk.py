@@ -76,17 +76,15 @@ class CAPIFInvokerConnector:
         
 
         # Asignar valores desde variables de entorno o desde el archivo de configuración
-        self.folder_to_store_certificates = os.getenv('FOLDER_TO_STORE_CERTIFICATES', config.get('folder_to_store_certificates','')).strip()
+        self.invoker_folder = os.getenv('invoker_folder', config.get('invoker_folder','')).strip()
         
         capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
         register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
-        capif_http_port = str(os.getenv('CAPIF_HTTP_PORT', config.get('capif_http_port', '')).strip())
         capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
         capif_register_port = str(os.getenv('CAPIF_REGISTER_PORT', config.get('capif_register_port', '')).strip())
         capif_invoker_username = os.getenv('CAPIF_INVOKER_USERNAME', config.get('capif_invoker_username', '')).strip()
         capif_invoker_password = os.getenv('CAPIF_INVOKER_PASSWORD', config.get('capif_invoker_password', '')).strip()
-        capif_register_username = os.getenv('CAPIF_REGISTER_USERNAME', config.get('capif_register_username', '')).strip()
-        capif_register_password = os.getenv('CAPIF_REGISTER_PASSWORD', config.get('capif_register_password', '')).strip()
+        
         capif_callback_url = os.getenv('CAPIF_CALLBACK_URL', config.get('capif_callback_url', '')).strip()
         description = os.getenv('DESCRIPTION', config.get('description', '')).strip()
         csr_common_name = os.getenv('CSR_COMMON_NAME', config.get('csr_common_name', '')).strip()
@@ -100,12 +98,7 @@ class CAPIFInvokerConnector:
 
 
         # Resto del código original para inicializar URLs y otros atributos
-        if len(capif_http_port) == 0 or int(capif_http_port) == 80:
-            self.capif_http_url = "http://" + capif_host.strip() + "/"
-        else:
-            self.capif_http_url = (
-                "http://" + capif_host.strip() + ":" + capif_http_port.strip() + "/"
-            )
+        
 
         if len(capif_https_port) == 0 or int(capif_https_port) == 443:
             self.capif_https_url = "https://" + capif_host.strip() + "/"
@@ -124,8 +117,7 @@ class CAPIFInvokerConnector:
         self.capif_callback_url = self.__add_trailing_slash_to_url_if_missing(
             capif_callback_url.strip()
         )
-        self.capif_register_username = capif_register_username
-        self.capif_register_password = capif_register_password
+    
         self.capif_invoker_username = capif_invoker_username
         self.capif_invoker_password = capif_invoker_password
         self.description = description
@@ -175,7 +167,7 @@ class CAPIFInvokerConnector:
     def __load_invoker_api_details(self):
         self.logger.debug("Loading Invoker API details")
         with open(
-            self.folder_to_store_certificates + self.capif_api_details_filename, "r"
+            self.invoker_folder + self.capif_api_details_filename, "r"
         ) as openfile:
             return json.load(openfile)
 
@@ -190,15 +182,15 @@ class CAPIFInvokerConnector:
             )
 
             signed_key_crt_path = (
-                self.folder_to_store_certificates + capif_api_details["csr_common_name"] + ".crt"
+                self.invoker_folder + capif_api_details["csr_common_name"] + ".crt"
             )
-            private_key_path = self.folder_to_store_certificates + "private.key"
+            private_key_path = self.invoker_folder + "private.key"
 
             response = requests.request(
                 "DELETE",
                 url,
                 cert=(signed_key_crt_path, private_key_path),
-                verify=self.folder_to_store_certificates + "ca.crt",
+                verify=self.invoker_folder + "ca.crt",
             )
             response.raise_for_status()
             self.logger.info("Invoker offboarded successfully")
@@ -219,8 +211,8 @@ class CAPIFInvokerConnector:
     def __create_private_and_public_keys(self) -> str:
         self.logger.info("Creating private and public keys for the Invoker cert")
         try:
-            private_key_path = self.folder_to_store_certificates + "private.key"
-            csr_file_path = self.folder_to_store_certificates + "cert_req.csr"
+            private_key_path = self.invoker_folder + "private.key"
+            csr_file_path = self.invoker_folder + "cert_req.csr"
 
             key = PKey()
             key.generate_key(TYPE_RSA, 2048)
@@ -253,7 +245,7 @@ class CAPIFInvokerConnector:
     def __remove_files(self):
         self.logger.info("Removing files generated")
         try:
-            folder_path = self.folder_to_store_certificates
+            folder_path = self.invoker_folder
             
             if os.path.exists(folder_path):
                 # Elimina todo el contenido dentro de la carpeta, incluyendo archivos y subcarpetas
@@ -287,7 +279,7 @@ class CAPIFInvokerConnector:
 
             response.raise_for_status()
             response_payload = json.loads(response.text)
-            ca_root_file = open(self.folder_to_store_certificates + "ca.crt", "wb+")
+            ca_root_file = open(self.invoker_folder + "ca.crt", "wb+")
             ca_root_file.write(bytes(response_payload["ca_root"], "utf-8"))
             self.logger.info("CAPIF CA root file saved and auth token obtained successfully")
             return response_payload
@@ -322,12 +314,12 @@ class CAPIFInvokerConnector:
                 url,
                 headers=headers,
                 data=payload,
-                verify=self.folder_to_store_certificates + "ca.crt",
+                verify=self.invoker_folder + "ca.crt",
             )
             response.raise_for_status()
             response_payload = json.loads(response.text)
             certification_file = open(
-                self.folder_to_store_certificates + self.csr_common_name + ".crt", "wb"
+                self.invoker_folder + self.csr_common_name + ".crt", "wb"
             )
             certification_file.write(
                 bytes(
@@ -346,7 +338,7 @@ class CAPIFInvokerConnector:
         self.logger.info("Writing API invoker ID and service discovery URL to file")
         try:
             with open(
-                self.folder_to_store_certificates + self.capif_api_details_filename, "w"
+                self.invoker_folder + self.capif_api_details_filename, "w"
             ) as outfile:
                 json.dump(
                     {
@@ -387,16 +379,13 @@ class CAPIFProviderConnector:
             raise
 
         try:
-            certificates_folder = os.getenv('CERTIFICATES_FOLDER', config.get('certificates_folder', '')).strip()
+            provider_folder = os.getenv('PROVIDER_FOLDER', config.get('provider_folder', '')).strip()
             capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
             capif_register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
-            capif_http_port = str(os.getenv('CAPIF_HTTP_PORT', config.get('capif_http_port', '')).strip())
             capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
             capif_register_port = str(os.getenv('CAPIF_REGISTER_PORT', config.get('capif_register_port', '')).strip())
             capif_provider_username = os.getenv('CAPIF_PROVIDER_USERNAME', config.get('capif_provider_username', '')).strip()
             capif_provider_password = os.getenv('CAPIF_PROVIDER_PASSWORD', config.get('capif_provider_password', '')).strip()
-            capif_register_username = os.getenv('CAPIF_REGISTER_USERNAME', config.get('capif_register_username', '')).strip()
-            capif_register_password = os.getenv('CAPIF_REGISTER_PASSWORD', config.get('capif_register_password', '')).strip()
             description = os.getenv('DESCRIPTION', config.get('description', '')).strip()
             csr_common_name = os.getenv('CSR_COMMON_NAME', config.get('csr_common_name', '')).strip()
             csr_organizational_unit = os.getenv('CSR_ORGANIZATIONAL_UNIT', config.get('csr_organizational_unit', '')).strip()
@@ -413,15 +402,13 @@ class CAPIFProviderConnector:
                 self.logger.error("CAPIF_PROVIDER_USERNAME is required but not provided")
                 raise ValueError("CAPIF_PROVIDER_USERNAME is required")
 
-            self.certificates_folder = os.path.join(certificates_folder.strip(), "")
+            self.provider_folder = os.path.join(provider_folder.strip(), "")
             self.description = description
             self.capif_host = capif_host.strip()
             self.capif_provider_username = capif_provider_username
             self.capif_provider_password = capif_provider_password
             self.capif_register_host = capif_register_host
             self.capif_register_port = capif_register_port
-            self.capif_register_username = capif_register_username
-            self.capif_register_password = capif_register_password
             self.csr_common_name = csr_common_name
             self.csr_organizational_unit = csr_organizational_unit
             self.csr_organization = csr_organization
@@ -431,14 +418,10 @@ class CAPIFProviderConnector:
             self.csr_email_address = csr_email_address
             self.uuid = uuid
             
-            capif_http_port = str(capif_http_port)
+            
             self.capif_https_port = str(capif_https_port)
             
-            if len(capif_http_port) == 0 or int(capif_http_port) == 80:
-                self.capif_http_url = f"http://{capif_host.strip()}/"
-            else:
-                self.capif_http_url = f"http://{capif_host.strip()}:{capif_http_port.strip()}/"
-
+            
             if len(self.capif_https_port) == 0 or int(self.capif_https_port) == 443:
                 self.capif_https_url = f"https://{capif_host.strip()}/"
             else:
@@ -459,11 +442,11 @@ class CAPIFProviderConnector:
     #Retrieves and stores the cert_server.pem from CAPIF.
         self.logger.info("Retrieving capif_cert_server.pem, this may take a few minutes.")
 
-        cmd = f"openssl s_client -connect {self.capif_host}:{self.capif_https_port} | openssl x509 -text > {self.certificates_folder}/capif_cert_server.pem"
+        cmd = f"openssl s_client -connect {self.capif_host}:{self.capif_https_port} | openssl x509 -text > {self.provider_folder}/capif_cert_server.pem"
         
         try:
             subprocess.run(cmd, shell=True, check=True)
-            cert_file = os.path.join(self.certificates_folder, "capif_cert_server.pem")
+            cert_file = os.path.join(self.provider_folder, "capif_cert_server.pem")
             if os.path.exists(cert_file) and os.path.getsize(cert_file) > 0:
                 self.logger.info("cert_server.pem successfully generated!")
             else:
@@ -490,8 +473,8 @@ class CAPIFProviderConnector:
         Creates private and public keys in the certificates folder.
         :return: The contents of the public key
         """
-        private_key_path = os.path.join(self.certificates_folder, f"{api_prov_func_role}_private_key.key")
-        csr_file_path = os.path.join(self.certificates_folder, f"{api_prov_func_role}_public.csr")
+        private_key_path = os.path.join(self.provider_folder, f"{api_prov_func_role}_private_key.key")
+        csr_file_path = os.path.join(self.provider_folder, f"{api_prov_func_role}_public.csr")
 
         # Create key pair
         key = PKey()
@@ -550,7 +533,7 @@ class CAPIFProviderConnector:
                 url,
                 headers=headers,
                 data=json.dumps(payload),
-                verify=os.path.join(self.certificates_folder, "ca.crt"),
+                verify=os.path.join(self.provider_folder, "ca.crt"),
             )
             response.raise_for_status()
             self.logger.info("Provider onboarded and signed certificate obtained successfully")
@@ -565,11 +548,11 @@ class CAPIFProviderConnector:
 
         for func_provile in onboarding_response["apiProvFuncs"]:
             role = func_provile["apiProvFuncRole"].lower()
-            cert_path = os.path.join(self.certificates_folder, f"dummy_{role}.crt")
+            cert_path = os.path.join(self.provider_folder, f"dummy_{role}.crt")
             with open(cert_path, "wb") as cert_file:
                 cert_file.write(func_provile["regInfo"]["apiProvCert"].encode("utf-8"))
 
-        provider_details_path = os.path.join(self.certificates_folder, "capif_provider_details.json")
+        provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
         with open(provider_details_path, "w") as outfile:
             data = {
                 "capif_registration_id": capif_registration_id,
@@ -600,7 +583,7 @@ class CAPIFProviderConnector:
             self.logger.info("Authorization acquired successfully")
 
             response_payload = response.json()
-            ca_root_file_path = os.path.join(self.certificates_folder, "ca.crt")
+            ca_root_file_path = os.path.join(self.provider_folder, "ca.crt")
 
             with open(ca_root_file_path, "wb") as ca_root_file:
                 ca_root_file.write(response_payload["ca_root"].encode("utf-8"))
@@ -652,7 +635,7 @@ class CAPIFProviderConnector:
         self.logger.info("Starting the service publication process")
 
         # Load provider details
-        provider_details_path = os.path.join(self.certificates_folder, "capif_provider_details.json")
+        provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
         self.logger.info(f"Loading provider details from {provider_details_path}")
         
         try:
@@ -691,8 +674,8 @@ class CAPIFProviderConnector:
         # Publish services
         url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}"
         cert = (
-            os.path.join(self.certificates_folder, "dummy_apf.crt"),
-            os.path.join(self.certificates_folder, "APF_private_key.key"),
+            os.path.join(self.provider_folder, "dummy_apf.crt"),
+            os.path.join(self.provider_folder, "APF_private_key.key"),
         )
         
         self.logger.info(f"Publishing services to URL: {url}")
@@ -703,7 +686,7 @@ class CAPIFProviderConnector:
                 headers={"Content-Type": "application/json"},
                 data=json.dumps(data),
                 cert=cert,
-                verify=os.path.join(self.certificates_folder, "ca.crt"),
+                verify=os.path.join(self.provider_folder, "ca.crt"),
             )
             response.raise_for_status()
             self.logger.info("Services published successfully")
@@ -711,7 +694,7 @@ class CAPIFProviderConnector:
             # Save response to file
             capif_response = response.text
             file_name = os.path.basename(service_api_description_json_full_path)
-            output_path = os.path.join(self.certificates_folder, f"CAPIF_{file_name}")
+            output_path = os.path.join(self.provider_folder, f"CAPIF_{file_name}")
             with open(output_path, "w") as outfile:
                 outfile.write(capif_response)
             self.logger.info(f"CAPIF response saved to {output_path}")
@@ -751,15 +734,15 @@ class CAPIFProviderConnector:
 
             # Define certificate paths
             cert_paths = (
-                os.path.join(self.certificates_folder, "dummy_amf.crt"),
-                os.path.join(self.certificates_folder, "AMF_private_key.key")
+                os.path.join(self.provider_folder, "dummy_amf.crt"),
+                os.path.join(self.provider_folder, "AMF_private_key.key")
             )
 
             # Send DELETE request to offboard the provider
             response = requests.delete(
                 url,
                 cert=cert_paths,
-                verify=os.path.join(self.certificates_folder, "ca.crt")
+                verify=os.path.join(self.provider_folder, "ca.crt")
             )
             
             response.raise_for_status()
@@ -775,7 +758,7 @@ class CAPIFProviderConnector:
     def __remove_files(self):
         self.logger.info("Removing files generated")
         try:
-            folder_path = self.certificates_folder
+            folder_path = self.provider_folder
             
             if os.path.exists(folder_path):
                 # Elimina todo el contenido dentro de la carpeta, incluyendo archivos y subcarpetas
@@ -799,7 +782,7 @@ class CAPIFProviderConnector:
         :raises FileNotFoundError: If the CAPIF provider details file is not found.
         :raises json.JSONDecodeError: If there is an error decoding the JSON file.
         """
-        file_path = os.path.join(self.certificates_folder, "capif_provider_details.json")
+        file_path = os.path.join(self.provider_folder, "capif_provider_details.json")
         
         try:
             with open(file_path, "r") as file:
@@ -832,23 +815,23 @@ class ServiceDiscoverer:
         self.config_path = os.path.dirname(config_file)+"/"
         capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
         capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
-        folder_path_for_certificates_and_api_key = str(os.getenv('FOLDER_PATH_FOR_CERTIFICATES_AND_API_KEY', config.get('folder_path_for_certificates_and_api_key', '')).strip())
+        invoker_folder = str(os.getenv('INVOKER_FOLDER', config.get('invoker_folder', '')).strip())
         uuid = os.getenv('UUID', config.get('uuid', '')).strip()
 
         self.uuid=uuid
         
         self.capif_host = capif_host
         self.capif_https_port = capif_https_port
-        self.folder_to_store_certificates_and_api_key = os.path.join(
-            folder_path_for_certificates_and_api_key.strip(), ""
+        self.invoker_folder = os.path.join(
+            invoker_folder.strip(), ""
         )
         self.capif_api_details = self.__load_provider_api_details()
         self.signed_key_crt_path = (
-                self.folder_to_store_certificates_and_api_key
+                self.invoker_folder
                 + self.capif_api_details["csr_common_name"] + ".crt"
         )
-        self.private_key_path = self.folder_to_store_certificates_and_api_key + "private.key"
-        self.ca_root_path = self.folder_to_store_certificates_and_api_key + "ca.crt"
+        self.private_key_path = self.invoker_folder + "private.key"
+        self.ca_root_path = self.invoker_folder + "ca.crt"
         
         self.logger.info("ServiceDiscoverer initialized correctly")
 
@@ -868,7 +851,7 @@ class ServiceDiscoverer:
     def __load_provider_api_details(self):
         try:
             with open(
-                    self.folder_to_store_certificates_and_api_key + "capif_api_security_context_details-"+self.uuid+".json",
+                    self.invoker_folder + "capif_api_security_context_details-"+self.uuid+".json",
                     "r",
             ) as openfile:
                 details = json.load(openfile)
@@ -917,7 +900,7 @@ class ServiceDiscoverer:
     def __cache_security_context(self):
         try:
             with open(
-                    self.folder_to_store_certificates_and_api_key + "capif_api_security_context_details-"+self.uuid+".json", "w"
+                    self.invoker_folder + "capif_api_security_context_details-"+self.uuid+".json", "w"
             ) as outfile:
                 json.dump(self.capif_api_details, outfile)
             self.logger.info("Security context saved correctly")
@@ -1199,7 +1182,7 @@ class ServiceDiscoverer:
     def save_api_details(self):
         try:
             # Define the path to save the details
-            file_path = self.folder_to_store_certificates_and_api_key + "capif_api_security_context_details-" + self.uuid + ".json"
+            file_path = self.invoker_folder + "capif_api_security_context_details-" + self.uuid + ".json"
             
             # Save the details as a JSON file
             with open(file_path, "w") as outfile:
