@@ -1,5 +1,6 @@
 import os
 import logging
+import shutil
 import subprocess
 from typing import List, Union, Optional
 from requests.auth import HTTPBasicAuth
@@ -209,7 +210,7 @@ class CAPIFInvokerConnector:
         self.logger.info("Offboarding and deregistering Invoker")
         try:
             self.__offboard_Invoker()
-            self.__remove_context()
+            self.__remove_files()
             self.logger.info("Invoker offboarded and deregistered successfully")
         except Exception as e:
             self.logger.error(f"Error during Invoker offboarding and deregistering: {e}")
@@ -249,17 +250,23 @@ class CAPIFInvokerConnector:
 
    
 
-    def __remove_context(self):
-        self.logger.info("Removing api security context")
+    def __remove_files(self):
+        self.logger.info("Removing files generated")
         try:
-            file_path = self.folder_to_store_certificates + self.capif_api_details_filename
-            if os.path.exists(file_path):
-                os.remove(file_path)
-                self.logger.info(f"File {file_path} removed successfully.")
+            folder_path = self.folder_to_store_certificates
+            
+            if os.path.exists(folder_path):
+                # Elimina todo el contenido dentro de la carpeta, incluyendo archivos y subcarpetas
+                for root, dirs, files in os.walk(folder_path):
+                    for file in files:
+                        os.remove(os.path.join(root, file))
+                    for dir in dirs:
+                        shutil.rmtree(os.path.join(root, dir))
+                self.logger.info(f"All contents in {folder_path} removed successfully.")
             else:
-                self.logger.warning(f"File {file_path} does not exist.")
+                self.logger.warning(f"Folder {folder_path} does not exist.")
         except Exception as e:
-            self.logger.error(f"Error during removing file: {e}")
+            self.logger.error(f"Error during removing folder contents: {e}")
             raise
 
     
@@ -725,9 +732,10 @@ class CAPIFProviderConnector:
         """
         try:
             self.offboard_nef()
-            self.logger.info("NEF offboarded and deregistered successfully.")
+            self.__remove_files()
+            self.logger.info("Provider offboarded and deregistered successfully.")
         except Exception as e:
-            self.logger.error(f"Failed to offboard and deregister NEF: {e}")
+            self.logger.error(f"Failed to offboard and deregister Provider: {e}")
             raise
         
     def offboard_nef(self) -> None:
@@ -763,7 +771,25 @@ class CAPIFProviderConnector:
         except Exception as e:
             self.logger.error(f"Unexpected error: {e}")
             raise
-
+    
+    def __remove_files(self):
+        self.logger.info("Removing files generated")
+        try:
+            folder_path = self.certificates_folder
+            
+            if os.path.exists(folder_path):
+                # Elimina todo el contenido dentro de la carpeta, incluyendo archivos y subcarpetas
+                for root, dirs, files in os.walk(folder_path):
+                    for file in files:
+                        os.remove(os.path.join(root, file))
+                    for dir in dirs:
+                        shutil.rmtree(os.path.join(root, dir))
+                self.logger.info(f"All contents in {folder_path} removed successfully.")
+            else:
+                self.logger.warning(f"Folder {folder_path} does not exist.")
+        except Exception as e:
+            self.logger.error(f"Error during removing folder contents: {e}")
+            raise
 
     def __load_nef_api_details(self) -> dict:
         """
@@ -1070,6 +1096,7 @@ class ServiceDiscoverer:
 
         # Formar la URL con los parámetros de query
         query_string = "&".join([f"{k}={v}" for k, v in query_params.items()])
+        
         url = f"https://{self.capif_host}:{self.capif_https_port}/{self.capif_api_details['discover_services_url']}{self.capif_api_details['api_invoker_id']}"
         
         if query_string:
@@ -1082,6 +1109,7 @@ class ServiceDiscoverer:
                 cert=(self.signed_key_crt_path, self.private_key_path),
                 verify=self.ca_root_path
             )
+            
             response.raise_for_status()
             response_payload = response.json()
             self.logger.info("Service APIs successfully discovered")

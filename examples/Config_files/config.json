@@ -1,26 +1,51 @@
-{
-    "folder_to_store_certificates": "/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/",
-    "certificates_folder": "/Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/",
-    "folder_path_for_certificates_and_api_key": "/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/",
-    "capif_host": "capifcore",
-    "register_host": "localhost",
-    "capif_http_port": "8080",
-    "capif_https_port": "443",
-    "capif_register_port": "8084",
-    "capif_register_username": "admin",
-    "capif_register_password": "password123",
-    "capif_callback_url": "http://localhost:5000",
-    "description": "Dummy example",
-    "csr_common_name": "test03",
-    "csr_organizational_unit": "test_app_ou",
-    "csr_organization": "test_app_o",
-    "crs_locality": "Madrid",
-    "csr_state_or_province_name": "Madrid",
-    "csr_country_name": "ES",
-    "csr_email_address": "test@example.com",
-    "capif_invoker_username": "custom_invoker75",
-    "capif_invoker_password": "pass123",
-    "capif_provider_username": "custom_example75",
-    "capif_provider_password": "pass123",
-    "uuid": "4f14958d-0143-50e8-b63c-359ec3ec595f"
-}
+{ 
+
+"folder_to_store_certificates": "/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/", 
+
+"certificates_folder": "/Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/", 
+
+"folder_path_for_certificates_and_api_key": "/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/", 
+
+"capif_host": "capif-prev.mobilesandbox.cloud", 
+
+"register_host": "registercapif-prev.mobilesandbox.cloud", 
+
+"capif_http_port": "8080", 
+
+"capif_https_port": "36212", 
+
+"capif_register_port": "36211", 
+
+"capif_register_username": "admin", 
+
+"capif_register_password": "password123", 
+
+"capif_callback_url": "http://localhost:5000", 
+
+"description": "Dummy example", 
+
+"csr_common_name": "test03", 
+
+"csr_organizational_unit": "test_app_ou", 
+
+"csr_organization": "test_app_o", 
+
+"crs_locality": "Madrid", 
+
+"csr_state_or_province_name": "Madrid", 
+
+"csr_country_name": "ES", 
+
+"csr_email_address": "test@example.com", 
+
+"capif_invoker_username": "echeva_0", 
+
+"capif_invoker_password": "echevapass", 
+
+"capif_provider_username": "echeva_0", 
+
+"capif_provider_password": "echevapass", 
+
+"uuid": "f1c191ee-9669-57e8-81ee-25143ecc8374" 
+
+} 
