@@ -92,14 +92,14 @@ class CAPIFInvokerConnector:
 
         # Asignar valores desde variables de entorno o desde el archivo de configuración
         
-        self.invoker_folder = os.path.abspath(os.getenv('invoker_folder', config.get('invoker_folder', '')).strip())
+        invoker_general_folder = os.path.abspath(os.getenv('invoker_folder', config.get('invoker_folder', '')).strip())
+        
         capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
         register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
         capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
         capif_register_port = str(os.getenv('CAPIF_REGISTER_PORT', config.get('capif_register_port', '')).strip())
         capif_invoker_username = os.getenv('CAPIF_INVOKER_USERNAME', config.get('capif_invoker_username', '')).strip()
         capif_invoker_password = os.getenv('CAPIF_INVOKER_PASSWORD', config.get('capif_invoker_password', '')).strip()
-        
         capif_callback_url = os.getenv('CAPIF_CALLBACK_URL', config.get('capif_callback_url', '')).strip()
         description = os.getenv('DESCRIPTION', config.get('description', '')).strip()
         csr_common_name = os.getenv('CSR_COMMON_NAME', config.get('csr_common_name', '')).strip()
@@ -110,8 +110,8 @@ class CAPIFInvokerConnector:
         csr_country_name = os.getenv('CSR_COUNTRY_NAME', config.get('csr_country_name', '')).strip()
         csr_email_address = os.getenv('CSR_EMAIL_ADDRESS', config.get('csr_email_address', '')).strip()
         
-
-
+        self.invoker_folder=os.path.join(invoker_general_folder,capif_invoker_username)
+        os.makedirs(self.invoker_folder, exist_ok=True)
         # Resto del código original para inicializar URLs y otros atributos
         
 
@@ -283,6 +283,7 @@ class CAPIFInvokerConnector:
                         os.remove(os.path.join(root, file))
                     for dir in dirs:
                         shutil.rmtree(os.path.join(root, dir))
+                os.rmdir(folder_path)
                 self.logger.info(f"All contents in {folder_path} removed successfully.")
             else:
                 self.logger.warning(f"Folder {folder_path} does not exist.")
@@ -422,7 +423,7 @@ class CAPIFProviderConnector:
         try:
             
             
-            provider_folder = os.path.abspath(os.getenv('PROVIDER_FOLDER', config.get('provider_folder', '')).strip())
+            provider_general_folder = os.path.abspath(os.getenv('PROVIDER_FOLDER', config.get('provider_folder', '')).strip())
             capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
             capif_register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
             capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
@@ -438,6 +439,7 @@ class CAPIFProviderConnector:
             csr_country_name = os.getenv('CSR_COUNTRY_NAME', config.get('csr_country_name', '')).strip()
             csr_email_address = os.getenv('CSR_EMAIL_ADDRESS', config.get('csr_email_address', '')).strip()
             
+            
 
             if not capif_host:
                 self.logger.warning("CAPIF_HOST is not provided; defaulting to an empty string")
@@ -445,7 +447,8 @@ class CAPIFProviderConnector:
                 self.logger.error("CAPIF_PROVIDER_USERNAME is required but not provided")
                 raise ValueError("CAPIF_PROVIDER_USERNAME is required")
 
-            self.provider_folder = os.path.join(provider_folder.strip(), "")
+            self.provider_folder = os.path.join(provider_general_folder, capif_provider_username)
+            os.makedirs(self.provider_folder, exist_ok=True)
             self.description = description
             self.capif_host = capif_host.strip()
             self.capif_provider_username = capif_provider_username
@@ -815,6 +818,7 @@ class CAPIFProviderConnector:
                         os.remove(os.path.join(root, file))
                     for dir in dirs:
                         shutil.rmtree(os.path.join(root, dir))
+                os.rmdir(folder_path)
                 self.logger.info(f"All contents in {folder_path} removed successfully.")
             else:
                 self.logger.warning(f"Folder {folder_path} does not exist.")
@@ -881,7 +885,8 @@ class ServiceDiscoverer:
         self.config_path = os.path.dirname(config_file)+"/"
         capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
         capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
-        invoker_folder = os.path.abspath(os.getenv('invoker_folder', config.get('invoker_folder', '')).strip())
+        invoker_general_folder = os.path.abspath(os.getenv('invoker_folder', config.get('invoker_folder', '')).strip())
+
         capif_invoker_username = os.getenv('CAPIF_INVOKER_USERNAME', config.get('capif_invoker_username', '')).strip()
 
         
@@ -889,15 +894,17 @@ class ServiceDiscoverer:
         self.capif_host = capif_host
         self.capif_https_port = capif_https_port
         self.invoker_folder = os.path.join(
-            invoker_folder.strip(), ""
+            invoker_general_folder, capif_invoker_username
         )
+        os.makedirs(self.invoker_folder, exist_ok=True)
         self.capif_api_details = self.__load_provider_api_details()
-        self.signed_key_crt_path = (
+        
+        self.signed_key_crt_path = os.path.join(
                 self.invoker_folder
-                + self.capif_api_details["csr_common_name"] + ".crt"
+                ,self.capif_api_details["csr_common_name"] + ".crt"
         )
-        self.private_key_path = self.invoker_folder + "private.key"
-        self.ca_root_path = self.invoker_folder + "ca.crt"
+        self.private_key_path = os.path.join(self.invoker_folder ,"private.key")
+        self.ca_root_path = os.path.join(self.invoker_folder , "ca.crt")
         
         self.logger.info("ServiceDiscoverer initialized correctly")
 
@@ -916,8 +923,9 @@ class ServiceDiscoverer:
 
     def __load_provider_api_details(self):
         try:
+            path=os.path.join(self.invoker_folder,"capif_api_security_context_details-"+self.capif_invoker_username+".json")
             with open(
-                    self.invoker_folder + "capif_api_security_context_details-"+self.capif_invoker_username+".json",
+                    path,
                     "r",
             ) as openfile:
                 details = json.load(openfile)
@@ -965,8 +973,9 @@ class ServiceDiscoverer:
 
     def __cache_security_context(self):
         try:
+            path=os.path.join(self.invoker_folder,"capif_api_security_context_details-"+self.capif_invoker_username+".json")
             with open(
-                    self.invoker_folder + "capif_api_security_context_details-"+self.capif_invoker_username+".json", "w"
+                    path, "w"
             ) as outfile:
                 json.dump(self.capif_api_details, outfile)
             self.logger.info("Security context saved correctly")
@@ -1248,7 +1257,7 @@ class ServiceDiscoverer:
     def save_api_details(self):
         try:
             # Define the path to save the details
-            file_path = self.invoker_folder + "capif_api_security_context_details-" + self.capif_invoker_username + ".json"
+            file_path = os.path.join(self.invoker_folder , "capif_api_security_context_details-" + self.capif_invoker_username + ".json")
             
             # Save the details as a JSON file
             with open(file_path, "w") as outfile:

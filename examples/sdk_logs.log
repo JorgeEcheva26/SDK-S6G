@@ -4041,3 +4041,14 @@
 2024-08-23 12:35:35,851 - CAPIFInvokerConnector - ERROR - Error during Invoker offboarding: [Errno 2] No such file or directory: '/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_foldercapif_api_security_context_details-echeva_0.json'
 2024-08-23 12:35:35,851 - CAPIFInvokerConnector - ERROR - Error during Invoker offboarding and deregistering: [Errno 2] No such file or directory: '/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_foldercapif_api_security_context_details-echeva_0.json'
 2024-08-23 12:41:01,102 - ServiceDiscoverer - WARNING - Received 404 error, redirecting to register security service
+2024-08-23 12:51:00,469 - CAPIFInvokerConnector - ERROR - Error during key creation: [Errno 2] No such file or directory: '/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/echeva_0/cert_req.csr'
+2024-08-23 12:51:00,470 - CAPIFInvokerConnector - ERROR - Error during Invoker registration and onboarding: [Errno 2] No such file or directory: '/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/echeva_0/cert_req.csr'
+2024-08-23 12:57:54,958 - CAPIFProviderConnector - ERROR - Command failed: Command 'openssl s_client -connect capif-prev.mobilesandbox.cloud:36212 | openssl x509 -text > /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_cert_server.pem' returned non-zero exit status 1.
+2024-08-23 13:02:11,153 - ServiceDiscoverer - ERROR - Error while loading Api invoker details: [Errno 2] No such file or directory: '/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/echeva_0capif_api_security_context_details-echeva_0.json'
+2024-08-23 13:05:17,231 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 403 Client Error: FORBIDDEN for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF80141eac440e64bb6fe176ddf2eb41/service-apis
+2024-08-23 13:06:52,639 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 403 Client Error: FORBIDDEN for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF53dc7c74f8e12b58033cc9c46cd6ce/service-apis
+2024-08-23 13:19:00,804 - ServiceDiscoverer - WARNING - Received 404 error, redirecting to register security service
+2024-08-23 13:20:42,092 - ServiceDiscoverer - WARNING - Received 404 error, redirecting to register security service
+2024-08-23 13:25:30,700 - ServiceDiscoverer - WARNING - Received 404 error, redirecting to register security service
+2024-08-23 13:27:55,492 - ServiceDiscoverer - WARNING - Received 404 error, redirecting to register security service
+2024-08-23 13:31:38,896 - ServiceDiscoverer - WARNING - Received 404 error, redirecting to register security service
