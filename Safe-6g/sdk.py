@@ -50,7 +50,7 @@ warnings.filterwarnings("ignore", category=RequestsDependencyWarning)
 
 # Configuración básica del logger
 logging.basicConfig(
-    level=logging.INFO,  # Nivel mínimo de severidad a registrar
+    level=logging.NOTSET,  # Nivel mínimo de severidad a registrar
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',  # Formato del mensaje de log
     handlers=[
         logging.FileHandler("sdk_logs.log"),  # Registra en un archivo
@@ -65,19 +65,34 @@ class CAPIFInvokerConnector:
     def __init__(self,
                  config_file: str ):
 
-        # Inicializar logger
-        self.logger = logging.getLogger(self.__class__.__name__)
-        self.logger.info("Initializing CAPIFInvokerConnector")
-
+        config_file = os.path.abspath(config_file)
         # Cargar configuración desde archivo si es necesario
         config = self.__load_config_file(config_file)
+        
+        debug_mode = os.getenv('DEBUG_MODE', config.get('debug_mode', 'False')).strip().lower()
+        if debug_mode=="false": debug_mode=False
+        
+        # Inicializar logger
+        self.logger = logging.getLogger(self.__class__.__name__)
+        if debug_mode:
+            self.logger.setLevel(logging.DEBUG)
+        else:
+            self.logger.setLevel(logging.WARNING)
+            
+        
 
         
+        urllib_logger = logging.getLogger("urllib3")
+        if not debug_mode:
+            urllib_logger.setLevel(logging.WARNING)
+        else:
+            urllib_logger.setLevel(logging.DEBUG)
         
+        self.logger.info("Initializing CAPIFInvokerConnector")
 
         # Asignar valores desde variables de entorno o desde el archivo de configuración
-        self.invoker_folder = os.getenv('invoker_folder', config.get('invoker_folder','')).strip()
         
+        self.invoker_folder = os.path.abspath(os.getenv('invoker_folder', config.get('invoker_folder', '')).strip())
         capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
         register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
         capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
@@ -94,7 +109,7 @@ class CAPIFInvokerConnector:
         csr_state_or_province_name = os.getenv('CSR_STATE_OR_PROVINCE_NAME', config.get('csr_state_or_province_name', '')).strip()
         csr_country_name = os.getenv('CSR_COUNTRY_NAME', config.get('csr_country_name', '')).strip()
         csr_email_address = os.getenv('CSR_EMAIL_ADDRESS', config.get('csr_email_address', '')).strip()
-        uuid = os.getenv('UUID', config.get('uuid', '')).strip()
+        
 
 
         # Resto del código original para inicializar URLs y otros atributos
@@ -128,9 +143,9 @@ class CAPIFInvokerConnector:
         self.csr_state_or_province_name = csr_state_or_province_name
         self.csr_country_name = csr_country_name
         self.csr_email_address = csr_email_address
-        self.capif_api_details_filename = "capif_api_security_context_details-"+uuid+".json"
+        self.capif_api_details_filename = "capif_api_security_context_details-"+self.capif_invoker_username+".json"
         #self.capif_api_details = self.__load_invoker_api_details()
-        self.uuid=uuid
+        
         self.logger.info("CAPIFInvokerConnector initialized with the config.json parameters")
 
     def __load_config_file(self, config_file: str):
@@ -165,9 +180,13 @@ class CAPIFInvokerConnector:
             raise
 
     def __load_invoker_api_details(self):
-        self.logger.debug("Loading Invoker API details")
+        self.logger.info("Loading Invoker API details")
+        path = os.path.join(
+            self.invoker_folder, 
+            self.capif_api_details_filename
+        )
         with open(
-            self.invoker_folder + self.capif_api_details_filename, "r"
+            path, "r"
         ) as openfile:
             return json.load(openfile)
 
@@ -181,16 +200,25 @@ class CAPIFInvokerConnector:
                 + capif_api_details["api_invoker_id"]
             )
 
-            signed_key_crt_path = (
-                self.invoker_folder + capif_api_details["csr_common_name"] + ".crt"
+            signed_key_crt_path = os.path.join(
+                self.invoker_folder, 
+                capif_api_details["csr_common_name"] + ".crt"
             )
-            private_key_path = self.invoker_folder + "private.key"
 
+            private_key_path = os.path.join(
+                self.invoker_folder, 
+                "private.key"
+            )
+
+            path = os.path.join(
+                self.invoker_folder, 
+                "ca.crt"
+            )
             response = requests.request(
                 "DELETE",
                 url,
                 cert=(signed_key_crt_path, private_key_path),
-                verify=self.invoker_folder + "ca.crt",
+                verify=path,
             )
             response.raise_for_status()
             self.logger.info("Invoker offboarded successfully")
@@ -211,8 +239,9 @@ class CAPIFInvokerConnector:
     def __create_private_and_public_keys(self) -> str:
         self.logger.info("Creating private and public keys for the Invoker cert")
         try:
-            private_key_path = self.invoker_folder + "private.key"
-            csr_file_path = self.invoker_folder + "cert_req.csr"
+            private_key_path = os.path.join(self.invoker_folder, "private.key")
+            
+            csr_file_path = os.path.join(self.invoker_folder, "cert_req.csr")
 
             key = PKey()
             key.generate_key(TYPE_RSA, 2048)
@@ -279,7 +308,8 @@ class CAPIFInvokerConnector:
 
             response.raise_for_status()
             response_payload = json.loads(response.text)
-            ca_root_file = open(self.invoker_folder + "ca.crt", "wb+")
+            ca_root_file_path = os.path.join(self.invoker_folder, "ca.crt")
+            ca_root_file = open(ca_root_file_path, "wb+")
             ca_root_file.write(bytes(response_payload["ca_root"], "utf-8"))
             self.logger.info("CAPIF CA root file saved and auth token obtained successfully")
             return response_payload
@@ -309,17 +339,20 @@ class CAPIFInvokerConnector:
                 "Authorization": "Bearer {}".format(capif_access_token),
                 "Content-Type": "application/json",
             }
+            pathca = os.path.join(self.invoker_folder,"ca.crt")
             response = requests.request(
                 "POST",
                 url,
                 headers=headers,
                 data=payload,
-                verify=self.invoker_folder + "ca.crt",
+                verify=pathca,
             )
             response.raise_for_status()
             response_payload = json.loads(response.text)
+            name=self.csr_common_name+".crt"
+            pathcsr = os.path.join(self.invoker_folder, name)
             certification_file = open(
-                self.invoker_folder + self.csr_common_name + ".crt", "wb"
+                pathcsr, "wb"
             )
             certification_file.write(
                 bytes(
@@ -336,16 +369,16 @@ class CAPIFInvokerConnector:
 
     def __write_to_file(self, csr_common_name, api_invoker_id, discover_services_url):
         self.logger.info("Writing API invoker ID and service discovery URL to file")
+        path = os.path.join(self.invoker_folder, self.capif_api_details_filename)
         try:
             with open(
-                self.invoker_folder + self.capif_api_details_filename, "w"
+                path, "w"
             ) as outfile:
                 json.dump(
                     {
                         "csr_common_name": csr_common_name,
                         "api_invoker_id": api_invoker_id,
                         "discover_services_url": discover_services_url,
-                        "uuid": self.uuid,
                     },
                     outfile,
                 )
@@ -362,24 +395,34 @@ class CAPIFProviderConnector:
         """
         Inicializa el conector CAPIFProvider con los parámetros especificados en el archivo de configuración.
         """
+        # Cargar configuración desde archivo si es necesario
+        config_file = os.path.abspath(config_file)
+        config = self.__load_config_file(config_file)
+        debug_mode = os.getenv('DEBUG_MODE', config.get('debug_mode', 'False')).strip().lower()
+        if debug_mode=="false": debug_mode=False
+        # Inicializar logger
         self.logger = logging.getLogger(self.__class__.__name__)
-        self.logger.info("Initializing CAPIFIProviderConnector")
+        if debug_mode:
+            self.logger.setLevel(logging.DEBUG)
+        else:
+            self.logger.setLevel(logging.WARNING)
+            
+        
+
+        
+        urllib_logger = logging.getLogger("urllib3")
+        if not debug_mode:
+            urllib_logger.setLevel(logging.WARNING)
+        else:
+            urllib_logger.setLevel(logging.DEBUG)
+        
+            
+        
 
         try:
-            config = self.__load_config_file(config_file)
-            self.logger.debug("Configuration loaded successfully")
-        except FileNotFoundError as e:
-            self.logger.error(f"Config file not found: {e}")
-            raise
-        except json.JSONDecodeError as e:
-            self.logger.error(f"Error parsing config file: {e}")
-            raise
-        except Exception as e:
-            self.logger.error(f"Unexpected error loading config file: {e}")
-            raise
-
-        try:
-            provider_folder = os.getenv('PROVIDER_FOLDER', config.get('provider_folder', '')).strip()
+            
+            
+            provider_folder = os.path.abspath(os.getenv('PROVIDER_FOLDER', config.get('provider_folder', '')).strip())
             capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
             capif_register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
             capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
@@ -394,7 +437,7 @@ class CAPIFProviderConnector:
             csr_state_or_province_name = os.getenv('CSR_STATE_OR_PROVINCE_NAME', config.get('csr_state_or_province_name', '')).strip()
             csr_country_name = os.getenv('CSR_COUNTRY_NAME', config.get('csr_country_name', '')).strip()
             csr_email_address = os.getenv('CSR_EMAIL_ADDRESS', config.get('csr_email_address', '')).strip()
-            uuid = os.getenv('UUID', config.get('uuid', '')).strip()
+            
 
             if not capif_host:
                 self.logger.warning("CAPIF_HOST is not provided; defaulting to an empty string")
@@ -416,7 +459,7 @@ class CAPIFProviderConnector:
             self.csr_state_or_province_name = csr_state_or_province_name
             self.csr_country_name = csr_country_name
             self.csr_email_address = csr_email_address
-            self.uuid = uuid
+            
             
             
             self.capif_https_port = str(capif_https_port)
@@ -438,14 +481,19 @@ class CAPIFProviderConnector:
             self.logger.error(f"Error during initialization: {e}")
             raise
 
+    
+
     def __store_certificate(self) -> None:
-    #Retrieves and stores the cert_server.pem from CAPIF.
+        # Retrieves and stores the cert_server.pem from CAPIF.
         self.logger.info("Retrieving capif_cert_server.pem, this may take a few minutes.")
 
         cmd = f"openssl s_client -connect {self.capif_host}:{self.capif_https_port} | openssl x509 -text > {self.provider_folder}/capif_cert_server.pem"
         
         try:
-            subprocess.run(cmd, shell=True, check=True)
+            # Redirige la salida estándar y de errores a os.devnull para ocultar los logs
+            with open(os.devnull, 'w') as devnull:
+                subprocess.run(cmd, shell=True, check=True, stdout=devnull, stderr=devnull)
+            
             cert_file = os.path.join(self.provider_folder, "capif_cert_server.pem")
             if os.path.exists(cert_file) and os.path.getsize(cert_file) > 0:
                 self.logger.info("cert_server.pem successfully generated!")
@@ -458,6 +506,7 @@ class CAPIFProviderConnector:
         except Exception as e:
             self.logger.error(f"Error occurred: {e}")
             raise
+
 
     def __load_config_file(self, config_file: str):
             """Carga el archivo de configuración."""
@@ -556,7 +605,6 @@ class CAPIFProviderConnector:
         with open(provider_details_path, "w") as outfile:
             data = {
                 "capif_registration_id": capif_registration_id,
-                "uuid": self.uuid,
                 "publish_url": publish_url,
                 **{f"{api_prov_func['apiProvFuncRole']}_api_prov_func_id": api_prov_func["apiProvFuncId"]
                 for api_prov_func in onboarding_response["apiProvFuncs"]}
@@ -808,18 +856,36 @@ class ServiceDiscoverer:
             self,
             config_file
     ):
-        self.logger = logging.getLogger(self.__class__.__name__)
-        self.logger.info("Initializing ServiceDiscoverer")
-
+        # Cargar configuración desde archivo si es necesario
+        config_file = os.path.abspath(config_file)
         config = self.__load_config_file(config_file)
+        debug_mode = os.getenv('DEBUG_MODE', config.get('debug_mode', 'False')).strip().lower()
+        if debug_mode=="false": debug_mode=False
+        
+        # Inicializar logger
+        self.logger = logging.getLogger(self.__class__.__name__)
+        if debug_mode:
+            self.logger.setLevel(logging.DEBUG)
+        else:
+            self.logger.setLevel(logging.WARNING)
+            
+        
+
+        
+        urllib_logger = logging.getLogger("urllib3")
+        if not debug_mode:
+            urllib_logger.setLevel(logging.WARNING)
+        else:
+            urllib_logger.setLevel(logging.DEBUG)
+
         self.config_path = os.path.dirname(config_file)+"/"
         capif_host = os.getenv('CAPIF_HOST', config.get('capif_host', '')).strip()
         capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
-        invoker_folder = str(os.getenv('INVOKER_FOLDER', config.get('invoker_folder', '')).strip())
-        uuid = os.getenv('UUID', config.get('uuid', '')).strip()
+        invoker_folder = os.path.abspath(os.getenv('invoker_folder', config.get('invoker_folder', '')).strip())
+        capif_invoker_username = os.getenv('CAPIF_INVOKER_USERNAME', config.get('capif_invoker_username', '')).strip()
 
-        self.uuid=uuid
         
+        self.capif_invoker_username=capif_invoker_username
         self.capif_host = capif_host
         self.capif_https_port = capif_https_port
         self.invoker_folder = os.path.join(
@@ -851,7 +917,7 @@ class ServiceDiscoverer:
     def __load_provider_api_details(self):
         try:
             with open(
-                    self.invoker_folder + "capif_api_security_context_details-"+self.uuid+".json",
+                    self.invoker_folder + "capif_api_security_context_details-"+self.capif_invoker_username+".json",
                     "r",
             ) as openfile:
                 details = json.load(openfile)
@@ -900,7 +966,7 @@ class ServiceDiscoverer:
     def __cache_security_context(self):
         try:
             with open(
-                    self.invoker_folder + "capif_api_security_context_details-"+self.uuid+".json", "w"
+                    self.invoker_folder + "capif_api_security_context_details-"+self.capif_invoker_username+".json", "w"
             ) as outfile:
                 json.dump(self.capif_api_details, outfile)
             self.logger.info("Security context saved correctly")
@@ -1182,7 +1248,7 @@ class ServiceDiscoverer:
     def save_api_details(self):
         try:
             # Define the path to save the details
-            file_path = self.invoker_folder + "capif_api_security_context_details-" + self.uuid + ".json"
+            file_path = self.invoker_folder + "capif_api_security_context_details-" + self.capif_invoker_username + ".json"
             
             # Save the details as a JSON file
             with open(file_path, "w") as outfile:

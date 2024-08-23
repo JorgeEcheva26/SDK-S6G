@@ -1,5 +1,5 @@
 {
-  "apiName": "/nef/api/v1/3gpp-monitoring-event/",
+  "apiName": "/nef/api/v1/3gpp-monitoring-event-7/",
   "aefProfiles": [
     {
       "aefId": "string",

@@ -1,8 +1,8 @@
 { 
 
-"invoker_folder": "/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/", 
+"invoker_folder": "../../test_invoker_certificate_folder/", 
 
-"provider_folder": "/Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/", 
+"provider_folder": "../../test_provider_certificate_folder/", 
 
 "capif_host": "capif-prev.mobilesandbox.cloud", 
 
@@ -36,8 +36,7 @@
 
 "capif_provider_username": "echeva_0", 
 
-"capif_provider_password": "echevapass", 
+"capif_provider_password": "echevapass",
 
-"uuid": "f1c191ee-9669-57e8-81ee-25143ecc8374" 
-
+"debug_mode": "False"
 } 
