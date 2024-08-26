@@ -173,7 +173,7 @@ class CAPIFInvokerConnector:
             api_invoker_id = self.__onboard_invoker_to_capif_and_create_the_signed_certificate(
                 public_key, capif_onboarding_url, capif_access_token
             )
-            self.__write_to_file(self.csr_common_name, api_invoker_id, capif_discover_url)
+            self.__write_to_file( api_invoker_id, capif_discover_url)
             self.logger.info("Invoker registered and onboarded successfully")
         except Exception as e:
             self.logger.error(f"Error during Invoker registration and onboarding: {e}")
@@ -202,7 +202,7 @@ class CAPIFInvokerConnector:
 
             signed_key_crt_path = os.path.join(
                 self.invoker_folder, 
-                capif_api_details["csr_common_name"] + ".crt"
+                capif_api_details["user_name"] + ".crt"
             )
 
             private_key_path = os.path.join(
@@ -350,7 +350,7 @@ class CAPIFInvokerConnector:
             )
             response.raise_for_status()
             response_payload = json.loads(response.text)
-            name=self.csr_common_name+".crt"
+            name=self.capif_invoker_username+".crt"
             pathcsr = os.path.join(self.invoker_folder, name)
             certification_file = open(
                 pathcsr, "wb"
@@ -368,7 +368,7 @@ class CAPIFInvokerConnector:
             self.logger.error(f"Error during onboarding Invoker to CAPIF: {e}")
             raise
 
-    def __write_to_file(self, csr_common_name, api_invoker_id, discover_services_url):
+    def __write_to_file(self, api_invoker_id, discover_services_url):
         self.logger.info("Writing API invoker ID and service discovery URL to file")
         path = os.path.join(self.invoker_folder, self.capif_api_details_filename)
         try:
@@ -377,7 +377,7 @@ class CAPIFInvokerConnector:
             ) as outfile:
                 json.dump(
                     {
-                        "csr_common_name": csr_common_name,
+                        "user_name": self.capif_invoker_username,
                         "api_invoker_id": api_invoker_id,
                         "discover_services_url": discover_services_url,
                     },
@@ -567,7 +567,7 @@ class CAPIFProviderConnector:
 
         payload = {
             "apiProvFuncs": [
-                {"regInfo": {"apiProvPubKey": ""}, "apiProvFuncRole": role, "apiProvFuncInfo": f"dummy_{role.lower()}"}
+                {"regInfo": {"apiProvPubKey": ""}, "apiProvFuncRole": role, "apiProvFuncInfo": f"{role.lower()}"}
                 for role in ["AEF", "APF", "AMF"]
             ],
             "apiProvDomInfo": "This is provider",
@@ -600,7 +600,7 @@ class CAPIFProviderConnector:
 
         for func_provile in onboarding_response["apiProvFuncs"]:
             role = func_provile["apiProvFuncRole"].lower()
-            cert_path = os.path.join(self.provider_folder, f"dummy_{role}.crt")
+            cert_path = os.path.join(self.provider_folder, f"{role}.crt")
             with open(cert_path, "wb") as cert_file:
                 cert_file.write(func_provile["regInfo"]["apiProvCert"].encode("utf-8"))
 
@@ -725,7 +725,7 @@ class CAPIFProviderConnector:
         # Publish services
         url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}"
         cert = (
-            os.path.join(self.provider_folder, "dummy_apf.crt"),
+            os.path.join(self.provider_folder, "apf.crt"),
             os.path.join(self.provider_folder, "APF_private_key.key"),
         )
         
@@ -785,7 +785,7 @@ class CAPIFProviderConnector:
 
             # Define certificate paths
             cert_paths = (
-                os.path.join(self.provider_folder, "dummy_amf.crt"),
+                os.path.join(self.provider_folder, "amf.crt"),
                 os.path.join(self.provider_folder, "AMF_private_key.key")
             )
 
@@ -901,7 +901,7 @@ class ServiceDiscoverer:
         
         self.signed_key_crt_path = os.path.join(
                 self.invoker_folder
-                ,self.capif_api_details["csr_common_name"] + ".crt"
+                ,self.capif_api_details["user_name"] + ".crt"
         )
         self.private_key_path = os.path.join(self.invoker_folder ,"private.key")
         self.ca_root_path = os.path.join(self.invoker_folder , "ca.crt")
@@ -961,15 +961,7 @@ class ServiceDiscoverer:
         self.logger.info("Access token successfully obtained")
         return token_dic["access_token"]
 
-    def __security_context_does_not_exist(self,presaved_data):
-        
-
-        return "registered_security_contexes" not in presaved_data
-
-    def __security_context_exist(self,presaved_data):
-        
-
-        return "registered_security_contexes" in presaved_data
+    
 
     def __cache_security_context(self):
         try:
@@ -1248,8 +1240,9 @@ class ServiceDiscoverer:
         for service in endpoints["serviceAPIDescriptions"]:
                 api_name = service["apiName"]
                 api_id = service["apiId"]
-                aef_id = service["aefProfiles"][0]["aefId"]
-                self.capif_api_details["registered_security_contexes"].append({"api_name":api_name,"api_id": api_id, "aef_id": aef_id})
+                for n in service["aefProfiles"]:
+                    aef_id=n["aefId"]
+                    self.capif_api_details["registered_security_contexes"].append({"api_name":api_name,"api_id": api_id, "aef_id": aef_id})
         self.save_api_details()        
 
     import json
