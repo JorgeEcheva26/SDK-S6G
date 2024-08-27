@@ -398,6 +398,7 @@ class CAPIFProviderConnector:
         """
         # Cargar configuración desde archivo si es necesario
         config_file = os.path.abspath(config_file)
+        self.config_path = os.path.dirname(config_file)+"/"
         config = self.__load_config_file(config_file)
         debug_mode = os.getenv('DEBUG_MODE', config.get('debug_mode', 'False')).strip().lower()
         if debug_mode=="false": debug_mode=False
@@ -759,6 +760,300 @@ class CAPIFProviderConnector:
             self.logger.error(f"Unexpected error during service publication: {e}")
             raise
 
+    def unpublish_service(self) -> dict:
+        """
+        Publishes services to CAPIF and returns the published services dictionary.
+
+        :param service_api_description_json_full_path: The full path of the service_api_description.json containing
+        the endpoints to be published.
+        :return: The published services dictionary that was saved in CAPIF.
+        """
+        self.logger.info("Starting the service unpublication process")
+
+        provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
+        self.logger.info(f"Loading provider details from {provider_details_path}")
+        
+        try:
+            with open(provider_details_path, "r") as file:
+                provider_details = json.load(file)
+                publish_url = provider_details["publish_url"]
+                AEF_api_prov_func_id = provider_details["AEF_api_prov_func_id"]
+                APF_api_prov_func_id = provider_details["APF_api_prov_func_id"]
+                self.logger.info("Provider details loaded successfully")
+                self.logger.debug(f"Publish URL: {publish_url}")
+                self.logger.debug(f"AEF API Provider Function ID: {AEF_api_prov_func_id}")
+                self.logger.debug(f"APF API Provider Function ID: {APF_api_prov_func_id}")
+        except FileNotFoundError:
+            self.logger.error(f"Provider details file not found: {provider_details_path}")
+            raise
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Error decoding JSON from file {provider_details_path}: {e}")
+            raise
+
+        # Load provider details
+        json_path = self.config_path +"publish.json"
+        with open(json_path, 'r') as f:
+            publish = json.load(f)
+        api_id="/" + publish["serviceApiId"]
+
+        url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}{api_id}"
+
+        cert = (
+            os.path.join(self.provider_folder, "apf.crt"),
+            os.path.join(self.provider_folder, "APF_private_key.key"),
+        )
+        
+        self.logger.info(f"Unpublishing service to URL: {url}")
+
+        try:
+            response = requests.delete(
+                url,
+                headers={"Content-Type": "application/json"},
+                cert=cert,
+                verify=os.path.join(self.provider_folder, "ca.crt"),
+            )
+            
+            response.raise_for_status()
+            self.logger.info("Services unpublished successfully")
+
+           
+        except requests.RequestException as e:
+            self.logger.error(f"Request to CAPIF failed: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Unexpected error during service unpublication: {e}")
+            raise
+
+    def get_service(self) -> dict:
+        """
+        Publishes services to CAPIF and returns the published services dictionary.
+
+        :param service_api_description_json_full_path: The full path of the service_api_description.json containing
+        the endpoints to be published.
+        :return: The published services dictionary that was saved in CAPIF.
+        """
+        self.logger.info("Starting the service unpublication process")
+
+        provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
+        self.logger.info(f"Loading provider details from {provider_details_path}")
+        
+        try:
+            with open(provider_details_path, "r") as file:
+                provider_details = json.load(file)
+                publish_url = provider_details["publish_url"]
+                AEF_api_prov_func_id = provider_details["AEF_api_prov_func_id"]
+                APF_api_prov_func_id = provider_details["APF_api_prov_func_id"]
+                self.logger.info("Provider details loaded successfully")
+                self.logger.debug(f"Publish URL: {publish_url}")
+                self.logger.debug(f"AEF API Provider Function ID: {AEF_api_prov_func_id}")
+                self.logger.debug(f"APF API Provider Function ID: {APF_api_prov_func_id}")
+        except FileNotFoundError:
+            self.logger.error(f"Provider details file not found: {provider_details_path}")
+            raise
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Error decoding JSON from file {provider_details_path}: {e}")
+            raise
+
+        # Load provider details
+        json_path = self.config_path +"publish.json"
+        with open(json_path, 'r') as f:
+            publish = json.load(f)
+        api_id="/" + publish["serviceApiId"]
+
+        url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}{api_id}"
+
+        cert = (
+            os.path.join(self.provider_folder, "apf.crt"),
+            os.path.join(self.provider_folder, "APF_private_key.key"),
+        )
+        
+        self.logger.info(f"Getting service to URL: {url}")
+
+        try:
+            response = requests.get(
+                url,
+                headers={"Content-Type": "application/json"},
+                cert=cert,
+                verify=os.path.join(self.provider_folder, "ca.crt"),
+            )
+            
+            response.raise_for_status()
+            
+            self.logger.info("Service received successfully")
+            path=os.path.join(self.provider_folder,"service_received.json")
+            with open(path, 'w') as f:
+                json_data = json.loads(response.text)
+                json.dump(json_data,f,indent=4)
+            self.logger.info(f"Service saved in {path}")
+
+            
+
+           
+        except requests.RequestException as e:
+            self.logger.error(f"Request to CAPIF failed: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Unexpected error during service getter: {e}")
+            raise
+
+    def get_all_services(self) -> dict:
+        """
+        Publishes services to CAPIF and returns the published services dictionary.
+
+        :param service_api_description_json_full_path: The full path of the service_api_description.json containing
+        the endpoints to be published.
+        :return: The published services dictionary that was saved in CAPIF.
+        """
+        self.logger.info("Starting the service publication process")
+
+        # Load provider details
+        provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
+        self.logger.info(f"Loading provider details from {provider_details_path}")
+        
+        try:
+            with open(provider_details_path, "r") as file:
+                provider_details = json.load(file)
+                publish_url = provider_details["publish_url"]
+                AEF_api_prov_func_id = provider_details["AEF_api_prov_func_id"]
+                APF_api_prov_func_id = provider_details["APF_api_prov_func_id"]
+                self.logger.info("Provider details loaded successfully")
+                self.logger.debug(f"Publish URL: {publish_url}")
+                self.logger.debug(f"AEF API Provider Function ID: {AEF_api_prov_func_id}")
+                self.logger.debug(f"APF API Provider Function ID: {APF_api_prov_func_id}")
+        except FileNotFoundError:
+            self.logger.error(f"Provider details file not found: {provider_details_path}")
+            raise
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Error decoding JSON from file {provider_details_path}: {e}")
+            raise
+
+        # Read and modify service API description
+        
+
+        # Publish services
+        url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}"
+        cert = (
+            os.path.join(self.provider_folder, "apf.crt"),
+            os.path.join(self.provider_folder, "APF_private_key.key"),
+        )
+        
+        self.logger.info(f"Getting services to URL: {url}")
+
+        try:
+            response = requests.get(
+                url,
+                headers={"Content-Type": "application/json"},
+                cert=cert,
+                verify=os.path.join(self.provider_folder, "ca.crt"),
+            )
+            response.raise_for_status()
+            self.logger.info("Services received successfully")
+
+            path=os.path.join(self.provider_folder,"service_received.json")
+            with open(path, 'w') as f:
+                json_data = json.loads(response.text)
+                json.dump(json_data,f,indent=4)
+            self.logger.info(f"Services saved in {path}")
+
+            # Save response to file
+            
+
+            
+
+        except requests.RequestException as e:
+            self.logger.error(f"Request to CAPIF failed: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Unexpected error during services reception: {e}")
+            raise
+
+    def update_service(self, service_api_description_json_full_path: str) -> dict:
+        """
+        Publishes services to CAPIF and returns the published services dictionary.
+
+        :param service_api_description_json_full_path: The full path of the service_api_description.json containing
+        the endpoints to be published.
+        :return: The published services dictionary that was saved in CAPIF.
+        """
+        self.logger.info("Starting the service publication process")
+
+        # Load provider details
+        provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
+        self.logger.info(f"Loading provider details from {provider_details_path}")
+        
+        try:
+            with open(provider_details_path, "r") as file:
+                provider_details = json.load(file)
+                publish_url = provider_details["publish_url"]
+                AEF_api_prov_func_id = provider_details["AEF_api_prov_func_id"]
+                APF_api_prov_func_id = provider_details["APF_api_prov_func_id"]
+                self.logger.info("Provider details loaded successfully")
+                self.logger.debug(f"Publish URL: {publish_url}")
+                self.logger.debug(f"AEF API Provider Function ID: {AEF_api_prov_func_id}")
+                self.logger.debug(f"APF API Provider Function ID: {APF_api_prov_func_id}")
+        except FileNotFoundError:
+            self.logger.error(f"Provider details file not found: {provider_details_path}")
+            raise
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Error decoding JSON from file {provider_details_path}: {e}")
+            raise
+
+        # Read and modify service API description
+        self.logger.info(f"Reading and modifying service API description from {service_api_description_json_full_path}")
+        
+        try:
+            with open(service_api_description_json_full_path, "r") as service_file:
+                data = json.load(service_file)
+                for profile in data.get("aefProfiles", []):
+                    profile["aefId"] = AEF_api_prov_func_id
+                self.logger.info("Service API description modified successfully")
+        except FileNotFoundError:
+            self.logger.error(f"Service API description file not found: {service_api_description_json_full_path}")
+            raise
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Error decoding JSON from file {service_api_description_json_full_path}: {e}")
+            raise
+        
+        json_path = self.config_path +"publish.json"
+        with open(json_path, 'r') as f:
+            publish = json.load(f)
+        api_id="/" + publish["serviceApiId"]
+        # Publish services
+        url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}{api_id}"
+        cert = (
+            os.path.join(self.provider_folder, "apf.crt"),
+            os.path.join(self.provider_folder, "APF_private_key.key"),
+        )
+        
+        self.logger.info(f"Publishing services to URL: {url}")
+
+        try:
+            response = requests.put(
+                url,
+                headers={"Content-Type": "application/json"},
+                data=json.dumps(data),
+                cert=cert,
+                verify=os.path.join(self.provider_folder, "ca.crt"),
+            )
+            response.raise_for_status()
+            self.logger.info("Services updated successfully")
+
+            # Save response to file
+            capif_response = response.text
+            file_name = os.path.basename(service_api_description_json_full_path)
+            output_path = os.path.join(self.provider_folder, f"CAPIF_{file_name}")
+            with open(output_path, "w") as outfile:
+                outfile.write(capif_response)
+            self.logger.info(f"CAPIF response saved to {output_path}")
+
+            return json.loads(capif_response)
+
+        except requests.RequestException as e:
+            self.logger.error(f"Request to CAPIF failed: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Unexpected error during service publication: {e}")
+            raise
 
     def offboard_and_deregister_nef(self) -> None:
         """
@@ -1230,6 +1525,7 @@ class ServiceDiscoverer:
     
     def discover(self):
         endpoints = self.discover_service_apis()
+        
         if len(endpoints) > 0:
             self.save_api_discovered(endpoints)
         else:

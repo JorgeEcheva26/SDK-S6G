@@ -38,5 +38,9 @@
 
 "capif_provider_password": "echevapass",
 
-"debug_mode": "True"
+"APFs":"",
+
+"AEFs":"",
+
+"debug_mode": "False"
 } 

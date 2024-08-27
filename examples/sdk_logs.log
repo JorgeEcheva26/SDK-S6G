@@ -4521,3 +4521,792 @@
 2024-08-26 11:42:57,735 - CAPIFProviderConnector - INFO - Removing files generated
 2024-08-26 11:42:57,738 - CAPIFProviderConnector - INFO - All contents in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0 removed successfully.
 2024-08-26 11:42:57,738 - CAPIFProviderConnector - INFO - Provider offboarded and deregistered successfully.
+2024-08-26 12:00:58,017 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-26 12:00:58,019 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-26 12:00:58,019 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-26 12:00:58,019 - CAPIFInvokerConnector - INFO - Creating private and public keys for the Invoker cert
+2024-08-26 12:00:58,262 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-26 12:00:58,262 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-26 12:00:58,274 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): registercapif-prev.mobilesandbox.cloud:36211
+2024-08-26 12:01:00,997 - urllib3.connectionpool - DEBUG - https://registercapif-prev.mobilesandbox.cloud:36211 "GET /getauth HTTP/11" 200 3610
+2024-08-26 12:01:01,001 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-26 12:01:01,002 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF
+2024-08-26 12:01:01,009 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:01:01,649 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /api-invoker-management/v1/onboardedInvokers HTTP/11" 201 5272
+2024-08-26 12:01:01,654 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-26 12:01:01,654 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-26 12:01:01,655 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-26 12:01:01,655 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-26 12:01:44,911 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 12:01:44,912 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-26 12:02:45,297 - CAPIFProviderConnector - INFO - cert_server.pem successfully generated!
+2024-08-26 12:02:45,297 - CAPIFProviderConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-26 12:02:45,313 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): registercapif-prev.mobilesandbox.cloud:36211
+2024-08-26 12:02:48,100 - urllib3.connectionpool - DEBUG - https://registercapif-prev.mobilesandbox.cloud:36211 "GET /getauth HTTP/11" 200 3610
+2024-08-26 12:02:48,104 - CAPIFProviderConnector - INFO - Authorization acquired successfully
+2024-08-26 12:02:48,105 - CAPIFProviderConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-26 12:02:48,105 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF and waiting signed certificate by giving our public keys to CAPIF
+2024-08-26 12:02:50,231 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:02:51,276 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /api-provider-management/v1/registrations HTTP/11" 201 15951
+2024-08-26 12:02:51,277 - CAPIFProviderConnector - INFO - Provider onboarded and signed certificate obtained successfully
+2024-08-26 12:02:51,277 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-26 12:02:51,279 - CAPIFProviderConnector - INFO - Data saved
+2024-08-26 12:03:22,712 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 12:03:22,712 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 12:03:22,725 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:03:23,048 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INVfe05071f7be63010bc794dfcaa732d HTTP/11" 200 10570
+2024-08-26 12:03:23,050 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 12:03:23,051 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 12:03:56,562 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 12:03:56,563 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-26 12:03:56,564 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 12:03:56,565 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 12:03:56,565 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 12:03:56,565 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF0a18a78b82c71f8e66ae9d8685f90b
+2024-08-26 12:03:56,565 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF4c100e60c615160048843fb6a0f4a9
+2024-08-26 12:03:56,565 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-26 12:03:56,566 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-26 12:03:56,567 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF4c100e60c615160048843fb6a0f4a9/service-apis
+2024-08-26 12:03:56,585 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:03:57,299 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /published-apis/v1/APF4c100e60c615160048843fb6a0f4a9/service-apis HTTP/11" 201 2659
+2024-08-26 12:03:57,300 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-26 12:03:57,300 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/CAPIF_provider_api_description_sample.json
+2024-08-26 12:04:03,551 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 12:04:03,551 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 12:04:03,563 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:04:03,744 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INVfe05071f7be63010bc794dfcaa732d HTTP/11" 200 13231
+2024-08-26 12:04:03,746 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 12:04:03,749 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 12:05:08,438 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 12:05:08,439 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 12:05:08,439 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-26 12:05:08,439 - ServiceDiscoverer - INFO - Trying to update security context
+2024-08-26 12:05:08,452 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:05:08,872 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /capif-security/v1/trustedInvokers/INVfe05071f7be63010bc794dfcaa732d/update HTTP/11" 404 134
+2024-08-26 12:05:08,873 - ServiceDiscoverer - WARNING - Received 404 error, redirecting to register security service
+2024-08-26 12:05:08,877 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:05:09,862 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "PUT /capif-security/v1/trustedInvokers/INVfe05071f7be63010bc794dfcaa732d HTTP/11" 201 2399
+2024-08-26 12:05:09,862 - ServiceDiscoverer - INFO - Security service properly registered
+2024-08-26 12:05:09,867 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-26 12:05:09,871 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:05:12,163 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /capif-security/v1/securities/INVfe05071f7be63010bc794dfcaa732d/token HTTP/11" 200 2381
+2024-08-26 12:05:12,164 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-26 12:05:12,164 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-26 12:05:12,166 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-26 12:08:09,795 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 12:08:09,796 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-26 12:08:09,796 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 12:08:09,798 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 12:08:09,798 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 12:08:09,798 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF0a18a78b82c71f8e66ae9d8685f90b
+2024-08-26 12:08:09,798 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF4c100e60c615160048843fb6a0f4a9
+2024-08-26 12:08:09,799 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-26 12:08:09,799 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-26 12:08:09,799 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF4c100e60c615160048843fb6a0f4a9/service-apis
+2024-08-26 12:08:09,812 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:08:10,702 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /published-apis/v1/APF4c100e60c615160048843fb6a0f4a9/service-apis HTTP/11" 201 2660
+2024-08-26 12:08:10,703 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-26 12:08:10,704 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/CAPIF_provider_api_description_sample.json
+2024-08-26 12:08:18,381 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 12:08:18,381 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 12:08:18,393 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:08:18,753 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INVfe05071f7be63010bc794dfcaa732d HTTP/11" 200 15893
+2024-08-26 12:08:18,754 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 12:08:18,758 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 12:08:44,135 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 12:08:44,135 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 12:08:44,136 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-26 12:08:44,136 - ServiceDiscoverer - INFO - Trying to update security context
+2024-08-26 12:08:44,145 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:08:45,066 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /capif-security/v1/trustedInvokers/INVfe05071f7be63010bc794dfcaa732d/update HTTP/11" 200 2835
+2024-08-26 12:08:45,067 - ServiceDiscoverer - INFO - Security context correctly updated
+2024-08-26 12:08:45,068 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-26 12:08:45,071 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:08:47,067 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /capif-security/v1/securities/INVfe05071f7be63010bc794dfcaa732d/token HTTP/11" 200 2703
+2024-08-26 12:08:47,069 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-26 12:08:47,070 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-26 12:08:47,086 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-26 12:11:10,837 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 12:11:10,838 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 12:11:10,860 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:11:11,147 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INVfe05071f7be63010bc794dfcaa732d&api-name=/nef/api/v1/3gpp-monitoring-event-2/ HTTP/11" 200 1347
+2024-08-26 12:11:11,148 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 12:11:11,150 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 12:11:47,509 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 12:11:47,509 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 12:11:47,509 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-26 12:11:47,509 - ServiceDiscoverer - INFO - Trying to update security context
+2024-08-26 12:11:47,520 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:11:48,065 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /capif-security/v1/trustedInvokers/INVfe05071f7be63010bc794dfcaa732d/update HTTP/11" 200 437
+2024-08-26 12:11:48,066 - ServiceDiscoverer - INFO - Security context correctly updated
+2024-08-26 12:11:48,070 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-26 12:11:48,073 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:11:50,069 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /capif-security/v1/securities/INVfe05071f7be63010bc794dfcaa732d/token HTTP/11" 200 927
+2024-08-26 12:11:50,070 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-26 12:11:50,071 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-26 12:11:50,073 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-26 12:30:56,278 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 12:30:56,278 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 12:30:56,298 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:30:56,646 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INVfe05071f7be63010bc794dfcaa732d&api-name=/nef/api/v1/3gpp-monitoring-event-2/ HTTP/11" 200 1347
+2024-08-26 12:30:56,646 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 12:30:56,648 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 12:31:13,024 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 12:31:13,024 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 12:31:13,044 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:31:13,149 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INVfe05071f7be63010bc794dfcaa732d HTTP/11" 200 15893
+2024-08-26 12:31:13,151 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 12:31:13,154 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 12:46:29,656 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-26 12:46:29,656 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-26 12:46:29,656 - CAPIFInvokerConnector - INFO - Offboarding and deregistering Invoker
+2024-08-26 12:46:29,656 - CAPIFInvokerConnector - INFO - Offboarding Invoker
+2024-08-26 12:46:29,656 - CAPIFInvokerConnector - INFO - Loading Invoker API details
+2024-08-26 12:46:29,675 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:46:30,354 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /api-invoker-management/v1/onboardedInvokers/INVfe05071f7be63010bc794dfcaa732d HTTP/11" 204 0
+2024-08-26 12:46:30,355 - CAPIFInvokerConnector - INFO - Invoker offboarded successfully
+2024-08-26 12:46:30,355 - CAPIFInvokerConnector - INFO - Removing files generated
+2024-08-26 12:46:30,360 - CAPIFInvokerConnector - INFO - All contents in /Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/echeva_0 removed successfully.
+2024-08-26 12:46:30,360 - CAPIFInvokerConnector - INFO - Invoker offboarded and deregistered successfully
+2024-08-26 12:46:30,918 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 12:46:30,919 - CAPIFProviderConnector - INFO - Offboarding the provider
+2024-08-26 12:46:30,931 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:46:31,484 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /api-provider-management/v1/registrations/c686a6590ff7e1d73ec5f5e6ac256b HTTP/11" 204 0
+2024-08-26 12:46:31,485 - CAPIFProviderConnector - INFO - Offboarding performed successfully
+2024-08-26 12:46:31,486 - CAPIFProviderConnector - INFO - Removing files generated
+2024-08-26 12:46:31,497 - CAPIFProviderConnector - INFO - All contents in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0 removed successfully.
+2024-08-26 12:46:31,498 - CAPIFProviderConnector - INFO - Provider offboarded and deregistered successfully.
+2024-08-26 12:46:43,958 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 12:46:43,958 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-26 12:47:44,218 - CAPIFProviderConnector - INFO - cert_server.pem successfully generated!
+2024-08-26 12:47:44,219 - CAPIFProviderConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-26 12:47:44,238 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): registercapif-prev.mobilesandbox.cloud:36211
+2024-08-26 12:47:46,720 - urllib3.connectionpool - DEBUG - https://registercapif-prev.mobilesandbox.cloud:36211 "GET /getauth HTTP/11" 200 3610
+2024-08-26 12:47:46,723 - CAPIFProviderConnector - INFO - Authorization acquired successfully
+2024-08-26 12:47:46,724 - CAPIFProviderConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-26 12:47:46,725 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF and waiting signed certificate by giving our public keys to CAPIF
+2024-08-26 12:47:49,395 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:47:50,790 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /api-provider-management/v1/registrations HTTP/11" 201 21008
+2024-08-26 12:47:50,791 - CAPIFProviderConnector - INFO - Provider onboarded and signed certificate obtained successfully
+2024-08-26 12:47:50,792 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-26 12:47:50,794 - CAPIFProviderConnector - INFO - Data saved
+2024-08-26 12:56:47,765 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 12:56:47,765 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-26 12:56:47,765 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 12:56:47,765 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 12:56:47,765 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 12:56:47,766 - CAPIFProviderConnector - DEBUG - AEF API Provider Function IDs: []
+2024-08-26 12:56:47,766 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APFb9784075bcac97f47740bb4bf8be3c
+2024-08-26 12:56:47,766 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-26 12:56:47,766 - CAPIFProviderConnector - WARNING - No corresponding AEF ID for profile index 0
+2024-08-26 12:56:47,766 - CAPIFProviderConnector - WARNING - No corresponding AEF ID for profile index 1
+2024-08-26 12:56:47,767 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-26 12:56:47,767 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFb9784075bcac97f47740bb4bf8be3c/service-apis
+2024-08-26 12:56:47,776 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:56:48,323 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /published-apis/v1/APFb9784075bcac97f47740bb4bf8be3c/service-apis HTTP/11" 201 2606
+2024-08-26 12:56:48,324 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-26 12:56:48,325 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/CAPIF_provider_api_description_sample.json
+2024-08-26 12:57:52,805 - ServiceDiscoverer - ERROR - Error while loading Api invoker details: [Errno 2] No such file or directory: '/Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/echeva_0/capif_api_security_context_details-echeva_0.json'
+2024-08-26 12:58:20,198 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 12:58:20,198 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-26 12:58:46,252 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-26 12:58:46,253 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-26 12:58:46,253 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-26 12:58:46,253 - CAPIFInvokerConnector - INFO - Creating private and public keys for the Invoker cert
+2024-08-26 12:58:47,591 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-26 12:58:47,591 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-26 12:58:47,607 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): registercapif-prev.mobilesandbox.cloud:36211
+2024-08-26 12:58:50,321 - urllib3.connectionpool - DEBUG - https://registercapif-prev.mobilesandbox.cloud:36211 "GET /getauth HTTP/11" 200 3610
+2024-08-26 12:58:50,324 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-26 12:58:50,325 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF
+2024-08-26 12:58:50,329 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:58:51,060 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /api-invoker-management/v1/onboardedInvokers HTTP/11" 201 5272
+2024-08-26 12:58:51,061 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-26 12:58:51,061 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-26 12:58:51,062 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-26 12:58:51,062 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-26 12:58:59,133 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 12:58:59,134 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 12:58:59,141 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 12:58:59,670 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INV6a31ed873e0a049c83004d01cadb70 HTTP/11" 200 13178
+2024-08-26 12:58:59,671 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 12:58:59,674 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 12:59:46,155 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 12:59:46,155 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-26 12:59:46,155 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 13:00:09,811 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 13:00:09,811 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-26 13:01:03,933 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 13:01:03,933 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-26 13:02:04,129 - CAPIFProviderConnector - INFO - cert_server.pem successfully generated!
+2024-08-26 13:02:04,129 - CAPIFProviderConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-26 13:02:04,140 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): registercapif-prev.mobilesandbox.cloud:36211
+2024-08-26 13:02:06,790 - urllib3.connectionpool - DEBUG - https://registercapif-prev.mobilesandbox.cloud:36211 "GET /getauth HTTP/11" 200 3610
+2024-08-26 13:02:06,793 - CAPIFProviderConnector - INFO - Authorization acquired successfully
+2024-08-26 13:02:06,794 - CAPIFProviderConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-26 13:02:06,794 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF and waiting signed certificate by giving our public keys to CAPIF
+2024-08-26 13:02:09,101 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:02:10,471 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /api-provider-management/v1/registrations HTTP/11" 201 15951
+2024-08-26 13:02:10,472 - CAPIFProviderConnector - INFO - Provider onboarded and signed certificate obtained successfully
+2024-08-26 13:02:10,472 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-26 13:02:10,475 - CAPIFProviderConnector - INFO - Data saved
+2024-08-26 13:02:55,554 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 13:02:55,554 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-26 13:02:55,554 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 13:02:55,555 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 13:02:55,555 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 13:02:55,555 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF815c85c723e23eff967f6ed0f70794
+2024-08-26 13:02:55,555 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APFb72cc199066fc11f4b013c2d790e31
+2024-08-26 13:02:55,555 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-26 13:02:55,555 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-26 13:02:55,555 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFb72cc199066fc11f4b013c2d790e31/service-apis
+2024-08-26 13:02:55,564 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:02:55,994 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /published-apis/v1/APFb72cc199066fc11f4b013c2d790e31/service-apis HTTP/11" 403 141
+2024-08-26 13:02:55,995 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 403 Client Error: FORBIDDEN for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFb72cc199066fc11f4b013c2d790e31/service-apis
+2024-08-26 13:03:13,340 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 13:03:13,340 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-26 13:03:13,340 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 13:03:13,340 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 13:03:13,340 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 13:03:13,341 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF815c85c723e23eff967f6ed0f70794
+2024-08-26 13:03:13,341 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APFb72cc199066fc11f4b013c2d790e31
+2024-08-26 13:03:13,341 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-26 13:03:13,341 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-26 13:03:13,341 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFb72cc199066fc11f4b013c2d790e31/service-apis
+2024-08-26 13:03:13,349 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:03:13,788 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /published-apis/v1/APFb72cc199066fc11f4b013c2d790e31/service-apis HTTP/11" 201 2660
+2024-08-26 13:03:13,789 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-26 13:03:13,790 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/CAPIF_provider_api_description_sample.json
+2024-08-26 13:05:21,712 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 13:05:21,712 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 13:05:21,720 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:05:22,136 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INV6a31ed873e0a049c83004d01cadb70 HTTP/11" 200 15840
+2024-08-26 13:05:22,137 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 13:05:22,138 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 13:06:47,119 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 13:06:47,119 - CAPIFProviderConnector - INFO - Offboarding the provider
+2024-08-26 13:06:47,128 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:06:47,754 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /api-provider-management/v1/registrations/9f514df1da3dd9724f1892708e12a3 HTTP/11" 204 0
+2024-08-26 13:06:47,755 - CAPIFProviderConnector - INFO - Offboarding performed successfully
+2024-08-26 13:06:47,755 - CAPIFProviderConnector - INFO - Removing files generated
+2024-08-26 13:06:47,760 - CAPIFProviderConnector - INFO - All contents in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0 removed successfully.
+2024-08-26 13:06:47,760 - CAPIFProviderConnector - INFO - Provider offboarded and deregistered successfully.
+2024-08-26 13:06:52,564 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 13:06:52,565 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 13:06:52,573 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:06:52,952 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INV6a31ed873e0a049c83004d01cadb70 HTTP/11" 200 13178
+2024-08-26 13:06:52,953 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 13:06:52,954 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 13:13:58,648 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 13:13:58,648 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 13:13:58,648 - ServiceDiscoverer - INFO - Getting security context for all API's filtered
+2024-08-26 13:13:58,648 - ServiceDiscoverer - INFO - Trying to update security context
+2024-08-26 13:13:58,656 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:13:59,155 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /capif-security/v1/trustedInvokers/INV6a31ed873e0a049c83004d01cadb70/update HTTP/11" 404 134
+2024-08-26 13:13:59,156 - ServiceDiscoverer - WARNING - Received 404 error, redirecting to register security service
+2024-08-26 13:13:59,159 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:14:00,057 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "PUT /capif-security/v1/trustedInvokers/INV6a31ed873e0a049c83004d01cadb70 HTTP/11" 201 2345
+2024-08-26 13:14:00,057 - ServiceDiscoverer - INFO - Security service properly registered
+2024-08-26 13:14:00,059 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-26 13:14:00,062 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:14:01,655 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /capif-security/v1/securities/INV6a31ed873e0a049c83004d01cadb70/token HTTP/11" 200 2260
+2024-08-26 13:14:01,656 - ServiceDiscoverer - INFO - Security token successfully obtained
+2024-08-26 13:14:01,656 - ServiceDiscoverer - INFO - Access token successfully obtained
+2024-08-26 13:14:01,657 - ServiceDiscoverer - INFO - Security context saved correctly
+2024-08-26 13:16:57,930 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 13:16:57,930 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 13:16:57,940 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:16:58,434 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INV6a31ed873e0a049c83004d01cadb70 HTTP/11" 200 13178
+2024-08-26 13:16:58,435 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 13:16:58,437 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 13:18:56,653 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 13:18:56,654 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 13:18:56,664 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:18:57,212 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INV6a31ed873e0a049c83004d01cadb70 HTTP/11" 200 13178
+2024-08-26 13:18:57,213 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 13:18:57,215 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 13:42:55,594 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 13:42:55,594 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-26 13:43:55,862 - CAPIFProviderConnector - INFO - cert_server.pem successfully generated!
+2024-08-26 13:43:55,863 - CAPIFProviderConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-26 13:43:55,884 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): registercapif-prev.mobilesandbox.cloud:36211
+2024-08-26 13:43:58,513 - urllib3.connectionpool - DEBUG - https://registercapif-prev.mobilesandbox.cloud:36211 "GET /getauth HTTP/11" 200 3610
+2024-08-26 13:43:58,515 - CAPIFProviderConnector - INFO - Authorization acquired successfully
+2024-08-26 13:43:58,516 - CAPIFProviderConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-26 13:43:58,517 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF and waiting signed certificate by giving our public keys to CAPIF
+2024-08-26 13:43:59,686 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:44:00,887 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /api-provider-management/v1/registrations HTTP/11" 201 15951
+2024-08-26 13:44:00,887 - CAPIFProviderConnector - INFO - Provider onboarded and signed certificate obtained successfully
+2024-08-26 13:44:00,888 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-26 13:44:00,889 - CAPIFProviderConnector - INFO - Data saved
+2024-08-26 13:55:42,494 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 13:56:06,972 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 13:56:06,973 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-26 13:56:06,973 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 13:56:06,973 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 13:56:06,973 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 13:56:06,973 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF756da7d1d7f2039276c0505774f796
+2024-08-26 13:56:06,974 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APFdf593d8b8f86aa688cb801356fcf4e
+2024-08-26 13:56:06,974 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis093a18ec70b4b5b7a72534e020f7ef
+2024-08-26 13:56:06,993 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:56:07,211 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis093a18ec70b4b5b7a72534e020f7ef HTTP/11" 404 205
+2024-08-26 13:56:07,212 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 404 Client Error: NOT FOUND for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis093a18ec70b4b5b7a72534e020f7ef
+2024-08-26 13:57:12,488 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 13:57:12,488 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-26 13:57:12,489 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 13:57:12,489 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 13:57:12,489 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 13:57:12,490 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF756da7d1d7f2039276c0505774f796
+2024-08-26 13:57:12,490 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APFdf593d8b8f86aa688cb801356fcf4e
+2024-08-26 13:57:12,490 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/093a18ec70b4b5b7a72534e020f7ef
+2024-08-26 13:57:12,509 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:57:12,713 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/093a18ec70b4b5b7a72534e020f7ef HTTP/11" 401 109
+2024-08-26 13:57:12,714 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 401 Client Error: UNAUTHORIZED for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/093a18ec70b4b5b7a72534e020f7ef
+2024-08-26 13:58:49,770 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 13:58:49,770 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-26 13:58:49,770 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 13:58:49,771 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 13:58:49,771 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 13:58:49,771 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF756da7d1d7f2039276c0505774f796
+2024-08-26 13:58:49,771 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APFdf593d8b8f86aa688cb801356fcf4e
+2024-08-26 13:58:49,772 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/093a18ec70b4b5b7a72534e020f7ef
+2024-08-26 13:58:49,779 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:58:50,018 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/093a18ec70b4b5b7a72534e020f7ef HTTP/11" 401 109
+2024-08-26 13:58:50,018 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 401 Client Error: UNAUTHORIZED for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/093a18ec70b4b5b7a72534e020f7ef
+2024-08-26 13:59:28,907 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 13:59:28,907 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-26 13:59:28,907 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 13:59:28,908 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 13:59:28,908 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 13:59:28,908 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF756da7d1d7f2039276c0505774f796
+2024-08-26 13:59:28,908 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APFdf593d8b8f86aa688cb801356fcf4e
+2024-08-26 13:59:28,908 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-26 13:59:28,910 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-26 13:59:28,910 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis
+2024-08-26 13:59:28,918 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:59:29,422 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis HTTP/11" 201 2660
+2024-08-26 13:59:29,422 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-26 13:59:29,423 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/CAPIF_provider_api_description_sample.json
+2024-08-26 13:59:44,003 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 13:59:44,003 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 13:59:44,011 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 13:59:44,374 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INV6a31ed873e0a049c83004d01cadb70 HTTP/11" 200 15840
+2024-08-26 13:59:44,375 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 13:59:44,379 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 14:00:10,405 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 14:00:10,405 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-26 14:00:10,405 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 14:00:10,406 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 14:00:10,406 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 14:00:10,406 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF756da7d1d7f2039276c0505774f796
+2024-08-26 14:00:10,406 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APFdf593d8b8f86aa688cb801356fcf4e
+2024-08-26 14:00:10,407 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/a6afb4e37c013fbc70d72bb57441c2
+2024-08-26 14:00:10,418 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 14:00:10,721 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/a6afb4e37c013fbc70d72bb57441c2 HTTP/11" 204 0
+2024-08-26 14:00:10,721 - CAPIFProviderConnector - INFO - Services unpublished successfully
+2024-08-26 14:00:19,662 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 14:00:19,662 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-26 14:00:19,662 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 14:00:19,662 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 14:00:19,662 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 14:00:19,662 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF756da7d1d7f2039276c0505774f796
+2024-08-26 14:00:19,662 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APFdf593d8b8f86aa688cb801356fcf4e
+2024-08-26 14:00:19,663 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-26 14:00:19,663 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-26 14:00:19,663 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis
+2024-08-26 14:00:19,671 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 14:00:20,015 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis HTTP/11" 201 2660
+2024-08-26 14:00:20,016 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-26 14:00:20,017 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/CAPIF_provider_api_description_sample.json
+2024-08-26 14:00:24,346 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 14:00:24,346 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-26 14:00:24,346 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 14:00:24,346 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 14:00:24,347 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 14:00:24,347 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF756da7d1d7f2039276c0505774f796
+2024-08-26 14:00:24,347 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APFdf593d8b8f86aa688cb801356fcf4e
+2024-08-26 14:00:24,347 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/a6afb4e37c013fbc70d72bb57441c2
+2024-08-26 14:00:24,357 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 14:00:24,419 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/a6afb4e37c013fbc70d72bb57441c2 HTTP/11" 401 109
+2024-08-26 14:00:24,420 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 401 Client Error: UNAUTHORIZED for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/a6afb4e37c013fbc70d72bb57441c2
+2024-08-26 14:00:40,991 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 14:00:40,991 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 14:00:40,998 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 14:00:41,170 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INV6a31ed873e0a049c83004d01cadb70 HTTP/11" 200 15840
+2024-08-26 14:00:41,171 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 14:00:41,174 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 14:01:04,661 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 14:01:04,661 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-26 14:01:04,661 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-26 14:01:04,661 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-26 14:01:04,662 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-26 14:01:04,662 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEF756da7d1d7f2039276c0505774f796
+2024-08-26 14:01:04,662 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APFdf593d8b8f86aa688cb801356fcf4e
+2024-08-26 14:01:04,662 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/86b16467b38e803bdf37f8bad17e85
+2024-08-26 14:01:04,672 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 14:01:04,924 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /published-apis/v1/APFdf593d8b8f86aa688cb801356fcf4e/service-apis/86b16467b38e803bdf37f8bad17e85 HTTP/11" 204 0
+2024-08-26 14:01:04,925 - CAPIFProviderConnector - INFO - Services unpublished successfully
+2024-08-26 14:01:11,791 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-26 14:01:11,791 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-26 14:01:11,802 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 14:01:11,963 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INV6a31ed873e0a049c83004d01cadb70 HTTP/11" 200 13178
+2024-08-26 14:01:11,964 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-26 14:01:11,967 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-26 14:02:05,735 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-26 14:02:05,736 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-26 14:02:05,736 - CAPIFInvokerConnector - INFO - Offboarding and deregistering Invoker
+2024-08-26 14:02:05,736 - CAPIFInvokerConnector - INFO - Offboarding Invoker
+2024-08-26 14:02:05,736 - CAPIFInvokerConnector - INFO - Loading Invoker API details
+2024-08-26 14:02:05,744 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 14:02:06,265 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /api-invoker-management/v1/onboardedInvokers/INV6a31ed873e0a049c83004d01cadb70 HTTP/11" 204 0
+2024-08-26 14:02:06,266 - CAPIFInvokerConnector - INFO - Invoker offboarded successfully
+2024-08-26 14:02:06,266 - CAPIFInvokerConnector - INFO - Removing files generated
+2024-08-26 14:02:06,269 - CAPIFInvokerConnector - INFO - All contents in /Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/echeva_0 removed successfully.
+2024-08-26 14:02:06,269 - CAPIFInvokerConnector - INFO - Invoker offboarded and deregistered successfully
+2024-08-26 14:02:06,815 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-26 14:02:06,815 - CAPIFProviderConnector - INFO - Offboarding the provider
+2024-08-26 14:02:06,825 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-26 14:02:07,189 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /api-provider-management/v1/registrations/9efbd990bc325b4ef5440d4c91dd66 HTTP/11" 204 0
+2024-08-26 14:02:07,190 - CAPIFProviderConnector - INFO - Offboarding performed successfully
+2024-08-26 14:02:07,191 - CAPIFProviderConnector - INFO - Removing files generated
+2024-08-26 14:02:07,196 - CAPIFProviderConnector - INFO - All contents in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0 removed successfully.
+2024-08-26 14:02:07,197 - CAPIFProviderConnector - INFO - Provider offboarded and deregistered successfully.
+2024-08-27 08:26:09,183 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-27 08:26:09,185 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-27 08:26:09,185 - CAPIFInvokerConnector - INFO - Registering and onboarding Invoker
+2024-08-27 08:26:09,185 - CAPIFInvokerConnector - INFO - Creating private and public keys for the Invoker cert
+2024-08-27 08:26:09,713 - CAPIFInvokerConnector - INFO - Keys created successfully
+2024-08-27 08:26:09,714 - CAPIFInvokerConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-27 08:26:09,804 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): registercapif-prev.mobilesandbox.cloud:36211
+2024-08-27 08:26:12,206 - urllib3.connectionpool - DEBUG - https://registercapif-prev.mobilesandbox.cloud:36211 "GET /getauth HTTP/11" 200 3610
+2024-08-27 08:26:12,209 - CAPIFInvokerConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-27 08:26:12,209 - CAPIFInvokerConnector - INFO - Onboarding Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF
+2024-08-27 08:26:12,272 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:26:12,853 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /api-invoker-management/v1/onboardedInvokers HTTP/11" 201 5272
+2024-08-27 08:26:12,854 - CAPIFInvokerConnector - INFO - Invoker onboarded and signed certificate created successfully
+2024-08-27 08:26:12,854 - CAPIFInvokerConnector - INFO - Writing API invoker ID and service discovery URL to file
+2024-08-27 08:26:12,855 - CAPIFInvokerConnector - INFO - API invoker ID and service discovery URL written to file successfully
+2024-08-27 08:26:12,855 - CAPIFInvokerConnector - INFO - Invoker registered and onboarded successfully
+2024-08-27 08:26:38,265 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:26:38,266 - CAPIFProviderConnector - INFO - Retrieving capif_cert_server.pem, this may take a few minutes.
+2024-08-27 08:27:38,545 - CAPIFProviderConnector - INFO - cert_server.pem successfully generated!
+2024-08-27 08:27:38,545 - CAPIFProviderConnector - INFO - Saving CAPIF CA root file and getting auth token with user and password given by the CAPIF administrator
+2024-08-27 08:27:38,555 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): registercapif-prev.mobilesandbox.cloud:36211
+2024-08-27 08:27:41,309 - urllib3.connectionpool - DEBUG - https://registercapif-prev.mobilesandbox.cloud:36211 "GET /getauth HTTP/11" 200 3610
+2024-08-27 08:27:41,312 - CAPIFProviderConnector - INFO - Authorization acquired successfully
+2024-08-27 08:27:41,313 - CAPIFProviderConnector - INFO - CAPIF CA root file saved and auth token obtained successfully
+2024-08-27 08:27:41,313 - CAPIFProviderConnector - INFO - Onboarding Provider to CAPIF and waiting signed certificate by giving our public keys to CAPIF
+2024-08-27 08:27:42,689 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:27:44,089 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /api-provider-management/v1/registrations HTTP/11" 201 15951
+2024-08-27 08:27:44,090 - CAPIFProviderConnector - INFO - Provider onboarded and signed certificate obtained successfully
+2024-08-27 08:27:44,090 - CAPIFProviderConnector - INFO - Saving the most relevant onboarding data
+2024-08-27 08:27:44,092 - CAPIFProviderConnector - INFO - Data saved
+2024-08-27 08:28:58,321 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:28:58,321 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-27 08:28:58,321 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:28:58,322 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:28:58,322 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:28:58,322 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:28:58,322 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:28:58,322 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-27 08:28:58,323 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-27 08:28:58,323 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis
+2024-08-27 08:28:58,331 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:28:59,017 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis HTTP/11" 201 2660
+2024-08-27 08:28:59,017 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-27 08:28:59,018 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/CAPIF_provider_api_description_sample.json
+2024-08-27 08:29:09,788 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-27 08:29:09,788 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-27 08:29:09,798 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:29:10,167 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INVe33868a5f03d4cb6cd01eb1f2757ba HTTP/11" 200 15840
+2024-08-27 08:29:10,168 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-27 08:29:10,170 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-27 08:30:29,790 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:30:29,790 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 08:30:29,790 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:30:29,790 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:30:29,791 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:30:29,791 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:30:29,791 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:30:29,791 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31
+2024-08-27 08:30:29,798 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:30:30,017 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31 HTTP/11" 200 2660
+2024-08-27 08:30:30,018 - CAPIFProviderConnector - INFO - Service received successfully
+2024-08-27 08:30:30,018 - CAPIFProviderConnector - INFO - {"apiName": "/nef/api/v1/3gpp-monitor-event-11/", "apiId": "c539f540a42d3cdd08538fc95eca31", "aefProfiles": [{"aefId": "AEFc0710179758aceec981ce7d58d316b", "versions": [{"apiVersion": "v1", "expiry": "2100-11-30T10:32:02.004000+00:00", "resources": [{"resourceName": "MONITORING_SUBSCRIPTIONS", "commType": " SUBSCRIBE_NOTIFY", "uri": "/{scsAsId}/subscriptions", "custOpName": "http_post", "operations": ["GET", "POST"], "description": "Endpoint to manage monitoring subscriptions"}, {"resourceName": "MONITORING_SUBSCRIPTION_SINGLE", "commType": " SUBSCRIBE_NOTIFY", "uri": "/{scsAsId}/subscriptions/{subscriptionId}", "custOpName": "http_get", "operations": ["GET", "PUT", "DELETE"], "description": "Endpoint to manage single subscription"}], "custOperations": [{"commType": "REQUEST_RESPONSE", "custOpName": "string", "operations": ["POST"], "description": "string"}]}], "protocol": "HTTP_1_1", "dataFormat": "JSON", "securityMethods": ["Oauth", "PSK"], "interfaceDescriptions": [{"ipv4Addr": "127.0.0.1", "port": 8888, "securityMethods": ["Oauth"]}]}, {"aefId": "AEFc0710179758aceec981ce7d58d316b", "versions": [{"apiVersion": "v1", "expiry": "2100-11-30T10:32:02.004000+00:00", "resources": [{"resourceName": "TSN_LIST_PROFILES", "commType": " SUBSCRIBE_NOTIFY", "uri": "/profile", "custOpName": "http_get", "operations": ["GET"], "description": "Endpoint for retrieving the list of available TSN profiles"}, {"resourceName": "TSN_DETAIL_PROFILE", "commType": " SUBSCRIBE_NOTIFY", "uri": "/profile?name={profileName}", "custOpName": "http_get", "operations": ["GET"], "description": "Endpoint for retrieving information about a single TSN profile"}, {"resourceName": "TSN_APPLY_CONFIGURATION", "commType": " SUBSCRIBE_NOTIFY", "uri": "/apply", "custOpName": "http_post", "operations": ["POST"], "description": "Endpoint for configuring TSN connection parameters"}, {"resourceName": "TSN_CLEAR_CONFIGURATION", "commType": " SUBSCRIBE_NOTIFY", "uri": "/clear", "custOpName": "http_post", "operations": ["POST"], "description": "Endpoint for removing a previous TSN connection configuration"}], "custOperations": [{"commType": "REQUEST_RESPONSE", "custOpName": "string", "operations": ["POST"], "description": "string"}]}], "protocol": "HTTP_1_1", "dataFormat": "JSON", "securityMethods": ["Oauth"], "interfaceDescriptions": [{"ipv4Addr": "127.0.0.1", "port": 8899, "securityMethods": ["Oauth"]}]}], "description": "API of dummy netapp to test", "supportedFeatures": "fffff", "shareableInfo": {"isShareable": true, "capifProvDoms": ["string"]}, "serviceAPICategory": "string", "apiSuppFeats": "fffff", "pubApiPath": {"ccfIds": ["string"]}, "ccfId": "string"}
+2024-08-27 08:37:57,358 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:37:57,359 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 08:37:57,359 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:37:57,359 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:37:57,359 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:37:57,360 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:37:57,360 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:37:57,360 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31
+2024-08-27 08:37:57,369 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:37:57,820 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31 HTTP/11" 200 2660
+2024-08-27 08:37:57,820 - CAPIFProviderConnector - INFO - Service received successfully
+2024-08-27 08:37:57,821 - CAPIFProviderConnector - ERROR - Unexpected error during service getter: '_io.TextIOWrapper' object has no attribute 'dump'
+2024-08-27 08:39:32,302 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:39:32,302 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 08:39:32,302 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:39:32,303 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:39:32,303 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:39:32,303 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:39:32,303 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:39:32,303 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31
+2024-08-27 08:39:32,310 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:39:32,628 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31 HTTP/11" 200 2660
+2024-08-27 08:39:32,629 - CAPIFProviderConnector - INFO - Service received successfully
+2024-08-27 08:39:32,630 - CAPIFProviderConnector - INFO - Service saved in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/service_received.json
+2024-08-27 08:43:11,539 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:43:11,540 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 08:43:11,540 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:43:11,541 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:43:11,541 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:43:11,541 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:43:11,541 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:43:11,542 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31
+2024-08-27 08:43:11,550 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:43:12,025 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31 HTTP/11" 200 2660
+2024-08-27 08:43:12,026 - CAPIFProviderConnector - INFO - Service received successfully
+2024-08-27 08:43:12,027 - CAPIFProviderConnector - INFO - Service saved in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/service_received.json
+2024-08-27 08:44:34,399 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:44:34,400 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 08:44:34,400 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:44:34,400 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:44:34,401 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:44:34,401 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:44:34,401 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:44:34,402 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31
+2024-08-27 08:44:34,411 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:44:34,722 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31 HTTP/11" 200 2660
+2024-08-27 08:44:34,723 - CAPIFProviderConnector - INFO - Service received successfully
+2024-08-27 08:44:34,724 - CAPIFProviderConnector - INFO - Service saved in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/service_received.json
+2024-08-27 08:45:35,575 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:45:35,575 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 08:45:35,575 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:45:35,576 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:45:35,576 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:45:35,576 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:45:35,577 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:45:35,577 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31
+2024-08-27 08:45:35,586 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:45:35,918 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31 HTTP/11" 200 2660
+2024-08-27 08:45:35,918 - CAPIFProviderConnector - INFO - Service received successfully
+2024-08-27 08:45:35,920 - CAPIFProviderConnector - INFO - Service saved in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/service_received.json
+2024-08-27 08:47:38,078 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:47:38,078 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 08:47:38,078 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:47:38,079 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:47:38,079 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:47:38,079 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:47:38,079 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:47:38,079 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31
+2024-08-27 08:47:38,086 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:47:38,520 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/c539f540a42d3cdd08538fc95eca31 HTTP/11" 204 0
+2024-08-27 08:47:38,521 - CAPIFProviderConnector - INFO - Services unpublished successfully
+2024-08-27 08:47:51,241 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-27 08:47:51,241 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-27 08:47:51,252 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:47:51,673 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INVe33868a5f03d4cb6cd01eb1f2757ba HTTP/11" 200 13178
+2024-08-27 08:47:51,674 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-27 08:47:51,676 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-27 08:48:20,969 - ServiceDiscoverer - INFO - Api provider details correctly loaded
+2024-08-27 08:48:20,969 - ServiceDiscoverer - INFO - ServiceDiscoverer initialized correctly
+2024-08-27 08:48:20,978 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:48:21,066 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /service-apis/v1/allServiceAPIs?api-invoker-id=INVe33868a5f03d4cb6cd01eb1f2757ba HTTP/11" 200 13178
+2024-08-27 08:48:21,067 - ServiceDiscoverer - INFO - Service APIs successfully discovered
+2024-08-27 08:48:21,068 - ServiceDiscoverer - INFO - API provider details correctly saved
+2024-08-27 08:48:24,557 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:48:24,557 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 08:48:24,558 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:48:24,558 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:48:24,558 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:48:24,558 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:48:24,558 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:48:24,559 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/093a18ec70b4b5b7a72534e020f7ef
+2024-08-27 08:48:24,566 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:48:24,817 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/093a18ec70b4b5b7a72534e020f7ef HTTP/11" 401 109
+2024-08-27 08:48:24,818 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 401 Client Error: UNAUTHORIZED for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/093a18ec70b4b5b7a72534e020f7ef
+2024-08-27 08:48:57,402 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:48:57,402 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 08:48:57,402 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:48:57,402 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:48:57,402 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:48:57,403 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:48:57,403 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:48:57,403 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/5963b54a8b47269812198e0de69bcc
+2024-08-27 08:48:57,411 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:48:57,488 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/5963b54a8b47269812198e0de69bcc HTTP/11" 401 109
+2024-08-27 08:48:57,489 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 401 Client Error: UNAUTHORIZED for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/5963b54a8b47269812198e0de69bcc
+2024-08-27 08:55:37,180 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:55:37,180 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-27 08:55:37,181 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:55:37,182 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:55:37,182 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:55:37,182 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:55:37,182 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:55:37,182 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-27 08:55:37,183 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-27 08:55:37,183 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis
+2024-08-27 08:55:37,196 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:55:37,832 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis HTTP/11" 201 2660
+2024-08-27 08:55:37,832 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-27 08:55:37,833 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/CAPIF_provider_api_description_sample.json
+2024-08-27 08:55:47,256 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:55:47,256 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-27 08:55:47,256 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:55:47,256 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:55:47,256 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:55:47,256 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:55:47,257 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:55:47,257 - CAPIFProviderConnector - INFO - Getting services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis
+2024-08-27 08:55:47,264 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:55:47,337 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis HTTP/11" 200 2662
+2024-08-27 08:55:47,338 - CAPIFProviderConnector - INFO - Services received successfully
+2024-08-27 08:55:47,340 - CAPIFProviderConnector - INFO - Services saved in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/service_received.json
+2024-08-27 08:56:22,610 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:56:22,610 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-27 08:56:22,610 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:56:22,611 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:56:22,611 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:56:22,611 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:56:22,611 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:56:22,611 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-27 08:56:22,612 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-27 08:56:22,612 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis
+2024-08-27 08:56:22,621 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:56:22,738 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis HTTP/11" 201 2660
+2024-08-27 08:56:22,738 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-27 08:56:22,740 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/CAPIF_provider_api_description_sample.json
+2024-08-27 08:56:49,576 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 08:56:49,576 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-27 08:56:49,576 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 08:56:49,577 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 08:56:49,577 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 08:56:49,577 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 08:56:49,577 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 08:56:49,577 - CAPIFProviderConnector - INFO - Getting services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis
+2024-08-27 08:56:49,585 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 08:56:49,835 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis HTTP/11" 200 5324
+2024-08-27 08:56:49,836 - CAPIFProviderConnector - INFO - Services received successfully
+2024-08-27 08:56:49,838 - CAPIFProviderConnector - INFO - Services saved in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/service_received.json
+2024-08-27 09:09:57,693 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 09:09:57,693 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 09:09:57,693 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 09:09:57,694 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 09:09:57,695 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 09:09:57,695 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 09:09:57,695 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 09:09:57,696 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/5963b54a8b47269812198e0de69bcc
+2024-08-27 09:09:57,706 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 09:09:57,973 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/5963b54a8b47269812198e0de69bcc HTTP/11" 401 109
+2024-08-27 09:09:57,974 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 401 Client Error: UNAUTHORIZED for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/5963b54a8b47269812198e0de69bcc
+2024-08-27 09:10:26,592 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 09:10:26,592 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 09:10:26,592 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 09:10:26,592 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 09:10:26,592 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 09:10:26,593 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 09:10:26,593 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 09:10:26,593 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/50482d9900a94dba4bb4ac8fb70819
+2024-08-27 09:10:26,601 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 09:10:26,765 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/50482d9900a94dba4bb4ac8fb70819 HTTP/11" 200 2660
+2024-08-27 09:10:26,765 - CAPIFProviderConnector - INFO - Service received successfully
+2024-08-27 09:10:26,775 - CAPIFProviderConnector - INFO - Service saved in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/service_received.json
+2024-08-27 09:13:03,744 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 09:13:03,746 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-27 09:13:03,746 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 09:13:03,748 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 09:13:03,748 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 09:13:03,748 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 09:13:03,748 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 09:13:03,748 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-27 09:13:03,749 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-27 09:13:03,751 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/50482d9900a94dba4bb4ac8fb70819
+2024-08-27 09:13:03,776 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 09:13:04,463 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "PUT /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/50482d9900a94dba4bb4ac8fb70819 HTTP/11" 200 2660
+2024-08-27 09:13:04,464 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-27 09:13:04,471 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/CAPIF_provider_api_description_sample.json
+2024-08-27 09:23:12,467 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 09:23:12,467 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-27 09:23:12,468 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 09:23:12,469 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 09:23:12,469 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 09:23:12,469 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 09:23:12,469 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 09:23:12,469 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-27 09:23:12,470 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-27 09:23:12,470 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis
+2024-08-27 09:23:12,488 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 09:23:12,960 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "POST /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis HTTP/11" 403 141
+2024-08-27 09:23:12,961 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 403 Client Error: FORBIDDEN for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis
+2024-08-27 09:23:23,712 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 09:23:23,712 - CAPIFProviderConnector - INFO - Starting the service unpublication process
+2024-08-27 09:23:23,713 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 09:23:23,713 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 09:23:23,713 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 09:23:23,713 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 09:23:23,713 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 09:23:23,715 - CAPIFProviderConnector - INFO - Unpublishing service to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/50482d9900a94dba4bb4ac8fb70819
+2024-08-27 09:23:23,725 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 09:23:23,865 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/50482d9900a94dba4bb4ac8fb70819 HTTP/11" 200 2660
+2024-08-27 09:23:23,865 - CAPIFProviderConnector - INFO - Service received successfully
+2024-08-27 09:23:23,869 - CAPIFProviderConnector - INFO - Service saved in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/service_received.json
+2024-08-27 09:24:24,825 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 09:24:24,826 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-27 09:24:24,826 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 09:24:24,827 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 09:24:24,827 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 09:24:24,827 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 09:24:24,827 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 09:24:24,827 - CAPIFProviderConnector - INFO - Getting services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis
+2024-08-27 09:24:24,835 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 09:24:25,171 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis HTTP/11" 200 5324
+2024-08-27 09:24:25,172 - CAPIFProviderConnector - INFO - Services received successfully
+2024-08-27 09:24:25,174 - CAPIFProviderConnector - INFO - Services saved in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/service_received.json
+2024-08-27 09:26:04,706 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 09:26:04,706 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-27 09:26:04,706 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 09:26:04,706 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 09:26:04,706 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 09:26:04,707 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 09:26:04,707 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 09:26:04,707 - CAPIFProviderConnector - INFO - Reading and modifying service API description from /Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/capif_exposer_sample_files/provider_api_description_sample.json
+2024-08-27 09:26:04,707 - CAPIFProviderConnector - INFO - Service API description modified successfully
+2024-08-27 09:26:04,708 - CAPIFProviderConnector - INFO - Publishing services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/50482d9900a94dba4bb4ac8fb70819
+2024-08-27 09:26:04,718 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 09:26:05,288 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "PUT /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis/50482d9900a94dba4bb4ac8fb70819 HTTP/11" 200 2660
+2024-08-27 09:26:05,289 - CAPIFProviderConnector - INFO - Services published successfully
+2024-08-27 09:26:05,290 - CAPIFProviderConnector - INFO - CAPIF response saved to /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/CAPIF_provider_api_description_sample.json
+2024-08-27 09:51:02,574 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 09:51:02,574 - CAPIFProviderConnector - INFO - Starting the service publication process
+2024-08-27 09:51:02,574 - CAPIFProviderConnector - INFO - Loading provider details from /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-27 09:51:02,575 - CAPIFProviderConnector - INFO - Provider details loaded successfully
+2024-08-27 09:51:02,575 - CAPIFProviderConnector - DEBUG - Publish URL: published-apis/v1/<apfId>/service-apis
+2024-08-27 09:51:02,575 - CAPIFProviderConnector - DEBUG - AEF API Provider Function ID: AEFc0710179758aceec981ce7d58d316b
+2024-08-27 09:51:02,575 - CAPIFProviderConnector - DEBUG - APF API Provider Function ID: APF0d31b1d83a81c20c6a3e1780edbf7a
+2024-08-27 09:51:02,576 - CAPIFProviderConnector - INFO - Getting services to URL: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis
+2024-08-27 09:51:02,593 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 09:51:03,172 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "GET /published-apis/v1/APF0d31b1d83a81c20c6a3e1780edbf7a/service-apis HTTP/11" 200 5324
+2024-08-27 09:51:03,173 - CAPIFProviderConnector - INFO - Services received successfully
+2024-08-27 09:51:03,177 - CAPIFProviderConnector - INFO - Services saved in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/service_received.json
+2024-08-27 10:29:25,433 - CAPIFInvokerConnector - INFO - Initializing CAPIFInvokerConnector
+2024-08-27 10:29:25,434 - CAPIFInvokerConnector - INFO - CAPIFInvokerConnector initialized with the config.json parameters
+2024-08-27 10:29:25,435 - CAPIFInvokerConnector - INFO - Offboarding and deregistering Invoker
+2024-08-27 10:29:25,435 - CAPIFInvokerConnector - INFO - Offboarding Invoker
+2024-08-27 10:29:25,435 - CAPIFInvokerConnector - INFO - Loading Invoker API details
+2024-08-27 10:29:25,455 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 10:29:26,082 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /api-invoker-management/v1/onboardedInvokers/INVe33868a5f03d4cb6cd01eb1f2757ba HTTP/11" 204 0
+2024-08-27 10:29:26,083 - CAPIFInvokerConnector - INFO - Invoker offboarded successfully
+2024-08-27 10:29:26,083 - CAPIFInvokerConnector - INFO - Removing files generated
+2024-08-27 10:29:26,087 - CAPIFInvokerConnector - INFO - All contents in /Users/IDB0128/Documents/OpenCapif/test_invoker_certificate_folder/echeva_0 removed successfully.
+2024-08-27 10:29:26,087 - CAPIFInvokerConnector - INFO - Invoker offboarded and deregistered successfully
+2024-08-27 10:29:36,387 - CAPIFProviderConnector - INFO - CAPIFProviderConnector initialized with the config.json parameters
+2024-08-27 10:29:36,388 - CAPIFProviderConnector - INFO - Offboarding the provider
+2024-08-27 10:29:36,398 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): capif-prev.mobilesandbox.cloud:36212
+2024-08-27 10:29:36,906 - urllib3.connectionpool - DEBUG - https://capif-prev.mobilesandbox.cloud:36212 "DELETE /api-provider-management/v1/registrations/f23235330e4eccc892ebb250b49a62 HTTP/11" 204 0
+2024-08-27 10:29:36,906 - CAPIFProviderConnector - INFO - Offboarding performed successfully
+2024-08-27 10:29:36,907 - CAPIFProviderConnector - INFO - Removing files generated
+2024-08-27 10:29:36,913 - CAPIFProviderConnector - INFO - All contents in /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0 removed successfully.
+2024-08-27 10:29:36,914 - CAPIFProviderConnector - INFO - Provider offboarded and deregistered successfully.
+2024-08-27 10:31:29,804 - ServiceDiscoverer - WARNING - Received 404 error, redirecting to register security service

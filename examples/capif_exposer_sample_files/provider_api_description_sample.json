@@ -1,11 +1,11 @@
 {
-  "apiName": "/nef/api/v1/3gpp-monitor-event-3/",
+  "apiName": "/nef/api/v1/3gpp-monitor-event-11/",
   "aefProfiles": [
     {
       "aefId": "string",
       "versions": [
         {
-          "apiVersion": "v1",
+          "apiVersion": "v3",
           "expiry": "2100-11-30T10:32:02.004Z",
           "resources": [
             {
