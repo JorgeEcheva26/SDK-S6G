@@ -439,7 +439,8 @@ class CAPIFProviderConnector:
             csr_state_or_province_name = os.getenv('CSR_STATE_OR_PROVINCE_NAME', config.get('csr_state_or_province_name', '')).strip()
             csr_country_name = os.getenv('CSR_COUNTRY_NAME', config.get('csr_country_name', '')).strip()
             csr_email_address = os.getenv('CSR_EMAIL_ADDRESS', config.get('csr_email_address', '')).strip()
-            
+            APFs = os.getenv('APFS', config.get('APFs', '')).strip()
+            AEFs = os.getenv('AEFS', config.get('AEFs', '')).strip()
             
 
             if not capif_host:
@@ -463,7 +464,8 @@ class CAPIFProviderConnector:
             self.csr_state_or_province_name = csr_state_or_province_name
             self.csr_country_name = csr_country_name
             self.csr_email_address = csr_email_address
-            
+            self.AEFs = int(AEFs)
+            self.APFs = int(APFs)
             
             
             self.capif_https_port = str(capif_https_port)
@@ -566,10 +568,19 @@ class CAPIFProviderConnector:
             "Content-Type": "application/json",
         }
 
+        # Crear la lista de roles sin indexar
+        roles = ["AMF"]
+        for n in range(1, self.AEFs + 1):
+            roles.append("AEF")
+
+        for n in range(1, self.APFs + 1):
+            roles.append("APF")
+
+        # Construir el payload con los roles sin indexar
         payload = {
             "apiProvFuncs": [
                 {"regInfo": {"apiProvPubKey": ""}, "apiProvFuncRole": role, "apiProvFuncInfo": f"{role.lower()}"}
-                for role in ["AEF", "APF", "AMF"]
+                for role in roles
             ],
             "apiProvDomInfo": "This is provider",
             "suppFeat": "fff",
@@ -577,9 +588,22 @@ class CAPIFProviderConnector:
             "regSec": access_token,
         }
 
-        for api_func in payload["apiProvFuncs"]:
-            public_key = self.__create_private_and_public_keys(api_func["apiProvFuncRole"])
+        # Generar los roles indexados para la creación de certificados
+        indexedroles = ["AMF"]
+        for n in range(1, self.AEFs + 1):
+            indexedroles.append(f"AEF-{n}")
+
+        for n in range(1, self.APFs + 1):
+            indexedroles.append(f"APF-{n}")
+
+        # Guardar las claves públicas y generar los certificados con roles indexados
+        for i, api_func in enumerate(payload["apiProvFuncs"]):
+            # Generar las claves públicas con el rol indexado, pero no actualizar el payload con el rol indexado
+            public_key = self.__create_private_and_public_keys(indexedroles[i])
+            
+            # Asignar la clave pública al payload
             api_func["regInfo"]["apiProvPubKey"] = public_key.decode("utf-8")
+
 
         try:
             response = requests.post(
@@ -599,23 +623,34 @@ class CAPIFProviderConnector:
     def __write_to_file(self, onboarding_response, capif_registration_id, publish_url):
         self.logger.info("Saving the most relevant onboarding data")
 
-        for func_provile in onboarding_response["apiProvFuncs"]:
-            role = func_provile["apiProvFuncRole"].lower()
+        # Generar los roles indexados para la correspondencia
+        indexedroles = ["AMF"]
+        for n in range(1, self.AEFs + 1):
+            indexedroles.append(f"AEF-{n}")
+
+        for n in range(1, self.APFs + 1):
+            indexedroles.append(f"APF-{n}")
+
+        # Guardar los certificados con los nombres indexados
+        for i, func_profile in enumerate(onboarding_response["apiProvFuncs"]):
+            role = indexedroles[i].lower()
             cert_path = os.path.join(self.provider_folder, f"{role}.crt")
             with open(cert_path, "wb") as cert_file:
-                cert_file.write(func_provile["regInfo"]["apiProvCert"].encode("utf-8"))
+                cert_file.write(func_profile["regInfo"]["apiProvCert"].encode("utf-8"))
 
+        # Guardar los detalles del proveedor
         provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
         with open(provider_details_path, "w") as outfile:
             data = {
                 "capif_registration_id": capif_registration_id,
                 "publish_url": publish_url,
-                **{f"{api_prov_func['apiProvFuncRole']}_api_prov_func_id": api_prov_func["apiProvFuncId"]
-                for api_prov_func in onboarding_response["apiProvFuncs"]}
+                **{f"{indexedroles[i]}_api_prov_func_id": api_prov_func["apiProvFuncId"]
+                for i, api_prov_func in enumerate(onboarding_response["apiProvFuncs"])}
             }
             json.dump(data, outfile, indent=4)
 
         self.logger.info("Data saved")
+
 
     
  
@@ -690,48 +725,71 @@ class CAPIFProviderConnector:
         provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
         self.logger.info(f"Loading provider details from {provider_details_path}")
         
-        try:
-            with open(provider_details_path, "r") as file:
-                provider_details = json.load(file)
-                publish_url = provider_details["publish_url"]
-                AEF_api_prov_func_id = provider_details["AEF_api_prov_func_id"]
-                APF_api_prov_func_id = provider_details["APF_api_prov_func_id"]
-                self.logger.info("Provider details loaded successfully")
-                self.logger.debug(f"Publish URL: {publish_url}")
-                self.logger.debug(f"AEF API Provider Function ID: {AEF_api_prov_func_id}")
-                self.logger.debug(f"APF API Provider Function ID: {APF_api_prov_func_id}")
-        except FileNotFoundError:
-            self.logger.error(f"Provider details file not found: {provider_details_path}")
-            raise
-        except json.JSONDecodeError as e:
-            self.logger.error(f"Error decoding JSON from file {provider_details_path}: {e}")
-            raise
+        provider_details=self.__load_provider_api_details()
+        publish_url=provider_details["publish_url"]
 
-        # Read and modify service API description
-        self.logger.info(f"Reading and modifying service API description from {service_api_description_json_full_path}")
+        json_path = self.config_path + "publish.json"
         
+
+        # Leer el archivo publish.json
+        with open(json_path, 'r') as f:
+            chosenAPFsandAEFs = json.load(f)
+
+        APF_api_prov_func_id = chosenAPFsandAEFs["publisherAPFid"]
+        AEFs_list = chosenAPFsandAEFs["publisherAEFsids"]
+
+        apf_number = None
+        for key, value in provider_details.items():
+            if value == APF_api_prov_func_id and key.startswith("APF-"):
+                apf_inter = key.split("-")[1]
+                apf_number= apf_inter.split("_")[0]                                 # Obtener el número del APF
+                break
+
+        if apf_number is None:
+            self.logger.error(f"No matching APF found for publisherAPFid: {APF_api_prov_func_id}")
+            raise ValueError("Invalid publisherAPFid")
+
+        # Leer y modificar la descripción de la API de servicio
+        self.logger.info(f"Reading and modifying service API description from {service_api_description_json_full_path}")
+
         try:
             with open(service_api_description_json_full_path, "r") as service_file:
                 data = json.load(service_file)
-                for profile in data.get("aefProfiles", []):
-                    profile["aefId"] = AEF_api_prov_func_id
+
+                # Verificamos que el número de AEFs coincide con el número de perfiles
+                if len(AEFs_list) != len(data.get("aefProfiles", [])):
+                    self.logger.error("The number of AEFs in publisherAEFsids does not match the number of profiles in aefProfiles")
+                    raise ValueError("Mismatch between number of AEFs and profiles")
+
+                # Asignamos los AEFs correspondientes
+                for profile, aef_id in zip(data.get("aefProfiles", []), AEFs_list):
+                    profile["aefId"] = aef_id
+
                 self.logger.info("Service API description modified successfully")
+
+                # Guardamos los cambios en el archivo
+                with open(service_api_description_json_full_path, "w") as service_file:
+                    json.dump(data, service_file, indent=4)
+
         except FileNotFoundError:
             self.logger.error(f"Service API description file not found: {service_api_description_json_full_path}")
             raise
         except json.JSONDecodeError as e:
             self.logger.error(f"Error decoding JSON from file {service_api_description_json_full_path}: {e}")
             raise
+        except ValueError as e:
+            self.logger.error(f"Error with the input data: {e}")
+            raise
 
         # Publish services
         url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}"
         cert = (
-            os.path.join(self.provider_folder, "apf.crt"),
-            os.path.join(self.provider_folder, "APF_private_key.key"),
+            os.path.join(self.provider_folder, f"apf-{apf_number}.crt"),
+            os.path.join(self.provider_folder, f"apf-{apf_number}_private_key.key"),
         )
         
         self.logger.info(f"Publishing services to URL: {url}")
-
+        print(data)
         try:
             response = requests.post(
                 url,
@@ -769,39 +827,44 @@ class CAPIFProviderConnector:
         :return: The published services dictionary that was saved in CAPIF.
         """
         self.logger.info("Starting the service unpublication process")
-
         provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
         self.logger.info(f"Loading provider details from {provider_details_path}")
         
-        try:
-            with open(provider_details_path, "r") as file:
-                provider_details = json.load(file)
-                publish_url = provider_details["publish_url"]
-                AEF_api_prov_func_id = provider_details["AEF_api_prov_func_id"]
-                APF_api_prov_func_id = provider_details["APF_api_prov_func_id"]
-                self.logger.info("Provider details loaded successfully")
-                self.logger.debug(f"Publish URL: {publish_url}")
-                self.logger.debug(f"AEF API Provider Function ID: {AEF_api_prov_func_id}")
-                self.logger.debug(f"APF API Provider Function ID: {APF_api_prov_func_id}")
-        except FileNotFoundError:
-            self.logger.error(f"Provider details file not found: {provider_details_path}")
-            raise
-        except json.JSONDecodeError as e:
-            self.logger.error(f"Error decoding JSON from file {provider_details_path}: {e}")
-            raise
+        provider_details=self.__load_provider_api_details()
+        publish_url=provider_details["publish_url"]
 
         # Load provider details
         json_path = self.config_path +"publish.json"
         with open(json_path, 'r') as f:
             publish = json.load(f)
         api_id="/" + publish["serviceApiId"]
+        APF_api_prov_func_id=publish["publisherAPFid"]
+
+        apf_number = None
+        for key, value in provider_details.items():
+            if value == APF_api_prov_func_id and key.startswith("APF-"):
+                apf_inter = key.split("-")[1]
+                apf_number= apf_inter.split("_")[0]                                 # Obtener el número del APF
+                break
+
+        if apf_number is None:
+            self.logger.error(f"No matching APF found for publisherAPFid: {APF_api_prov_func_id}")
+            raise ValueError("Invalid publisherAPFid")
+
+        
+        self.logger.info(f"Loading provider details from {provider_details_path}")
+        
+        
+
+        
 
         url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}{api_id}"
 
         cert = (
-            os.path.join(self.provider_folder, "apf.crt"),
-            os.path.join(self.provider_folder, "APF_private_key.key"),
+            os.path.join(self.provider_folder, f"apf-{apf_number}.crt"),
+            os.path.join(self.provider_folder, f"apf-{apf_number}_private_key.key"),
         )
+        
         
         self.logger.info(f"Unpublishing service to URL: {url}")
 
@@ -837,35 +900,38 @@ class CAPIFProviderConnector:
         provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
         self.logger.info(f"Loading provider details from {provider_details_path}")
         
-        try:
-            with open(provider_details_path, "r") as file:
-                provider_details = json.load(file)
-                publish_url = provider_details["publish_url"]
-                AEF_api_prov_func_id = provider_details["AEF_api_prov_func_id"]
-                APF_api_prov_func_id = provider_details["APF_api_prov_func_id"]
-                self.logger.info("Provider details loaded successfully")
-                self.logger.debug(f"Publish URL: {publish_url}")
-                self.logger.debug(f"AEF API Provider Function ID: {AEF_api_prov_func_id}")
-                self.logger.debug(f"APF API Provider Function ID: {APF_api_prov_func_id}")
-        except FileNotFoundError:
-            self.logger.error(f"Provider details file not found: {provider_details_path}")
-            raise
-        except json.JSONDecodeError as e:
-            self.logger.error(f"Error decoding JSON from file {provider_details_path}: {e}")
-            raise
+        provider_details=self.__load_provider_api_details()
+        publish_url=provider_details["publish_url"]
 
-        # Load provider details
-        json_path = self.config_path +"publish.json"
+        json_path = self.config_path + "publish.json"
+        
+
+        # Leer el archivo publish.json
         with open(json_path, 'r') as f:
-            publish = json.load(f)
-        api_id="/" + publish["serviceApiId"]
+            chosenAPFsandAEFs = json.load(f)
+
+        APF_api_prov_func_id = chosenAPFsandAEFs["publisherAPFid"]
+        AEFs_list = chosenAPFsandAEFs["publisherAEFsids"]
+        api_id="/" +chosenAPFsandAEFs["serviceApiId"]
+        
+        apf_number = None
+        for key, value in provider_details.items():
+            if value == APF_api_prov_func_id and key.startswith("APF-"):
+                apf_inter = key.split("-")[1]
+                apf_number= apf_inter.split("_")[0]                                 # Obtener el número del APF
+                break
+
+        if apf_number is None:
+            self.logger.error(f"No matching APF found for publisherAPFid: {APF_api_prov_func_id}")
+            raise ValueError("Invalid publisherAPFid")
 
         url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}{api_id}"
 
         cert = (
-            os.path.join(self.provider_folder, "apf.crt"),
-            os.path.join(self.provider_folder, "APF_private_key.key"),
+            os.path.join(self.provider_folder, f"apf-{apf_number}.crt"),
+            os.path.join(self.provider_folder, f"apf-{apf_number}_private_key.key"),
         )
+        
         
         self.logger.info(f"Getting service to URL: {url}")
 
@@ -906,36 +972,44 @@ class CAPIFProviderConnector:
         """
         self.logger.info("Starting the service publication process")
 
-        # Load provider details
+       # Load provider details
         provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
         self.logger.info(f"Loading provider details from {provider_details_path}")
         
-        try:
-            with open(provider_details_path, "r") as file:
-                provider_details = json.load(file)
-                publish_url = provider_details["publish_url"]
-                AEF_api_prov_func_id = provider_details["AEF_api_prov_func_id"]
-                APF_api_prov_func_id = provider_details["APF_api_prov_func_id"]
-                self.logger.info("Provider details loaded successfully")
-                self.logger.debug(f"Publish URL: {publish_url}")
-                self.logger.debug(f"AEF API Provider Function ID: {AEF_api_prov_func_id}")
-                self.logger.debug(f"APF API Provider Function ID: {APF_api_prov_func_id}")
-        except FileNotFoundError:
-            self.logger.error(f"Provider details file not found: {provider_details_path}")
-            raise
-        except json.JSONDecodeError as e:
-            self.logger.error(f"Error decoding JSON from file {provider_details_path}: {e}")
-            raise
+        provider_details=self.__load_provider_api_details()
+        publish_url=provider_details["publish_url"]
 
-        # Read and modify service API description
+        json_path = self.config_path + "publish.json"
+        
+
+        # Leer el archivo publish.json
+        with open(json_path, 'r') as f:
+            chosenAPFsandAEFs = json.load(f)
+
+        APF_api_prov_func_id = chosenAPFsandAEFs["publisherAPFid"]
+        AEFs_list = chosenAPFsandAEFs["publisherAEFsids"]
+
+        apf_number = None
+        for key, value in provider_details.items():
+            if value == APF_api_prov_func_id and key.startswith("APF-"):
+                apf_inter = key.split("-")[1]
+                apf_number= apf_inter.split("_")[0]                                 # Obtener el número del APF
+                break
+
+        if apf_number is None:
+            self.logger.error(f"No matching APF found for publisherAPFid: {APF_api_prov_func_id}")
+            raise ValueError("Invalid publisherAPFid")
+
+        # Leer y modificar la descripción de la API de servicio
         
 
         # Publish services
         url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}"
         cert = (
-            os.path.join(self.provider_folder, "apf.crt"),
-            os.path.join(self.provider_folder, "APF_private_key.key"),
+            os.path.join(self.provider_folder, f"apf-{apf_number}.crt"),
+            os.path.join(self.provider_folder, f"apf-{apf_number}_private_key.key"),
         )
+        
         
         self.logger.info(f"Getting services to URL: {url}")
 
@@ -978,52 +1052,73 @@ class CAPIFProviderConnector:
         self.logger.info("Starting the service publication process")
 
         # Load provider details
+        # Load provider details
         provider_details_path = os.path.join(self.provider_folder, "capif_provider_details.json")
         self.logger.info(f"Loading provider details from {provider_details_path}")
         
-        try:
-            with open(provider_details_path, "r") as file:
-                provider_details = json.load(file)
-                publish_url = provider_details["publish_url"]
-                AEF_api_prov_func_id = provider_details["AEF_api_prov_func_id"]
-                APF_api_prov_func_id = provider_details["APF_api_prov_func_id"]
-                self.logger.info("Provider details loaded successfully")
-                self.logger.debug(f"Publish URL: {publish_url}")
-                self.logger.debug(f"AEF API Provider Function ID: {AEF_api_prov_func_id}")
-                self.logger.debug(f"APF API Provider Function ID: {APF_api_prov_func_id}")
-        except FileNotFoundError:
-            self.logger.error(f"Provider details file not found: {provider_details_path}")
-            raise
-        except json.JSONDecodeError as e:
-            self.logger.error(f"Error decoding JSON from file {provider_details_path}: {e}")
-            raise
+        provider_details=self.__load_provider_api_details()
+        publish_url=provider_details["publish_url"]
 
-        # Read and modify service API description
-        self.logger.info(f"Reading and modifying service API description from {service_api_description_json_full_path}")
+        json_path = self.config_path + "publish.json"
         
+
+        # Leer el archivo publish.json
+        with open(json_path, 'r') as f:
+            chosenAPFsandAEFs = json.load(f)
+
+        APF_api_prov_func_id = chosenAPFsandAEFs["publisherAPFid"]
+        AEFs_list = chosenAPFsandAEFs["publisherAEFsids"]
+
+        apf_number = None
+        for key, value in provider_details.items():
+            if value == APF_api_prov_func_id and key.startswith("APF-"):
+                apf_inter = key.split("-")[1]
+                apf_number= apf_inter.split("_")[0]                                 # Obtener el número del APF
+                break
+
+        if apf_number is None:
+            self.logger.error(f"No matching APF found for publisherAPFid: {APF_api_prov_func_id}")
+            raise ValueError("Invalid publisherAPFid")
+
+        # Leer y modificar la descripción de la API de servicio
+        self.logger.info(f"Reading and modifying service API description from {service_api_description_json_full_path}")
+
         try:
             with open(service_api_description_json_full_path, "r") as service_file:
                 data = json.load(service_file)
-                for profile in data.get("aefProfiles", []):
-                    profile["aefId"] = AEF_api_prov_func_id
+
+                # Verificamos que el número de AEFs coincide con el número de perfiles
+                if len(AEFs_list) != len(data.get("aefProfiles", [])):
+                    self.logger.error("The number of AEFs in publisherAEFsids does not match the number of profiles in aefProfiles")
+                    raise ValueError("Mismatch between number of AEFs and profiles")
+
+                # Asignamos los AEFs correspondientes
+                for profile, aef_id in zip(data.get("aefProfiles", []), AEFs_list):
+                    profile["aefId"] = aef_id
+
                 self.logger.info("Service API description modified successfully")
+
+                # Guardamos los cambios en el archivo
+                with open(service_api_description_json_full_path, "w") as service_file:
+                    json.dump(data, service_file, indent=4)
+
         except FileNotFoundError:
             self.logger.error(f"Service API description file not found: {service_api_description_json_full_path}")
             raise
         except json.JSONDecodeError as e:
             self.logger.error(f"Error decoding JSON from file {service_api_description_json_full_path}: {e}")
             raise
-        
-        json_path = self.config_path +"publish.json"
-        with open(json_path, 'r') as f:
-            publish = json.load(f)
-        api_id="/" + publish["serviceApiId"]
+        except ValueError as e:
+            self.logger.error(f"Error with the input data: {e}")
+            raise
+        api_id="/" +chosenAPFsandAEFs["serviceApiId"]
         # Publish services
         url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}{api_id}"
         cert = (
-            os.path.join(self.provider_folder, "apf.crt"),
-            os.path.join(self.provider_folder, "APF_private_key.key"),
+            os.path.join(self.provider_folder, f"apf-{apf_number}.crt"),
+            os.path.join(self.provider_folder, f"apf-{apf_number}_private_key.key"),
         )
+        
         
         self.logger.info(f"Publishing services to URL: {url}")
 
@@ -1075,7 +1170,7 @@ class CAPIFProviderConnector:
             self.logger.info("Offboarding the provider")
             
             # Load CAPIF API details
-            capif_api_details = self.__load_nef_api_details()
+            capif_api_details = self.__load_provider_api_details()
             url = f"{self.capif_https_url}api-provider-management/v1/registrations/{capif_api_details['capif_registration_id']}"
 
             # Define certificate paths
@@ -1121,7 +1216,7 @@ class CAPIFProviderConnector:
             self.logger.error(f"Error during removing folder contents: {e}")
             raise
 
-    def __load_nef_api_details(self) -> dict:
+    def __load_provider_api_details(self) -> dict:
         """
         Loads NEF API details from the CAPIF provider details JSON file.
         

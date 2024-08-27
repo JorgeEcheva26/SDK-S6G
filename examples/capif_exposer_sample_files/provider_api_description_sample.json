@@ -1,131 +1,155 @@
 {
-  "apiName": "/nef/api/v1/3gpp-monitor-event-11/",
-  "aefProfiles": [
-    {
-      "aefId": "string",
-      "versions": [
+    "apiName": "/nef/api/v1/3gpp-monitor-event-13/",
+    "aefProfiles": [
         {
-          "apiVersion": "v3",
-          "expiry": "2100-11-30T10:32:02.004Z",
-          "resources": [
-            {
-              "resourceName": "MONITORING_SUBSCRIPTIONS",
-              "commType": " SUBSCRIBE_NOTIFY",
-              "uri": "/{scsAsId}/subscriptions",
-              "custOpName": "http_post",
-              "operations": ["GET","POST"],
-              "description": "Endpoint to manage monitoring subscriptions"
-            },
-            {
-              "resourceName": "MONITORING_SUBSCRIPTION_SINGLE",
-              "commType": " SUBSCRIBE_NOTIFY",
-              "uri": "/{scsAsId}/subscriptions/{subscriptionId}",
-              "custOpName": "http_get",
-              "operations": ["GET","PUT","DELETE"],
-              "description": "Endpoint to manage single subscription"
-            }
-          ],
-          "custOperations": [
-            {
-              "commType": "REQUEST_RESPONSE",
-              "custOpName": "string",
-              "operations": [
-                "POST"
-              ],
-              "description": "string"
-            }
-          ]
-        }
-      ],
-      "protocol": "HTTP_1_1",
-      "dataFormat": "JSON",
-      "securityMethods": ["Oauth", "PSK"],
-      "interfaceDescriptions": [
+            "aefId": "AEFad2397d7a638c7563c9e34094b819d",
+            "versions": [
+                {
+                    "apiVersion": "v3",
+                    "expiry": "2100-11-30T10:32:02.004Z",
+                    "resources": [
+                        {
+                            "resourceName": "MONITORING_SUBSCRIPTIONS",
+                            "commType": " SUBSCRIBE_NOTIFY",
+                            "uri": "/{scsAsId}/subscriptions",
+                            "custOpName": "http_post",
+                            "operations": [
+                                "GET",
+                                "POST"
+                            ],
+                            "description": "Endpoint to manage monitoring subscriptions"
+                        },
+                        {
+                            "resourceName": "MONITORING_SUBSCRIPTION_SINGLE",
+                            "commType": " SUBSCRIBE_NOTIFY",
+                            "uri": "/{scsAsId}/subscriptions/{subscriptionId}",
+                            "custOpName": "http_get",
+                            "operations": [
+                                "GET",
+                                "PUT",
+                                "DELETE"
+                            ],
+                            "description": "Endpoint to manage single subscription"
+                        }
+                    ],
+                    "custOperations": [
+                        {
+                            "commType": "REQUEST_RESPONSE",
+                            "custOpName": "string",
+                            "operations": [
+                                "POST"
+                            ],
+                            "description": "string"
+                        }
+                    ]
+                }
+            ],
+            "protocol": "HTTP_1_1",
+            "dataFormat": "JSON",
+            "securityMethods": [
+                "Oauth",
+                "PSK"
+            ],
+            "interfaceDescriptions": [
+                {
+                    "ipv4Addr": "127.0.0.1",
+                    "port": 8888,
+                    "securityMethods": [
+                        "Oauth"
+                    ]
+                }
+            ]
+        },
         {
-          "ipv4Addr": "127.0.0.1",
-          "port": 8888,
-          "securityMethods": ["Oauth"]
+            "aefId": "AEFe4ee8eb6d5bd8a496dd3fa28d25f92",
+            "versions": [
+                {
+                    "apiVersion": "v1",
+                    "expiry": "2100-11-30T10:32:02.004Z",
+                    "resources": [
+                        {
+                            "resourceName": "TSN_LIST_PROFILES",
+                            "commType": " SUBSCRIBE_NOTIFY",
+                            "uri": "/profile",
+                            "custOpName": "http_get",
+                            "operations": [
+                                "GET"
+                            ],
+                            "description": "Endpoint for retrieving the list of available TSN profiles"
+                        },
+                        {
+                            "resourceName": "TSN_DETAIL_PROFILE",
+                            "commType": " SUBSCRIBE_NOTIFY",
+                            "uri": "/profile?name={profileName}",
+                            "custOpName": "http_get",
+                            "operations": [
+                                "GET"
+                            ],
+                            "description": "Endpoint for retrieving information about a single TSN profile"
+                        },
+                        {
+                            "resourceName": "TSN_APPLY_CONFIGURATION",
+                            "commType": " SUBSCRIBE_NOTIFY",
+                            "uri": "/apply",
+                            "custOpName": "http_post",
+                            "operations": [
+                                "POST"
+                            ],
+                            "description": "Endpoint for configuring TSN connection parameters"
+                        },
+                        {
+                            "resourceName": "TSN_CLEAR_CONFIGURATION",
+                            "commType": " SUBSCRIBE_NOTIFY",
+                            "uri": "/clear",
+                            "custOpName": "http_post",
+                            "operations": [
+                                "POST"
+                            ],
+                            "description": "Endpoint for removing a previous TSN connection configuration"
+                        }
+                    ],
+                    "custOperations": [
+                        {
+                            "commType": "REQUEST_RESPONSE",
+                            "custOpName": "string",
+                            "operations": [
+                                "POST"
+                            ],
+                            "description": "string"
+                        }
+                    ]
+                }
+            ],
+            "protocol": "HTTP_1_1",
+            "dataFormat": "JSON",
+            "securityMethods": [
+                "Oauth"
+            ],
+            "interfaceDescriptions": [
+                {
+                    "ipv4Addr": "127.0.0.1",
+                    "port": 8899,
+                    "securityMethods": [
+                        "Oauth"
+                    ]
+                }
+            ]
         }
-      ]
+    ],
+    "description": "API of dummy netapp to test",
+    "supportedFeatures": "fffff",
+    "shareableInfo": {
+        "isShareable": true,
+        "capifProvDoms": [
+            "string"
+        ]
     },
-    {
-      "aefId": "string",
-      "versions": [
-        {
-          "apiVersion": "v1",
-          "expiry": "2100-11-30T10:32:02.004Z",
-          "resources": [
-            {
-              "resourceName": "TSN_LIST_PROFILES",
-              "commType": " SUBSCRIBE_NOTIFY",
-              "uri": "/profile",
-              "custOpName": "http_get",
-              "operations": ["GET"],
-              "description": "Endpoint for retrieving the list of available TSN profiles"
-            },
-            {
-              "resourceName": "TSN_DETAIL_PROFILE",
-              "commType": " SUBSCRIBE_NOTIFY",
-              "uri": "/profile?name={profileName}",
-              "custOpName": "http_get",
-              "operations": ["GET"],
-              "description": "Endpoint for retrieving information about a single TSN profile"
-            },
-            {
-              "resourceName": "TSN_APPLY_CONFIGURATION",
-              "commType": " SUBSCRIBE_NOTIFY",
-              "uri": "/apply",
-              "custOpName": "http_post",
-              "operations": ["POST"],
-              "description": "Endpoint for configuring TSN connection parameters"
-            },
-            {
-              "resourceName": "TSN_CLEAR_CONFIGURATION",
-              "commType": " SUBSCRIBE_NOTIFY",
-              "uri": "/clear",
-              "custOpName": "http_post",
-              "operations": ["POST"],
-              "description": "Endpoint for removing a previous TSN connection configuration"
-            }
-          ],
-          "custOperations": [
-            {
-              "commType": "REQUEST_RESPONSE",
-              "custOpName": "string",
-              "operations": [
-                "POST"
-              ],
-              "description": "string"
-            }
-          ]
-        }
-      ],
-      "protocol": "HTTP_1_1",
-      "dataFormat": "JSON",
-      "securityMethods": ["Oauth"],
-      "interfaceDescriptions": [
-        {
-          "ipv4Addr": "127.0.0.1",
-          "port": 8899,
-          "securityMethods": ["Oauth"]
-        }
-      ]
-    }
-  ],
-  "description": "API of dummy netapp to test",
-  "supportedFeatures": "fffff",
-  "shareableInfo": {
-    "isShareable": true,
-    "capifProvDoms": [
-      "string"
-    ]
-  },
-  "serviceAPICategory": "string",
-  "apiSuppFeats": "fffff",
-  "pubApiPath": {
-    "ccfIds": [
-      "string"
-    ]
-  },
-  "ccfId": "string"
+    "serviceAPICategory": "string",
+    "apiSuppFeats": "fffff",
+    "pubApiPath": {
+        "ccfIds": [
+            "string"
+        ]
+    },
+    "ccfId": "string"
 }
