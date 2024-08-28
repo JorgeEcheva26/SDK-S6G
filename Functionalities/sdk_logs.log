@@ -1,0 +1,3 @@
+2024-08-28 13:43:19,721 - CAPIFProviderConnector - ERROR - File not found: /Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json
+2024-08-28 13:43:19,723 - CAPIFProviderConnector - ERROR - Unexpected error: [Errno 2] No such file or directory: '/Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json'
+2024-08-28 13:43:19,723 - CAPIFProviderConnector - ERROR - Failed to offboard and deregister Provider: [Errno 2] No such file or directory: '/Users/IDB0128/Documents/OpenCapif/test_provider_certificate_folder/echeva_0/capif_provider_details.json'

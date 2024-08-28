@@ -79,7 +79,7 @@ class CAPIFInvokerConnector:
         capif_invoker_username = os.getenv('CAPIF_INVOKER_USERNAME', config.get('capif_invoker_username', '')).strip()
         capif_invoker_password = os.getenv('CAPIF_INVOKER_PASSWORD', config.get('capif_invoker_password', '')).strip()
         capif_callback_url = os.getenv('CAPIF_CALLBACK_URL', config.get('capif_callback_url', '')).strip()
-        description = os.getenv('DESCRIPTION', config.get('description', '')).strip()
+        
         csr_common_name = os.getenv('CSR_COMMON_NAME', config.get('csr_common_name', '')).strip()
         csr_organizational_unit = os.getenv('CSR_ORGANIZATIONAL_UNIT', config.get('csr_organizational_unit', '')).strip()
         csr_organization = os.getenv('CSR_ORGANIZATION', config.get('csr_organization', '')).strip()
@@ -113,7 +113,7 @@ class CAPIFInvokerConnector:
     
         self.capif_invoker_username = capif_invoker_username
         self.capif_invoker_password = capif_invoker_password
-        self.description = description
+        
         self.csr_common_name = "invoker_" + csr_common_name
         self.csr_organizational_unit = csr_organizational_unit
         self.csr_organization = csr_organization
@@ -409,7 +409,7 @@ class CAPIFProviderConnector:
             capif_register_port = str(os.getenv('CAPIF_REGISTER_PORT', config.get('capif_register_port', '')).strip())
             capif_provider_username = os.getenv('CAPIF_PROVIDER_USERNAME', config.get('capif_provider_username', '')).strip()
             capif_provider_password = os.getenv('CAPIF_PROVIDER_PASSWORD', config.get('capif_provider_password', '')).strip()
-            description = os.getenv('DESCRIPTION', config.get('description', '')).strip()
+            
             csr_common_name = os.getenv('CSR_COMMON_NAME', config.get('csr_common_name', '')).strip()
             csr_organizational_unit = os.getenv('CSR_ORGANIZATIONAL_UNIT', config.get('csr_organizational_unit', '')).strip()
             csr_organization = os.getenv('CSR_ORGANIZATION', config.get('csr_organization', '')).strip()
@@ -429,7 +429,7 @@ class CAPIFProviderConnector:
 
             self.provider_folder = os.path.join(provider_general_folder, capif_provider_username)
             os.makedirs(self.provider_folder, exist_ok=True)
-            self.description = description
+            
             self.capif_host = capif_host.strip()
             self.capif_provider_username = capif_provider_username
             self.capif_provider_password = capif_provider_password

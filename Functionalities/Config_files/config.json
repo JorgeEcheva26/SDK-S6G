@@ -14,8 +14,6 @@
 
 "capif_callback_url": "http://localhost:5000", 
 
-"description": "Dummy example", 
-
 "csr_common_name": "test03", 
 
 "csr_organizational_unit": "test_app_ou", 
