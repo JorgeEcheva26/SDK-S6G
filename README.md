@@ -75,3 +75,54 @@ To use SDK-S6G we must follow this path for his Installation.
 Congratulations! You ended the installation for SDK-S6G
 
 
+
+## How to use SDK-S6G
+
+1 - First we need to complete the emulator utils file with our absolute paths in order to complete the configuration of the SDK.The register file is not needed for the use of the SDK.The provider_exposer_get_sample_api_description_path is obligatory if we want to use the publish functionalities.
+
+2 - Then we need to fullfill config.json
+
+    "invoker_folder": String | The path (relative or absolute) of the folder you want to store your invoker information
+
+    "provider_folder": String | The path (relative or absolute) of the folder you want to store your invoker information
+
+    "capif_host": String | The domain name of your capif host
+
+    "register_host": String | The domain name of your register host
+
+    "capif_https_port": Integer | The port of your capif host 
+
+    "capif_register_port": Integer | The port of your register host
+
+    "capif_callback_url": String | The Url you want to recieve CAPIF notifications(This functionality is not currently available) 
+
+    "csr_common_name": String | Information for your invoker certificate 
+
+    "csr_organizational_unit": String | Information for your invoker certificate
+
+    "csr_organization": String | Information for your invoker certificate
+
+    "crs_locality": String | Information for your invoker certificate 
+
+    "csr_state_or_province_name": String |Information for your invoker certificate 
+
+    "csr_country_name": String | Information for your invoker certificate 
+
+    "csr_email_address": String | Information for your invoker certificate
+
+    "capif_invoker_username": String | CAPIF username 
+
+    "capif_invoker_password": String | CAPIF password 
+
+    "capif_provider_username": String | CAPIF username
+
+    "capif_provider_password": String | CAPIF password
+
+    "APFs": Integer | Number of APF's you want to onboard as a provider Example:5 
+
+    "AEFs": Integer | Number of AEF's you want to onboard as a provider Example:2
+
+    "debug_mode": Boolean | If you want to recieve logs from SDK-S6G Example:True/False
+    
+
+
