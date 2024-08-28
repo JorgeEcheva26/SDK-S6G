@@ -2,29 +2,7 @@ import os
 import logging
 import shutil
 import subprocess
-from typing import List, Union, Optional
 from requests.auth import HTTPBasicAuth
-from evolved5g import swagger_client
-from abc import ABC, abstractmethod
-from enum import Enum
-from dataclasses import dataclass
-from evolved5g.swagger_client import (
-    MonitoringEventAPIApi,
-    MonitoringEventSubscriptionCreate,
-    MonitoringEventSubscription,
-    SessionWithQoSAPIApi,
-    AsSessionWithQoSSubscriptionCreate,
-    Snssai,
-    UsageThreshold,
-    AsSessionWithQoSSubscription,
-    QosMonitoringInformation,
-    RequestedQoSMonitoringParameters,
-    ReportingFrequency,
-    MonitoringEventReport,
-    CellsApi,
-    Cell,
-)
-import datetime
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
