@@ -49,6 +49,7 @@ To use SDK-S6G we must follow this path for his Installation.
     #Comands to install the enviroment
     pyenv install 3.12
     pyenv virtualenv 3.12 Sdkenviroment
+    source activate Sdkenviroment 
 
     #OPTIONAL
         #Sometimes Mac shells has a little trouble while finding the shell path, try this command
