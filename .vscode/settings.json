@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./Safe-6g"
+    ]
+}

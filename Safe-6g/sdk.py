@@ -410,7 +410,7 @@ class CAPIFProviderConnector:
             self.logger.setLevel(logging.WARNING)
             
         
-
+        
         
         urllib_logger = logging.getLogger("urllib3")
         if not debug_mode:
@@ -789,7 +789,7 @@ class CAPIFProviderConnector:
         )
         
         self.logger.info(f"Publishing services to URL: {url}")
-        print(data)
+        
         try:
             response = requests.post(
                 url,
@@ -1264,7 +1264,7 @@ class ServiceDiscoverer:
             self.logger.setLevel(logging.WARNING)
             
         
-
+        
         
         urllib_logger = logging.getLogger("urllib3")
         if not debug_mode:

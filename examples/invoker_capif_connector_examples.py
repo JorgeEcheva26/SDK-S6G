@@ -1,6 +1,10 @@
 
+import sys
+sys.path.insert(0, '/Users/IDB0128/Documents/OpenCapif/SDK-S6G/Safe-6g/')
 
-from evolved5g.sdk import CAPIFInvokerConnector, ServiceDiscoverer
+# Ahora importa las clases desde tu archivo sdk.py
+from sdk import CAPIFInvokerConnector
+
 import emulator_utils
 
 def showcase_capif_connector():
@@ -20,4 +24,11 @@ if __name__ == "__main__":
     showcase_capif_connector()
 
 
+""" # Importa el módulo completo para evitar problemas con rutas relativas
+import sys
+sys.path.insert(0, '/Users/IDB0128/Documents/OpenCapif/SDK-S6G/Safe-6g/')
 
+# Ahora importa las clases desde tu archivo sdk.py
+from sdk import CAPIFInvokerConnector, ServiceDiscoverer
+
+"""

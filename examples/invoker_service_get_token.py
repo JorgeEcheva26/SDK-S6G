@@ -1,6 +1,8 @@
-from evolved5g.sdk import CAPIFInvokerConnector, ServiceDiscoverer
-
+import sys
+sys.path.insert(0, '/Users/IDB0128/Documents/OpenCapif/SDK-S6G/Safe-6g/')
+from sdk import  ServiceDiscoverer
 import emulator_utils
+
 
 
 

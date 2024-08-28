@@ -1,4 +1,8 @@
-from evolved5g.sdk import CAPIFProviderConnector
+import sys
+sys.path.insert(0, '/Users/IDB0128/Documents/OpenCapif/SDK-S6G/Safe-6g/')
+
+
+from sdk import CAPIFProviderConnector, ServiceDiscoverer
 import emulator_utils
 def offboard_capif_nef_connector():
     """
