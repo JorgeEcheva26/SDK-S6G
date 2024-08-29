@@ -780,14 +780,35 @@ class CAPIFProviderConnector:
             self.logger.info("Services published successfully")
 
             # Save response to file
-            capif_response = response.text
-            file_name = os.path.basename(service_api_description_json_full_path)
-            output_path = os.path.join(self.provider_folder, f"CAPIF_{file_name}")
+            capif_response_text = response.text
+            
+            capif_response_json=json.loads(capif_response_text)
+            
+            file_name = capif_response_json.get("apiName", "default_name")  # Default name if apiName is missing
+            id=capif_response_json.get("apiId","default_id")
+            output_path = os.path.join(self.provider_folder, f"CAPIF-{file_name}-{id}-api.json")
+            
+            
+            
             with open(output_path, "w") as outfile:
-                outfile.write(capif_response)
+                outfile.write(capif_response_text)
             self.logger.info(f"CAPIF response saved to {output_path}")
+            output_path = os.path.join(self.provider_folder, "Published-Apis.json")
 
-            return json.loads(capif_response)
+            # Leer el archivo existente de APIs publicados
+            published_apis = {}
+            if os.path.exists(output_path):
+                with open(output_path, "r") as outfile:
+                    published_apis = json.load(outfile)
+
+            # Agregar el nuevo API publicado
+            published_apis[file_name] = id
+
+            # Escribir el archivo actualizado de APIs publicados
+            with open(output_path, "w") as outfile:
+                json.dump(published_apis, outfile, indent=4)
+            self.logger.info(f"API '{file_name}' with ID '{id}' added to Published Apis.")
+            return json.loads(capif_response_text)
 
         except requests.RequestException as e:
             self.logger.error(f"Request to CAPIF failed: {e}")
@@ -795,6 +816,7 @@ class CAPIFProviderConnector:
         except Exception as e:
             self.logger.error(f"Unexpected error during service publication: {e}")
             raise
+
 
     def unpublish_service(self) -> dict:
         """
@@ -817,7 +839,7 @@ class CAPIFProviderConnector:
             publish = json.load(f)
         api_id="/" + publish["serviceApiId"]
         APF_api_prov_func_id=publish["publisherAPFid"]
-
+        AEFs_list = publish["publisherAEFsids"]
         apf_number = None
         for key, value in provider_details.items():
             if value == APF_api_prov_func_id and key.startswith("APF-"):
@@ -831,10 +853,6 @@ class CAPIFProviderConnector:
 
         
         self.logger.info(f"Loading provider details from {provider_details_path}")
-        
-        
-
-        
 
         url = f"{self.capif_https_url}{publish_url.replace('<apfId>', APF_api_prov_func_id)}{api_id}"
 
@@ -855,6 +873,48 @@ class CAPIFProviderConnector:
             )
             
             response.raise_for_status()
+
+            directory = self.provider_folder
+            
+            # Iterar sobre todos los archivos en el directorio
+            for filename in os.listdir(directory):
+                path = os.path.join(directory, filename)
+                
+                # Verificar si el archivo empieza con 'CAPIF-'
+
+                if filename.startswith("CAPIF-") and publish["serviceApiId"] in filename:
+                    
+                    os.remove(path) # Salir del bucle si el archivo es eliminado
+                    break
+            
+            output_path = os.path.join(self.provider_folder, "Published-Apis.json")
+
+            # Leer el archivo existente de APIs publicados
+            published_apis = {}
+            if os.path.exists(output_path):
+                with open(output_path, "r") as outfile:
+                    published_apis = json.load(outfile)
+
+            # ID del API que deseas eliminar
+            api_id_to_delete = publish["serviceApiId"]  # Reemplaza con el ID específico
+
+            # Buscar y eliminar el API por su ID
+            api_name_to_delete = None
+            for name, id in published_apis.items():
+                if id == api_id_to_delete:
+                    api_name_to_delete = name
+                    break
+
+            if api_name_to_delete:
+                del published_apis[api_name_to_delete]
+                self.logger.info(f"API with ID '{api_id_to_delete}' removed from Published Apis.")
+            else:
+                self.logger.warning(f"API with ID '{api_id_to_delete}' not found in Published Apis.")
+
+            # Escribir el archivo actualizado de APIs publicados
+            with open(output_path, "w") as outfile:
+                json.dump(published_apis, outfile, indent=4)
+            
             self.logger.info("Services unpublished successfully")
 
            
@@ -1099,7 +1159,7 @@ class CAPIFProviderConnector:
         
         
         self.logger.info(f"Publishing services to URL: {url}")
-
+        
         try:
             response = requests.put(
                 url,
@@ -1112,15 +1172,35 @@ class CAPIFProviderConnector:
             self.logger.info("Services updated successfully")
 
             # Save response to file
-            capif_response = response.text
-            file_name = os.path.basename(service_api_description_json_full_path)
-            output_path = os.path.join(self.provider_folder, f"CAPIF_{file_name}")
+            capif_response_text = response.text
+            
+            capif_response_json=json.loads(capif_response_text)
+            
+            file_name = capif_response_json.get("apiName", "default_name")  # Default name if apiName is missing
+            id=capif_response_json.get("apiId","default_id")
+            output_path = os.path.join(self.provider_folder, f"CAPIF-{file_name}-{id}-api.json")
+            
+            
+            
             with open(output_path, "w") as outfile:
-                outfile.write(capif_response)
+                outfile.write(capif_response_text)
             self.logger.info(f"CAPIF response saved to {output_path}")
+            output_path = os.path.join(self.provider_folder, "Published-Apis.json")
 
-            return json.loads(capif_response)
+            # Leer el archivo existente de APIs publicados
+            published_apis = {}
+            if os.path.exists(output_path):
+                with open(output_path, "r") as outfile:
+                    published_apis = json.load(outfile)
 
+            # Agregar el nuevo API publicado
+            published_apis[file_name] = id
+
+            # Escribir el archivo actualizado de APIs publicados
+            with open(output_path, "w") as outfile:
+                json.dump(published_apis, outfile, indent=4)
+            self.logger.info(f"API '{file_name}' with ID '{id}' added to Published Apis.")
+            return json.loads(capif_response_text)
         except requests.RequestException as e:
             self.logger.error(f"Request to CAPIF failed: {e}")
             raise

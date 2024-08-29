@@ -172,6 +172,7 @@ PublisherAPFid is required in:
 PublisherAEFsids is required in:
 
 -   Provider Publish Api
+-   Provider Unpublish Api
 -   Provider Update Api
 
 For using the Publish Api function or the Update function you **must** modify the provider_api_description_sample.json with the Publish API that you want to share following the standard schema for [ServiceAPIDescription](https://github.com/jdegre/5GC_APIs/blob/Rel-18/TS29222_CAPIF_Publish_Service_API.yaml)
@@ -187,6 +188,7 @@ In the provider_folder, you will find several folders with each capif_username y
 - Capif_provider_details.json : Contains all the APFs and AEFs ids you have already onboarded with this capif_username
 - CAPIF_provider_api_description_sample.json : If you already published or updated an API, you will find a copy of your last payload.
 - Service_received.json : If you already used the get an api or get all apis functionality, you will find the response to your request.
+- Published-Apis.json : Constains the currently published APIs with their ApiId
 
 ## Discover_filter.json
 This file follows the parameters schema from the GET petition of  [Discover Services API](https://github.com/jdegre/5GC_APIs/blob/Rel-18/TS29222_CAPIF_Discover_Service_API.yaml) 

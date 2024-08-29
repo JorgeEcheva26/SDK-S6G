@@ -1,8 +1,8 @@
 {
-    "apiName": "/nef/api/v1/3gpp-monitor-event-13/",
+    "apiName": "Api-de-prueba-2",
     "aefProfiles": [
         {
-            "aefId": "AEFe69cc87acf73293a0149996fa97151",
+            "aefId": "AEFc0acbe7f16825927b7219a4447ebeb",
             "versions": [
                 {
                     "apiVersion": "v3",
@@ -61,7 +61,7 @@
             ]
         },
         {
-            "aefId": "AEFec8714e780d9c5ed00b38b66912dd2",
+            "aefId": "AEF6cd37a1066635b274d38bea27940fb",
             "versions": [
                 {
                     "apiVersion": "v1",
