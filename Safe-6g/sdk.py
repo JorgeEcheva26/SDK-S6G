@@ -889,7 +889,7 @@ class CAPIFProviderConnector:
             chosenAPFsandAEFs = json.load(f)
 
         APF_api_prov_func_id = chosenAPFsandAEFs["publisherAPFid"]
-        AEFs_list = chosenAPFsandAEFs["publisherAEFsids"]
+        
         api_id="/" +chosenAPFsandAEFs["serviceApiId"]
         
         apf_number = None
@@ -965,7 +965,7 @@ class CAPIFProviderConnector:
             chosenAPFsandAEFs = json.load(f)
 
         APF_api_prov_func_id = chosenAPFsandAEFs["publisherAPFid"]
-        AEFs_list = chosenAPFsandAEFs["publisherAEFsids"]
+        
 
         apf_number = None
         for key, value in provider_details.items():
