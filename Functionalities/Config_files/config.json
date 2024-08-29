@@ -27,14 +27,10 @@
 "csr_country_name": "ES", 
 
 "csr_email_address": "test@example.com", 
+ 
+"capif_username": "echeva_0", 
 
-"capif_invoker_username": "echeva_0", 
-
-"capif_invoker_password": "echevapass", 
-
-"capif_provider_username": "echeva_0", 
-
-"capif_provider_password": "echevapass",
+"capif_password": "echevapass",
 
 "APFs":"1",
 

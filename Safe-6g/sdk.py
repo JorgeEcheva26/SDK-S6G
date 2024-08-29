@@ -76,8 +76,8 @@ class CAPIFInvokerConnector:
         register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
         capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
         capif_register_port = str(os.getenv('CAPIF_REGISTER_PORT', config.get('capif_register_port', '')).strip())
-        capif_invoker_username = os.getenv('CAPIF_INVOKER_USERNAME', config.get('capif_invoker_username', '')).strip()
-        capif_invoker_password = os.getenv('CAPIF_INVOKER_PASSWORD', config.get('capif_invoker_password', '')).strip()
+        capif_invoker_username = os.getenv('CAPIF_USERNAME', config.get('capif_username', '')).strip()
+        capif_invoker_password = os.getenv('CAPIF_PASSWORD', config.get('capif_password', '')).strip()
         capif_callback_url = os.getenv('CAPIF_CALLBACK_URL', config.get('capif_callback_url', '')).strip()
         
         csr_common_name = os.getenv('CSR_COMMON_NAME', config.get('csr_common_name', '')).strip()
@@ -407,8 +407,8 @@ class CAPIFProviderConnector:
             capif_register_host = os.getenv('REGISTER_HOST', config.get('register_host', '')).strip()
             capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
             capif_register_port = str(os.getenv('CAPIF_REGISTER_PORT', config.get('capif_register_port', '')).strip())
-            capif_provider_username = os.getenv('CAPIF_PROVIDER_USERNAME', config.get('capif_provider_username', '')).strip()
-            capif_provider_password = os.getenv('CAPIF_PROVIDER_PASSWORD', config.get('capif_provider_password', '')).strip()
+            capif_provider_username = os.getenv('CAPIF_USERNAME', config.get('capif_username', '')).strip()
+            capif_provider_password = os.getenv('CAPIF_PASSWORD', config.get('capif_password', '')).strip()
             
             csr_common_name = os.getenv('CSR_COMMON_NAME', config.get('csr_common_name', '')).strip()
             csr_organizational_unit = os.getenv('CSR_ORGANIZATIONAL_UNIT', config.get('csr_organizational_unit', '')).strip()
@@ -1255,7 +1255,7 @@ class ServiceDiscoverer:
         capif_https_port = str(os.getenv('CAPIF_HTTPS_PORT', config.get('capif_https_port', '')).strip())
         invoker_general_folder = os.path.abspath(os.getenv('invoker_folder', config.get('invoker_folder', '')).strip())
 
-        capif_invoker_username = os.getenv('CAPIF_INVOKER_USERNAME', config.get('capif_invoker_username', '')).strip()
+        capif_invoker_username = os.getenv('CAPIF_USERNAME', config.get('capif_username', '')).strip()
 
         
         self.capif_invoker_username=capif_invoker_username
