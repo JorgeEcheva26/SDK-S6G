@@ -366,6 +366,89 @@ class CAPIFInvokerConnector:
             self.logger.error(f"Error during writing to file: {e}")
             raise
 
+    def update_Invoker(self):
+        self.logger.info("Updating Invoker")
+        try:
+            
+            capif_postauth_info = self.__save_capif_ca_root_file_and_get_auth_token()
+            capif_onboarding_url = capif_postauth_info["ccf_onboarding_url"]
+            capif_access_token = capif_postauth_info["access_token"]
+            path=self.invoker_folder + "/cert_req.csr"
+            with open(path, "rb") as file:
+                public_key = file.read()
+            
+            self.__update_invoker_to_capif_and_create_the_signed_certificate(
+                public_key, capif_onboarding_url, capif_access_token
+            )
+            
+            self.logger.info("Invoker updated successfully")
+        except Exception as e:
+            self.logger.error(f"Error during Invoker updating Invoker: {e}")
+            raise
+
+    def __update_invoker_to_capif_and_create_the_signed_certificate(
+        self, public_key, capif_onboarding_url, capif_access_token
+    ):
+        self.logger.info("Updating Invoker to CAPIF and creating signed certificate by giving our public key to CAPIF")
+        try:
+            path = self.invoker_folder + "/" + self.capif_api_details_filename
+
+           
+            with open(path, "r") as file:
+                invoker_details = file.read()
+
+            
+            invoker_details = json.loads(invoker_details)
+
+            
+            invoker_id = invoker_details["api_invoker_id"]
+            url = self.capif_https_url + capif_onboarding_url + "/" + invoker_id
+            payload_dict = {
+                "notificationDestination": self.capif_callback_url,
+                "supportedFeatures": "fffffff",
+                "apiInvokerInformation": self.csr_common_name,
+                "websockNotifConfig": {
+                    "requestWebsocketUri": True,
+                    "websocketUri": "websocketUri",
+                },
+                "onboardingInformation": {"apiInvokerPublicKey": str(public_key, "utf-8")},
+                "requestTestNotification": True,
+            }
+            payload = json.dumps(payload_dict)
+            headers = {
+                "Authorization": "Bearer {}".format(capif_access_token),
+                "Content-Type": "application/json",
+            }
+            signed_key_crt_path = os.path.join(
+                self.invoker_folder, 
+                self.capif_invoker_username + ".crt"
+            )
+
+            private_key_path = os.path.join(
+                self.invoker_folder, 
+                "private.key"
+            )
+            pathca = os.path.join(self.invoker_folder,"ca.crt")
+            response = requests.request(
+                "PUT",
+                url,
+                headers=headers,
+                data=payload,
+                cert=(signed_key_crt_path, private_key_path),
+                verify=pathca,
+            )
+            print(response.text)
+            response.raise_for_status()
+            
+            
+            self.logger.info("Invoker updated and signed certificate updated successfully")
+            
+        except Exception as e:
+            self.logger.error(f"Error during updating Invoker to CAPIF: {e}")
+            raise
+
+    
+
 class CAPIFProviderConnector:
     """
     Τhis class is responsible for onboarding an exposer (eg. NEF emulator) to CAPIF
