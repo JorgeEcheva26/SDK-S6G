@@ -28,3 +28,5 @@
 2024-08-29 13:34:47,420 - CAPIFProviderConnector - ERROR - Unexpected error during service publication: 'str' object has no attribute 'get'
 2024-08-29 13:36:57,123 - CAPIFProviderConnector - ERROR - Unexpected error during service publication: write() argument must be str, not dict
 2024-08-29 14:09:56,938 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 401 Client Error: UNAUTHORIZED for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APFe9b968ba70670ee9ac5d37eeca58dd/service-apis/0372d034b7a200f24c81d23e4fec05
+2024-08-30 11:32:21,190 - ServiceDiscoverer - WARNING - Received 404 error, redirecting to register security service
+2024-08-30 11:36:47,921 - CAPIFProviderConnector - ERROR - Request to CAPIF failed: 404 Client Error: NOT FOUND for url: https://capif-prev.mobilesandbox.cloud:36212/published-apis/v1/APF39d212eeb636f3d93a046786a71438/service-apis/

@@ -1178,6 +1178,21 @@ class CAPIFProviderConnector:
             
             file_name = capif_response_json.get("apiName", "default_name")  # Default name if apiName is missing
             id=capif_response_json.get("apiId","default_id")
+            directory = self.provider_folder
+            
+            # Iterar sobre todos los archivos en el directorio
+            for filename in os.listdir(directory):
+                path = os.path.join(directory, filename)
+                
+                # Verificar si el archivo empieza con 'CAPIF-'
+
+                if filename.startswith("CAPIF-") and id in filename:
+                    
+                    os.remove(path) # Salir del bucle si el archivo es eliminado
+                    break
+
+
+
             output_path = os.path.join(self.provider_folder, f"CAPIF-{file_name}-{id}-api.json")
             
             
@@ -1192,7 +1207,10 @@ class CAPIFProviderConnector:
             if os.path.exists(output_path):
                 with open(output_path, "r") as outfile:
                     published_apis = json.load(outfile)
-
+                    
+            keys_to_remove = [key for key, value in published_apis.items() if value == id]
+            for key in keys_to_remove:
+                del published_apis[key]
             # Agregar el nuevo API publicado
             published_apis[file_name] = id
 
