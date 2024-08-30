@@ -30,7 +30,7 @@ This tool is focused on connect to CAPIF in a simpler way.
   
 - **Provider Capif connector offboarding**: Simplifies the process of offboarding for Provider users
 
-![Descripción de la imagen](images/Flujo completo-OPENCAPIF ACTUAL.jpg)
+![Descripción de la imagen](./images/Flujo%20completo-OPENCAPIF%20ACTUAL.jpg)
 
 
 ## Other Functionalities
@@ -40,7 +40,7 @@ Apart from the SDK it is available diferent functionalities for development reas
 - **Register and login**: Facilitates the loggin process for admin users and creates a CAPIF user 
 - **Deregister and login**: Facilitates the loggin process for admin users and eliminates a CAPIF user
 
-![Descripción de la imagen](images/Flujo completo-SDK ACTUAL CON REGISTER.jpg)
+![Descripción de la imagen](./images/Flujo%20completo-SDK%20ACTUAL%20CON%20REGISTER.jpg)
 
 
 
