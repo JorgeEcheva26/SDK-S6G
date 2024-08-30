@@ -82,7 +82,7 @@ Congratulations! You ended the installation for SDK-S6G
 
 # How to use SDK-S6G
 
-1 - First we need to complete the emulator utils file with our absolute paths in order to complete the configuration of the SDK.The register file is not needed for the use of the SDK.The provider_exposer_get_sample_api_description_path is obligatory if we want to use the publish functionalities.
+1 - First we need to complete the **emulator utils file** with our absolute paths in order to complete the configuration of the SDK.The register file is not needed for the use of the SDK.The provider_exposer_get_sample_api_description_path is obligatory if we want to use the publish functionalities.
 
 2 - Then we need to fill out Config files depending on the functionalities we want to use from the SDK
 
@@ -214,4 +214,23 @@ By default, the Service Get Token will get the access token for using all the AP
 3. Use the Service Get Token Functionality.
 
     
+## Register.json
 
+
+    "register_host": String | The domain name of your register host
+    "capif_register_port": Integer | The port of your register host
+    "capif_register_username": String | CAPIF admin username
+    "capif_register_password": String | CAPIF admin password
+    "capif_username": String | CAPIF user username
+    "capif_password": String | CAPIF user password
+    "config_path": String | Absolute path to the Config_files folder
+    "uuid": String | UUID for Deregistering the user
+
+
+This file is only used for the Functionalities of :
+- Register and login 
+- Deregister and login
+
+Each field is obligatory to complete except UUID, which is only obligatory in case of Deregistering the user.
+
+Although this field is not obligatory we recomend to store the UUID parameter recieved by the Register and login functionality in this field.
