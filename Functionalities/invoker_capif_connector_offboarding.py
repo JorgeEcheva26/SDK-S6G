@@ -5,8 +5,9 @@ import os
 sys.path.append('/Users/IDB0128/Documents/OpenCapif/SDK-S6G')
 
 
+import emulator_utils 
 import sys
-sys.path.insert(0, '/Users/IDB0128/Documents/OpenCapif/SDK-S6G/Safe-6g/')
+sys.path.insert(0, emulator_utils.get_sdk_folder)
 
 # Ahora importa las clases desde tu archivo sdk.py
 from sdk import CAPIFInvokerConnector

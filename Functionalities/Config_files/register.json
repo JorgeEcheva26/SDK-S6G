@@ -1,10 +1,10 @@
 {
-    "register_host": "localhost",
-    "capif_register_port": "8084",
-    "capif_register_username": "admin",
-    "capif_register_password": "password123",
-    "capif_username":"custom_invoker75",
-    "capif_password":"pass123",
-    "config_path":"/Users/IDB0128/Documents/OpenCapif/SDK-S6G/examples/Config_files/",
-    "uuid":"f75efe6a-5dd4-523c-8f4b-3dee419d6f89"
+    "register_host": "",
+    "capif_register_port": "",
+    "capif_register_username": "",
+    "capif_register_password": "",
+    "capif_username":"",
+    "capif_password":"",
+    "config_path":"",
+    "uuid":""
 }

@@ -1,16 +1,16 @@
+import emulator_utils 
 import sys
-sys.path.insert(0, '/Users/IDB0128/Documents/OpenCapif/SDK-S6G/Safe-6g/')
+sys.path.insert(0, emulator_utils.get_sdk_folder)
 
-
-from sdk import CAPIFProviderConnector, ServiceDiscoverer
-import emulator_utils
+# Ahora importa las clases desde tu archivo sdk.py
+from sdk import CAPIFProviderConnector
 def showcase_capif_nef_connector():
     """
 
     """
     capif_connector = CAPIFProviderConnector(config_file=emulator_utils.get_config_file())
 
-    capif_connector.update_service(
+    capif_connector.publish_services(
         service_api_description_json_full_path=emulator_utils.provider_exposer_get_sample_api_description_path())
     print("COMPLETED")
 

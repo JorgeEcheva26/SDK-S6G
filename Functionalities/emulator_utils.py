@@ -11,3 +11,6 @@ def provider_exposer_get_sample_api_description_path() -> str:
 
 def get_provider_config_file()->str:
     return "/Users/IDB0128/Documents/OpenCapif/SDK-S6G/Functionalities/Config_files/Provider_config.json"
+
+def get_sdk_folder()-> str:
+    return "/Users/IDB0128/Documents/OpenCapif/SDK-S6G/"

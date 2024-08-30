@@ -2,10 +2,10 @@
     "apiName": "Api-de-prueba-2",
     "aefProfiles": [
         {
-            "aefId": "AEFc0acbe7f16825927b7219a4447ebeb",
+            "aefId": "",
             "versions": [
                 {
-                    "apiVersion": "v3",
+                    "apiVersion": "v1",
                     "expiry": "2100-11-30T10:32:02.004Z",
                     "resources": [
                         {
@@ -61,7 +61,7 @@
             ]
         },
         {
-            "aefId": "AEF6cd37a1066635b274d38bea27940fb",
+            "aefId": "",
             "versions": [
                 {
                     "apiVersion": "v1",

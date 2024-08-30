@@ -1,40 +1,40 @@
 { 
 
-"invoker_folder": "../../test_invoker_certificate_folder/", 
+"invoker_folder": "", 
 
-"provider_folder": "../../test_provider_certificate_folder/", 
+"provider_folder": "", 
 
-"capif_host": "capif-prev.mobilesandbox.cloud", 
+"capif_host": "", 
 
-"register_host": "registercapif-prev.mobilesandbox.cloud", 
+"register_host": "", 
 
-"capif_https_port": "36212", 
+"capif_https_port": "", 
 
-"capif_register_port": "36211", 
+"capif_register_port": "", 
 
-"capif_callback_url": "http://localhost:5000", 
+"capif_callback_url": "", 
 
-"csr_common_name": "test03", 
+"csr_common_name": "", 
 
-"csr_organizational_unit": "test_app_ou", 
+"csr_organizational_unit": "", 
 
-"csr_organization": "test_app_o", 
+"csr_organization": "", 
 
-"crs_locality": "Madrid", 
+"crs_locality": "", 
 
-"csr_state_or_province_name": "Madrid", 
+"csr_state_or_province_name": "", 
 
-"csr_country_name": "ES", 
+"csr_country_name": "", 
 
-"csr_email_address": "test@example.com", 
+"csr_email_address": "", 
  
-"capif_username": "echeva_0", 
+"capif_username": "", 
 
-"capif_password": "echevapass",
+"capif_password": "",
 
-"APFs":"1",
+"APFs":"",
 
-"AEFs":"2",
+"AEFs":"",
 
-"debug_mode": "False"
+"debug_mode": ""
 } 
