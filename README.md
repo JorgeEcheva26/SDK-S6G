@@ -4,7 +4,7 @@
 
 This tool is focused on connect to CAPIF in a simpler way.
 
-
+**PLEASE CHANGE TO V1 BRANCH TO USE THE MOST UPDATED VERSION OF SDK**
 
 # Functionalities
 
@@ -62,7 +62,7 @@ To use SDK-S6G we must follow this path for his Installation.
         eval "$(pyenv virtualenv-init -)"
 2 - Clone the repository
     
-    git clone https://github.com/JorgeEcheva26/SDK-S6G.git
+    git clone -b v1 --single-branch https://github.com/JorgeEcheva26/SDK-S6G.git
 
     #Then move to the SDK-S6G folder
 
